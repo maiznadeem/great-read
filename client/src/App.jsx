@@ -1,18 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import Layout from './components/Layout'
+import HomePage from './pages/HomePage'
 
-  return (
-    <>
-      <div className='text-red-300'>
-        <p>HELLLO</p>
-      </div>
-    </>
-  )
+function App() {
+
+    return (
+        <BrowserRouter>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<HomePage />} />
+                    </Route>
+                </Routes>
+            </Suspense>
+        </BrowserRouter>
+    )
 }
 
 export default App
