@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 
 import Logo from '../assets/logos/logo-golden.svg';
 
@@ -12,7 +11,7 @@ const Footer = () => {
                     alt="Logo"
                     className="mx-auto h-16 w-auto mb-4"
                 />
-                <p className="text-xs text-[#A6A6A6]">Copyright @2023. All rights reserved.</p>
+                <p className="manrope-regular text-xs text-[#A6A6A6]">Copyright @2023. All rights reserved.</p>
             </div>
         </footer>
     );

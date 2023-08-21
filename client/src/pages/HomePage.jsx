@@ -1,27 +1,14 @@
-import React from 'react'
-import { Container } from 'react-bootstrap';
+import React from 'react';
+
+import Banner from '../components/Banner';
 
 const HomePage = () => {
-    return (
-        <div className='w-full'>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-            <div className='py-12'>HomePage</div>
-        </div>
-    )
-}
 
-export default HomePage
+    return (
+        <section className='py-4 pt-40 px-8'>
+            <Banner />
+        </section>
+    );
+};
+
+export default HomePage;
