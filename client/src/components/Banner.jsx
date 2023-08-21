@@ -8,7 +8,7 @@ import shelf3 from '../assets/shelf/Shelf3.jpg'
 
 const Banner = () => {
     return (
-        <div className='flex gap-12 my-4 items-center'>
+        <section className='flex gap-12 my-4 items-center'>
             <div className='w-1/4'>
                 <div className='flex flex-col items-center justify-center'>
                     <div className='rounded'>
@@ -38,9 +38,9 @@ const Banner = () => {
                                 <div className='w-[80%] mx-auto relative xl:w-[500px]'>
                                     <img className='shadow-xl' src={shelf} alt='Shelf' />
                                     <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                                        <img src={shelf1} alt='Shelf' className='h-auto w-1/3' />
-                                        <img src={shelf2} alt='Shelf' className='h-auto w-1/4' />
-                                        <img src={shelf3} alt='Shelf' className='h-auto w-1/5' />
+                                        <img src={shelf1} alt='Shelf' className='h-auto rounded-xl w-1/3' />
+                                        <img src={shelf2} alt='Shelf' className='h-auto rounded-lg w-1/4' />
+                                        <img src={shelf3} alt='Shelf' className='h-auto rounded-md w-1/5' />
                                     </div>
                                 </div>
                                 <p className='manrope-semibold text-2xl py-4 text-center text-black'>Picks for June 2023</p>
@@ -49,7 +49,7 @@ const Banner = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 
