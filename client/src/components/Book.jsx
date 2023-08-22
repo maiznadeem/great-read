@@ -34,7 +34,7 @@ const Book = ({ book }) => {
                 <img
                     src={book.image}
                     alt={book.title}
-                    className="h-56 w-auto rounded-lg -mt-16 -ml-10 max-h-56 shadow-lg"
+                    className="h-56 w-auto rounded-lg -mt-16 -ml-10 max-h-56 shadow-xl"
                 />
                 <div className='flex justify-center items-center'>
                     <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
