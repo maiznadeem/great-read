@@ -2,10 +2,11 @@ import React from 'react';
 
 import Category from './Category';
 import Book from './Book';
-import Pagination from './Pagination';
+import DefaultPagination from './DefaultPagination';
 import categoriesData from '../utils/categoriesData';
 
-import book1 from '../assets/books/Book1.jpg'
+import book1 from '../assets/books/Book1.jpg';
+
 
 const Books = () => {
 
@@ -76,8 +77,12 @@ const Books = () => {
                         <Book key={book.id} book={book} />
                     ))}
                 </div>
-                <div className='my-12 flex items-center justify-center'>
-                    <Pagination />
+                <div className='my-12 flex flex-col items-center justify-center'>
+                <DefaultPagination
+                    currentPage={1}
+                    limit={10}
+                    totalResults={104}
+                />
                 </div>
             </div>
         </section>
