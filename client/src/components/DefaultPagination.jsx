@@ -13,6 +13,94 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
     const renderPageButtons = () => {
         const buttons = [];
 
+        if (totalPages <= 6) {
+            for (let i = 1; i <= 6; i++) {
+                buttons.push(
+                    <button
+                        key={i}
+                        onClick={() => handlePageChange(i)}
+                        aria-current={current === i ? 'page' : undefined}
+                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                            current === i
+                                ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                                : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
+                        }`}
+                    >
+                        {i}
+                    </button>
+                );
+            }
+            return buttons
+        }
+
+        if (current <= 4) {
+            for (let i = 1; i <= 5; i++) {
+                buttons.push(
+                    <button
+                        key={i}
+                        onClick={() => handlePageChange(i)}
+                        aria-current={current === i ? 'page' : undefined}
+                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                            current === i
+                                ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                                : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
+                        }`}
+                    >
+                        {i}
+                    </button>
+                );
+            }
+            buttons.push(
+                <span key="left-dots" className="text-black relative inline-flex items-center px-4 py-2 text-sm manrope-semibold">
+                    ...
+                </span>
+            );
+            buttons.push(
+                <button
+                    key={totalPages}
+                    onClick={() => handlePageChange(totalPages)}
+                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                >
+                    {totalPages}
+                </button>
+            );
+            return buttons
+        }
+
+        if (current >= totalPages-3) {
+            buttons.push(
+                <button
+                    key={1}
+                    onClick={() => handlePageChange(1)}
+                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
+                >
+                    1
+                </button>
+            );
+            buttons.push(
+                <span key="left-dots" className="text-black relative inline-flex items-center px-4 py-2 text-sm manrope-semibold">
+                    ...
+                </span>
+            );
+            for (let i = totalPages-4; i <= totalPages; i++) {
+                buttons.push(
+                    <button
+                        key={i}
+                        onClick={() => handlePageChange(i)}
+                        aria-current={current === i ? 'page' : undefined}
+                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                            current === i
+                                ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                                : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
+                        }`}
+                    >
+                        {i}
+                    </button>
+                );
+            }
+            return buttons
+        }
+
         const leftBound = Math.max(1, current - 2);
         const rightBound = Math.min(totalPages, current + 2);
 

@@ -24,7 +24,7 @@ const readerQuotes = [
     },
     {
         author: 'Elon Musk',
-        quote: 'What you should do when you’re writing a book is you should have a question and it should be a real question. It should be one you don’t know the answer to and then you should be studying and writing like mad and reading everything you can get your hands on to see if you can actually grapple with the problem and come to some solution and you should walk the reader as well through your process of thinking.',
+        quote: 'Sample Quote. Elon Musk is great.',
         image: elon,
     },
     {

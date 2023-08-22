@@ -7,12 +7,17 @@ import readerQuotes from '../utils/readerQuotes';
 
 const Banner = () => {
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+    const [fadeIn, setFadeIn] = useState(false);
 
     useEffect(() => {
         const quoteRotationInterval = setInterval(() => {
             setCurrentQuoteIndex((prevIndex) =>
                 prevIndex === readerQuotes.length - 1 ? 0 : prevIndex + 1
             );
+            setFadeIn(true);
+            setTimeout(() => {
+                setFadeIn(false);
+            }, 9500);
         }, 10000);
 
         return () => {
@@ -24,16 +29,16 @@ const Banner = () => {
 
     return (
         <section className='flex gap-12 my-4 items-center'>
-            <div className='w-1/4'>
+            <div className={`w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
                 <div className='flex flex-col items-center justify-center'>
                     <div className='rounded'>
                         <img
                             src={currentQuote.image}
                             alt={currentQuote.author}
-                            className='h-24 w-auto rounded-full shadow-xl mb-4 animate-fade-in'
+                            className='h-24 w-auto rounded-full shadow-xl mb-4'
                         />
                     </div>
-                    <p className='manrope-regular text-center text-black text-xl animate-fade-in'>
+                    <p className='manrope-regular text-center text-black text-md'>
                         {currentQuote.quote}
                     </p>
                     <p className='manrope-semibold text-primaryDark mt-4'>
