@@ -27,7 +27,7 @@ const ConnectDots = () => {
     }, []);
 
     return (
-        <section className='mb-24 mt-44 mx-8'>
+        <section className='mt-40 sm:my-14 mx-2 sm:mx-8'>
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
                 <div className='flex flex-col w-full'>
                     <div className='flex flex-col gap-4 max-w-[800px]'>
@@ -49,8 +49,7 @@ const ConnectDots = () => {
                             key={index}
                             className={`flex items-center justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
                             style={{
-                                flex: '1 1 30%',
-                                maxWidth: '45%',
+                                maxWidth: '300px',
                             }}
                         >
                             <p className='manrope-regular text-lg text-center text-black'>"{quote}"</p>

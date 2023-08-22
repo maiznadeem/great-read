@@ -9,7 +9,7 @@ const Footer = () => {
                 <img
                     src={Logo}
                     alt="Logo"
-                    className="mx-auto h-16 w-auto mb-4"
+                    className="mx-auto h-8 md:h-16 w-auto mb-4"
                 />
                 <p className="manrope-regular text-xs text-[#A6A6A6]">Copyright @2023. All rights reserved.</p>
             </div>

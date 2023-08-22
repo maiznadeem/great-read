@@ -24,7 +24,7 @@ const readerQuotes = [
     },
     {
         author: 'Elon Musk',
-        quote: 'Sample Quote. Elon Musk is great.',
+        quote: 'Books showed me there were possibilities in life, that there were actually people like me living in a world I could not only aspire to but attain. Reading gave me hope. For me, it was the open door.',
         image: elon,
     },
     {

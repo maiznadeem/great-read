@@ -30,7 +30,7 @@ const Book = ({ book }) => {
 
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
-            <div className='flex flex-row gap-4'>
+            <div className='flex flex-row gap-4 flex-1'>
                 <img
                     src={book.image}
                     alt={book.title}

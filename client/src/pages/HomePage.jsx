@@ -6,7 +6,7 @@ import Books from '../components/Books';
 const HomePage = () => {
 
     return (
-        <section className='py-4 pt-40 px-8'>
+        <section className='px-2 pt-28 sm:py-4 sm:px-8'>
             <Banner />
             <Books />
         </section>

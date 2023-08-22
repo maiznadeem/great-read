@@ -45,3 +45,19 @@ body {
     min-width: 320px;
     min-height: 100vh;
 }
+
+@media (min-width: 640px) {
+    .header-container {
+        position: relative;
+    }
+
+    .header-container::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        height: 3px;
+        background-color: #8D5E20;
+        left: 2.5%;
+        width: 50%;
+    }
+}

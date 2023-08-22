@@ -12,6 +12,12 @@ export default {
                 secondary: '#623A06',
                 backgroundPrimary: '#ffffff',
             },
+            screens: {
+                'xl2': '1499px',
+            },
+            scale: {
+                '65': '0.65'
+            }
         },
     },
     plugins: [],
