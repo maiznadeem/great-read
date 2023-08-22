@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom'; // Import useLocation
+
 import Logo from '../assets/logos/logo.svg';
 
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const location = useLocation(); // Get the current location using useLocation
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,6 +23,10 @@ const Header = () => {
         };
     }, []);
 
+    // Determine the button text and link based on the current location
+    const buttonText = location.pathname === '/' ? 'Connect The Dots' : 'Homepage';
+    const buttonLink = location.pathname === '/' ? '/connectdots' : '/';
+
     return (
         <header
             className={`fixed top-0 left-0 w-full bg-backgroundPrimary ${
@@ -27,7 +34,7 @@ const Header = () => {
             } transition-all duration-300 ease-in-out z-10 border-b-2 border-primary`}
         >
             <div className="flex justify-between items-center">
-                <a href="#" className="text-white font-bold text-lg">
+                <Link to='/' className="text-white font-bold text-lg">
                     <img
                         src={Logo}
                         alt="Logo"
@@ -35,9 +42,9 @@ const Header = () => {
                             isScrolled ? 'h-10 max-h-96' : 'h-20 max-h-96'
                         }`}
                     />
-                </a>
+                </Link>
                 <button className="manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark">
-                    Connect The Dots
+                    <NavLink to={buttonLink}>{buttonText}</NavLink>
                 </button>
             </div>
         </header>

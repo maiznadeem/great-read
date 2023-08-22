@@ -5,6 +5,7 @@ import './App.css'
 
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
+import ConnectDots from './pages/ConnectDots'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
                 <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<HomePage />} />
+                        <Route path="/connectdots" element={<ConnectDots />} />
                     </Route>
                 </Routes>
             </Suspense>
