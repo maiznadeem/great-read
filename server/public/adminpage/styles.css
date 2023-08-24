@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+}
+
+.dashboard h1 {
+    text-align: center;
+    color: #333;
+}
+
+.book-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    background: white;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="url"],
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.category-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    font-size: 14px;
+    margin: 30px 0px;
+}
+
+.category-checkboxes label {
+    display: flex;
+    font-weight: 300;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.category-checkboxes input[type="checkbox"] {
+    display: none;
+}
+
+#submitButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none; /* Remove outline on focus */
+}
+
+#submitButton:hover {
+    background-color: #555;
+}
+
+#responseMessage {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    color: green;
+}

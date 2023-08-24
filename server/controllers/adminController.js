@@ -8,6 +8,7 @@ const storage = new Storage({
 
 async function uploadImage(req, res) {
     try {
+        
         if (!req.file) {
             return res.status(400).send('No file uploaded.');
         }
@@ -25,11 +26,10 @@ async function uploadImage(req, res) {
         });
 
         const publicUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
-
-        console.log('File uploaded to:', publicUrl);
         res.json({
             publicUrl: publicUrl,
         });
+
     } catch (error) {
         console.error('Error uploading file:', error);
         res.status(500).send('Error uploading file.');
