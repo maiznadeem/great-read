@@ -133,30 +133,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!(isURL(amazon) && isURL(perlego))) {
-            showError('Please provide a valid quote.');
+            showError('Please provide valid Amazon and Perlego links.');
+            return;
         }
         
         const isConfirmed = confirm('Are you sure you want to submit the form?');
-        if (isConfirmed) {
-            try {
-                const formData = new FormData(form);
-                const response = await fetch('/api/admin/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
+        if (!isConfirmed) return;
 
-                if (response.ok) {
-                    responseMessage.innerText = 'Upload successful!';
-                    responseMessage.style.color = 'green';
-                    form.reset();
-                } else {
-                    const errorText = await response.text();
-                    showError('Error: ' + errorText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showError('An error occurred. Please try again later.');
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Uploading...';
+        submitButton.style.backgroundColor = 'lightgray';
+        submitButton.style.cursor = 'default';
+
+        try {
+            const formData = new FormData(form);
+            const response = await uploadFormData(formData);
+
+            if (response.status === 200) {
+                responseMessage.innerText = 'Upload successful!';
+                responseMessage.style.color = 'green';
+                form.reset();
+                const categoryItems = categoryGrid.querySelectorAll('.category-item');
+                categoryItems.forEach(item => {
+                    item.classList.remove('selected');
+                });
+            } else {
+                showError('Error: ' + response.data);
             }
+        } catch (error) {
+            showError(error.message);
+            console.log(error)
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Upload';
+            submitButton.style.backgroundColor = '';
+            submitButton.style.cursor = 'pointer';
         }
     });
+
+    async function uploadFormData(formData) {
+        try {
+            const response = await axios.post('/api/admin/upload', formData);
+    
+            if (response.status === 200) {
+                return response;
+            } else {
+                const errorMessage = response.data.error || 'An unknown error occurred.';
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            throw new Error('An error occurred: ' + error.message);
+        }
+    }
+    
 });

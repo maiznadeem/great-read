@@ -17,7 +17,6 @@ const bookSchema = new mongoose.Schema({
     type: [String],
     validate: {
       validator: (categories) => {
-        // Define the allowed categories here
         const allowedCategories = [
           'Autobiography/Biography',
           'Managing Workforce',
@@ -51,8 +50,6 @@ const bookSchema = new mongoose.Schema({
           'Teamwork',
           'Problem Solving',
         ];
-
-        // Check if all categories in the array are allowed
         return categories.every((category) => allowedCategories.includes(category));
       },
       message: 'One or more categories are not allowed.',
@@ -76,6 +73,6 @@ const bookSchema = new mongoose.Schema({
   },
 });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model('Book', bookSchema, 'Book');
 
 module.exports = Book;

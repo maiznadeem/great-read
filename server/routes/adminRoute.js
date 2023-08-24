@@ -11,6 +11,6 @@ const upload = multer({
     },
 });
 
-adminRoute.post('/upload', upload.single('image'), adminController.uploadImage);
+adminRoute.post('/upload', upload.single('image'), adminController.uploadBook);
 
 module.exports = { adminRoute };
