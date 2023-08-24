@@ -2,6 +2,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('bookForm');
     const submitButton = document.getElementById('submitButton');
     const responseMessage = document.getElementById('responseMessage');
+    const publishingYearInput = document.getElementById('publishingYear');
+    
+    const currentYear = new Date().getFullYear();
+    publishingYearInput.setAttribute('max', currentYear);
+    
+    function isEmptyOrWhitespace(value) {
+        return /^\s*$/.test(value);
+    }
+    
+    function containsSpecialCharacters(value) {
+        return /[\n\t\r]/.test(value);
+    }
+    
+    function showError(errorMessage) {
+        responseMessage.innerText = errorMessage;
+        responseMessage.style.color = 'red';
+    }
+    
+    function resetResponseMessage() {
+        responseMessage.innerText = '';
+    }
+
+    function isURL(str) {
+        const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
+        return urlPattern.test(str);
+    }
     
     const categories = [
         "Autobiography/Biography",
@@ -57,57 +83,80 @@ document.addEventListener('DOMContentLoaded', function () {
         categoryItem.addEventListener('click', () => {
             if (checkbox.checked) {
                 checkbox.checked = false
-                console.log("unchecked")
                 categoryItem.classList.remove('selected');
             } else {
                 checkbox.checked = true
-                console.log("checked")
                 categoryItem.classList.add('selected');
             }
         });
         
         categoryGrid.appendChild(categoryItem);
     });
-    
 
-    submitButton.addEventListener('click', async () => {
-        try {
-            const categories = form.querySelectorAll('input[name="categories"]:checked');
-            if (categories.length === 0) {
-                responseMessage.innerText = 'Select at least one category.';
-                responseMessage.style.color = 'red';
-                return;
-            }
+    submitButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        resetResponseMessage();
+        
+        const title = form.querySelector('#title').value.trim();
+        const author = form.querySelector('#author').value.trim();
+        const publishingYear = form.querySelector('#publishingYear').value.trim();
+        const amazon = form.querySelector('#amazon').value.trim();
+        const perlego = form.querySelector('#perlego').value.trim();
+        const quote = form.querySelector('#quote').value.trim();
+        
+        const selectedCategories = form.querySelectorAll('input[name="categories"]:checked');
+        if (selectedCategories.length === 0) {
+            showError('Select at least one category.');
+            return;
+        }
 
-            const requiredFields = ['title', 'author', 'publishingYear', 'amazon', 'perlego', 'quote', 'image'];
-            for (const field of requiredFields) {
-                const inputField = form.querySelector(`#${field}`);
-                if (!inputField.value.trim()) {
-                    responseMessage.innerText = `Please provide a value for ${field}.`;
-                    responseMessage.style.color = 'red';
-                    return;
+        if (isEmptyOrWhitespace(title) || containsSpecialCharacters(title)) {
+            showError('Please provide a valid title. (should not contain special characters)');
+            return;
+        }
+        
+        if (isEmptyOrWhitespace(author) || containsSpecialCharacters(author)) {
+            showError('Please provide a valid author. (should not contain special characters)');
+            return;
+        }
+        
+        if (isEmptyOrWhitespace(quote) || containsSpecialCharacters(quote)) {
+            showError('Please provide a valid quote (without newline characters).');
+            return;
+        }
+
+        const publishingYearNumber = parseInt(publishingYear);
+        if (isNaN(publishingYearNumber) || publishingYearNumber < 1200 || publishingYearNumber > currentYear) {
+            showError('Please provide a valid publishing year between 1200 and ' + currentYear + '.');
+            return;
+        }
+
+        if (!(isURL(amazon) && isURL(perlego))) {
+            showError('Please provide a valid quote.');
+        }
+        
+        const isConfirmed = confirm('Are you sure you want to submit the form?');
+        if (isConfirmed) {
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('/api/admin/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    responseMessage.innerText = 'Upload successful!';
+                    responseMessage.style.color = 'green';
+                    form.reset();
+                } else {
+                    const errorText = await response.text();
+                    showError('Error: ' + errorText);
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('An error occurred. Please try again later.');
             }
-
-            const formData = new FormData(form);
-            const response = await fetch('/api/admin/upload', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                responseMessage.innerText = 'Upload successful!';
-                responseMessage.style.color = 'green';
-                form.reset();
-            } else {
-                const errorText = await response.text();
-                responseMessage.innerText = `Error: ${errorText}`;
-                responseMessage.style.color = 'red';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            responseMessage.innerText = 'An error occurred. Please try again later.';
-            responseMessage.style.color = 'red';
         }
     });
 });

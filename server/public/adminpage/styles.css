@@ -79,6 +79,7 @@ body {
 .selected label {
     color: white;
     background-color: #001780;
+    border: 1px solid #001780;
 }
 
 #submitButton {
