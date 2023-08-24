@@ -47,15 +47,28 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox.type = 'checkbox';
         checkbox.name = 'categories';
         checkbox.value = category;
-
+    
         const label = document.createElement('label');
         label.textContent = category;
-
+    
         categoryItem.appendChild(checkbox);
         categoryItem.appendChild(label);
+    
+        categoryItem.addEventListener('click', () => {
+            if (checkbox.checked) {
+                checkbox.checked = false
+                console.log("unchecked")
+                categoryItem.classList.remove('selected');
+            } else {
+                checkbox.checked = true
+                console.log("checked")
+                categoryItem.classList.add('selected');
+            }
+        });
         
         categoryGrid.appendChild(categoryItem);
     });
+    
 
     submitButton.addEventListener('click', async () => {
         try {
