@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById('submitButton');
     const responseMessage = document.getElementById('responseMessage');
     const publishingYearInput = document.getElementById('publishingYear');
+    const logoutButton = document.getElementById('logoutButton');
     
     const currentYear = new Date().getFullYear();
     publishingYearInput.setAttribute('max', currentYear);
@@ -13,11 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function containsSpecialCharacters(value) {
         return /[\n\t\r]/.test(value);
-    }
-    
-    function showError(errorMessage) {
-        responseMessage.innerText = errorMessage;
-        responseMessage.style.color = 'red';
     }
     
     function resetResponseMessage() {
@@ -93,6 +89,25 @@ document.addEventListener('DOMContentLoaded', function () {
         categoryGrid.appendChild(categoryItem);
     });
 
+    function handleError(message) {
+        responseMessage.innerText = message;
+        responseMessage.style.color = 'red';
+    }
+
+    logoutButton.addEventListener('click', function () {
+        fetch('/logout', {
+            method: 'POST',
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                window.location.href = '/authpage';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+    
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
         
@@ -107,48 +122,48 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const selectedCategories = form.querySelectorAll('input[name="categories"]:checked');
         if (selectedCategories.length === 0) {
-            showError('Select at least one category.');
+            handleError('Select at least one category.');
             return;
         }
-
+    
         if (isEmptyOrWhitespace(title) || containsSpecialCharacters(title)) {
-            showError('Please provide a valid title. (should not contain special characters)');
+            handleError('Please provide a valid title. (should not contain special characters)');
             return;
         }
         
         if (isEmptyOrWhitespace(author) || containsSpecialCharacters(author)) {
-            showError('Please provide a valid author. (should not contain special characters)');
+            handleError('Please provide a valid author. (should not contain special characters)');
             return;
         }
         
         if (isEmptyOrWhitespace(quote) || containsSpecialCharacters(quote)) {
-            showError('Please provide a valid quote (without newline characters).');
+            handleError('Please provide a valid quote (without newline characters).');
             return;
         }
-
+    
         const publishingYearNumber = parseInt(publishingYear);
         if (isNaN(publishingYearNumber) || publishingYearNumber < 1200 || publishingYearNumber > currentYear) {
-            showError('Please provide a valid publishing year between 1200 and ' + currentYear + '.');
+            handleError('Please provide a valid publishing year between 1200 and ' + currentYear + '.');
             return;
         }
-
+    
         if (!(isURL(amazon) && isURL(perlego))) {
-            showError('Please provide valid Amazon and Perlego links.');
+            handleError('Please provide valid Amazon and Perlego links.');
             return;
         }
         
         const isConfirmed = confirm('Are you sure you want to submit the form?');
         if (!isConfirmed) return;
-
+    
         submitButton.disabled = true;
         submitButton.innerHTML = 'Uploading...';
         submitButton.style.backgroundColor = 'lightgray';
         submitButton.style.cursor = 'default';
-
+    
         try {
             const formData = new FormData(form);
-            const response = await uploadFormData(formData);
-
+            const response = await axios.post('/api/admin/upload', formData);
+        
             if (response.status === 200) {
                 responseMessage.innerText = 'Upload successful!';
                 responseMessage.style.color = 'green';
@@ -157,33 +172,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 categoryItems.forEach(item => {
                     item.classList.remove('selected');
                 });
-            } else {
-                showError('Error: ' + response.data);
             }
         } catch (error) {
-            showError(error.message);
-            console.log(error)
+            if (error.response.data.error)
+                handleError('An error occurred: ' + error.response.data.error);
+            else if (error.response) {
+                const htmlResponse = error.response.data;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlResponse, 'text/html');
+                const errorMessage = doc.querySelector('pre').textContent;
+                const firstLine = errorMessage.split('\n')[0];
+                handleError(firstLine);
+            }
+            else 
+                handleError('An error occurred: ' + error.message);
         } finally {
             submitButton.disabled = false;
             submitButton.innerHTML = 'Upload';
             submitButton.style.backgroundColor = '';
             submitButton.style.cursor = 'pointer';
-        }
+        }        
     });
-
-    async function uploadFormData(formData) {
-        try {
-            const response = await axios.post('/api/admin/upload', formData);
-    
-            if (response.status === 200) {
-                return response;
-            } else {
-                const errorMessage = response.data.error || 'An unknown error occurred.';
-                throw new Error(errorMessage);
-            }
-        } catch (error) {
-            throw new Error('An error occurred: ' + error.message);
-        }
-    }
     
 });

@@ -1,7 +1,6 @@
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
-const axios = require('axios');
 const { validationResult } = require('express-validator');
 
 const storage = new Storage({
@@ -47,11 +46,7 @@ async function uploadBook(req, res) {
             image: publicUrl,
         });
 
-        console.log('Uploading to MongoDB');
-
         await newBook.save();
-
-        console.log('Uploaded.');
 
         res.status(200).json({ message: 'Book uploaded successfully' });
     } catch (error) {

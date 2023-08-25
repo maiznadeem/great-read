@@ -1,10 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 require('dotenv').config();
 const path = require('path');
 
 const { adminRoute } = require('./routes/adminRoute');
+const { loginRoute } = require('./routes/loginRoute');
+const { logoutRoute } = require('./routes/logoutRoute');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,6 +16,45 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 const dbURL = process.env.MONGO_DB_URL;
+const secretKey = process.env.SESSION_SECRET;
+
+app.use(session({
+    secret: secretKey,
+    resave: false,
+    saveUninitialized: true,
+}));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+function isAuthenticated(req, res, next) {
+    if (req.session.isAuthenticated) {
+        next();
+    } else {
+        res.redirect('/authpage');
+    }
+}
+
+app.use('/login', loginRoute);
+app.use('/logout', logoutRoute);
+
+app.use('/admin', isAuthenticated);
+app.use('/admin', adminRoute);
+app.get('/', (req, res) => {
+    if (req.session.isAuthenticated) {
+        res.redirect('/admin');
+    } else {
+        res.redirect('/authpage');
+    }
+});
+app.get('/authpage', (req, res) => {
+    if (req.session.isAuthenticated) {
+        res.redirect('/admin');
+    } else {
+        res.sendFile(path.join(__dirname, 'public', 'authpage', 'index.html'));
+    }
+});
+
+
 
 mongoose
     .connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,10 +64,6 @@ mongoose
     .catch((err) => {
         console.error('Error connecting to MongoDB:', err);
     });
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/api/admin', adminRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
