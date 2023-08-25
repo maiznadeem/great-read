@@ -4,7 +4,10 @@ const loginRoute = express.Router();
 loginRoute.post('/', (req, res) => {
     const { username, password } = req.body;
 
-    if (username === 'admin' && password === 'password') {
+    const detail1 = process.env.USER_NAME;
+    const detail2 = process.env.PASSWORD;
+
+    if (username === detail1 && password === detail2) {
         req.session.isAuthenticated = true;
         res.redirect('/admin');
     } else {
