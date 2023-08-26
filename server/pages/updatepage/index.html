@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Update and Delete Book</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <button id="logoutButton">Logout</button>
+        <button id="addButton">Add Book</button>
+        <h1>Update and Delete a Book</h1>
+        
+        <!-- Left Section: Update Book Details -->
+        <div class="container">
+            <div class="left-section">
+                <form id="updateBookForm">
+                    <div class="form-group">
+                        <label for="updateTitle">Title:</label>
+                        <input type="text" name="updateTitle" id="updateTitle" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAuthor">Author:</label>
+                        <input type="text" name="updateAuthor" id="updateAuthor" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updatePublishingYear">Publishing Year:</label>
+                        <input type="number" name="updatePublishingYear" id="updatePublishingYear" min="1200" value="2023">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categories">Categories (select at least one):</label>
+                        <div class="category-checkboxes" id="categoryCheckboxes">
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="amazon">Amazon Link:</label>
+                        <input type="url" name="amazon" id="amazon" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="perlego">Perlego Link:</label>
+                        <input type="url" name="perlego" id="perlego" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="quote">Quote:</label>
+                        <textarea name="quote" id="quote" rows="4"></textarea>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="image">Upload Image (Max 5MB):</label>
+                        <input type="file" name="image" id="image" accept="image/*" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Book ID:</label>
+                        <input type="text" name="updateAuthor" id="updateAuthor" required>
+                    </div>
+
+                    <button id="updateButton">Update</button>
+                    <button id="deleteButton">Delete</button>
+                </form>
+            </div>
+
+            <!-- Right Section: Search and Display Books -->
+            <div class="right-section">
+                <h2>Search and Display Books</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for books...">
+                    <button id="searchButton">Search</button>
+                </div>
+                <div id="searchResults" class="book-grid">
+                    <!-- Display search results here -->
+                </div>
+            </div>
+        </div>
+
+        <p id="responseMessage"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

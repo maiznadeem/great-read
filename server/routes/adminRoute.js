@@ -13,7 +13,12 @@ const upload = multer({
 });
 
 const adminPagePath = path.join(__dirname, '..', 'pages', 'adminpage');
+const updatePagePath = path.join(__dirname, '..', 'pages', 'updatepage');
+const quotePagePath = path.join(__dirname, '..', 'pages', 'quotespage');
+
 adminRoute.use(express.static(adminPagePath));
+adminRoute.use('/update', express.static(updatePagePath));
+adminRoute.use('/quotes', express.static(quotePagePath));
 
 adminRoute.post('/upload', upload.single('image'), adminController.uploadBook);
 

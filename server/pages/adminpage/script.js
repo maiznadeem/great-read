@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const responseMessage = document.getElementById('responseMessage');
     const publishingYearInput = document.getElementById('publishingYear');
     const logoutButton = document.getElementById('logoutButton');
+    const updateOrDeleteButton = document.getElementById('updateOrDeleteButton');
     
     const currentYear = new Date().getFullYear();
     publishingYearInput.setAttribute('max', currentYear);
@@ -107,6 +108,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
     });
+
+    updateOrDeleteButton.addEventListener('click', function () {
+        window.location.href = '/admin/update'
+    })
     
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -162,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         try {
             const formData = new FormData(form);
-            const response = await axios.post('/api/admin/upload', formData);
+            const response = await axios.post('/admin/upload', formData);
         
             if (response.status === 200) {
                 responseMessage.innerText = 'Upload successful!';
