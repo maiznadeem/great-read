@@ -2,17 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
 
 const { adminRoute } = require('./routes/adminRoute');
 const { loginRoute } = require('./routes/loginRoute');
 const { logoutRoute } = require('./routes/logoutRoute');
+const { getRoute } = require('./routes/getRoute');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 const port = process.env.PORT || 5000;
 const dbURL = process.env.MONGO_DB_URL;
@@ -36,6 +39,7 @@ function isAuthenticated(req, res, next) {
 
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
+app.use('/get', getRoute);
 
 app.use('/admin', isAuthenticated);
 app.use('/admin', adminRoute);

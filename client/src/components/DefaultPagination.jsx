@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) => {
@@ -10,11 +10,22 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
     const startEntry = (current - 1) * limit + 1;
     const endEntry = Math.min(current * limit, totalResults);
 
+    useEffect(() => {
+        setCurrent(currentPage);
+    }, [currentPage]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage !== current) {
+            setCurrent(newPage);
+            onPageChange(newPage);
+        }
+    };
+
     const renderPageButtons = () => {
         const buttons = [];
 
         if (totalPages <= 6) {
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= totalPages; i++) {
                 buttons.push(
                     <button
                         key={i}
@@ -162,11 +173,6 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
         return buttons;
     };
 
-    const handlePageChange = (newPage) => {
-        setCurrent(newPage);
-        onPageChange(newPage);
-    };
-
     return (
         <div className="border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
             <div className="flex flex-col gap-4 items-center justify-between sm:flex-1 sm:items-center sm:justify-between">
@@ -195,7 +201,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         </button>
                     </nav>
                 </div>
-                <div className="text-sm text-gray-700 mt-2">
+                <div className="manrope-semibold text-sm text-gray-700 mt-2">
                     Showing <span className="manrope-semibold">{startEntry}</span> to{' '}
                     <span className="manrope-semibold">{endEntry}</span> of{' '}
                     <span className="manrope-semibold">{totalResults}</span> results

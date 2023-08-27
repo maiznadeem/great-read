@@ -38,7 +38,7 @@ const Banner = () => {
     const currentQuote = readerQuotes[currentQuoteIndex];
 
     return (
-        <section className='flex gap-12 my-4 items-center flex-col-reverse lg:flex-row'>
+        <section className='flex gap-12 mt-4 items-center flex-col-reverse lg:flex-row'>
             <div className={`md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
                 <div className='flex flex-col items-center justify-center'>
                     <div className='rounded'>

@@ -34,12 +34,12 @@ const Book = ({ book }) => {
                 <img
                     src={book.image}
                     alt={book.title}
-                    className="h-56 w-auto rounded-lg -mt-16 -ml-10 max-h-56 shadow-xl"
+                    className="h-56 w-36 rounded-lg -mt-16 -ml-10 max-h-56 object-cover shadow-xl"
                 />
                 <div className='flex justify-center items-center'>
                     <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
-                    <p className="manrope-regular text-gray-600 text-sm">{book.notableQuote}</p>
+                    <p className="manrope-regular text-gray-600 text-sm">{book.quote}</p>
                 </div>
             </div>
             <div className='flex mt-4 justify-between'>
