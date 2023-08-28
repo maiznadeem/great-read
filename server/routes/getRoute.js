@@ -1,16 +1,28 @@
 const express = require('express');
 const getRoute = express.Router();
 const Book = require('../models/Book');
-getRoute.get('/books', async (req, res) => {
-    const { offset, limit } = req.query;
+
+// Change the route to handle POST requests
+getRoute.post('/books', async (req, res) => {
+    const { offset, limit, categories } = req.body;
 
     try {
         const offsetNum = parseInt(offset);
         const limitNum = parseInt(limit);
-        const books = await Book.find({})
+        let query = Book.find({});
+        let totalCountQuery = Book.countDocuments();
+
+        if (categories && categories.length > 0) {
+            query = query.where('categories').in(categories);
+            totalCountQuery = totalCountQuery.where('categories').in(categories);
+        }
+
+        const books = await query
             .skip(offsetNum)
-            .limit(limitNum);
-        const totalCount = await Book.countDocuments();
+            .limit(limitNum)
+            .exec();
+
+        const totalCount = await totalCountQuery.exec();
         res.json({
             books,
             totalCount,

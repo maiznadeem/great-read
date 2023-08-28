@@ -12,10 +12,11 @@ const Books = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
+    const [activeCategories, setActiveCategories] = useState([]);
 
     useEffect(() => {
         setIsLoading(true);
-        getBooks((currentPage - 1) * limit, limit)
+        getBooks((currentPage - 1) * limit, limit, activeCategories)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);
@@ -25,7 +26,7 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
-    }, [currentPage, limit]);
+    }, [currentPage, limit, activeCategories]);    
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -36,13 +37,26 @@ const Books = () => {
         setCurrentPage(1);
     };
 
+    const handleCategoryClick = (categoryName) => {
+        if (activeCategories.includes(categoryName)) {
+            setActiveCategories((prevActiveCategories) =>
+                prevActiveCategories.filter((cat) => cat !== categoryName)
+            );
+        } else {
+            setActiveCategories((prevActiveCategories) => [
+                ...prevActiveCategories,
+                categoryName,
+            ]);
+        }
+    };
+
     return (
         <section className='mx-4 sm:my-24 sm:mx-8'>
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3000+</span> books to find your best self.</p>
                 <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
                     {categoriesData.map((category) => (
-                        <Category key={category.id} category={category} />
+                        <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
                     ))}
                 </div>
                 {isLoading ? (

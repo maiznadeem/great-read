@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-const Category = ({ category }) => {
+const Category = ({ category, handleCategoryClick }) => {
     const [isActive, setIsActive] = useState(false);
 
     const handleClick = () => {
         setIsActive(!isActive);
+        handleCategoryClick(category.name);
     };
 
     const containerClasses = `bg-${isActive ? 'primary' : 'white'} rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
