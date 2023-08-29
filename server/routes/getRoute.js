@@ -2,6 +2,7 @@ const express = require('express');
 const getRoute = express.Router();
 const Book = require('../models/Book');
 const TopPicks = require('../models/TopPicks');
+const Quote = require('../models/Quote');
 
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories } = req.body;
@@ -41,6 +42,16 @@ getRoute.get('/toppicks', async (req, res) => {
         res.json(topPicks);
     } catch (error) {
         console.error('Error fetching top picks:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+getRoute.get('/quotes', async (req, res) => {
+    try {
+        const quotes = await Quote.find();
+        res.json(quotes);
+    } catch (error) {
+        console.error('Error fetching quotes:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

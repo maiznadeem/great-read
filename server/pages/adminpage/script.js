@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const publishingYearInput = document.getElementById('publishingYear');
     const logoutButton = document.getElementById('logoutButton');
     const updateOrDeleteButton = document.getElementById('updateOrDeleteButton');
+    const addOrDeleteQuotes = document.getElementById('addOrDeleteQuotes');
     
     const currentYear = new Date().getFullYear();
     publishingYearInput.setAttribute('max', currentYear);
@@ -112,6 +113,10 @@ document.addEventListener('DOMContentLoaded', function () {
     updateOrDeleteButton.addEventListener('click', function () {
         window.location.href = '/admin/update'
     })
+
+    addOrDeleteQuotes.addEventListener('click', function () {
+        window.location.href = '/admin/quotes'
+    })
     
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -167,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         try {
             const formData = new FormData(form);
-            const response = await axios.post('/admin/upload', formData);
+            const response = await axios.post('/admin/uploadbook', formData);
         
             if (response.status === 200) {
                 responseMessage.innerText = 'Upload successful!';

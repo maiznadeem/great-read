@@ -20,6 +20,10 @@ adminRoute.use(express.static(adminPagePath));
 adminRoute.use('/update', express.static(updatePagePath));
 adminRoute.use('/quotes', express.static(quotePagePath));
 
-adminRoute.post('/upload', upload.single('image'), adminController.uploadBook);
+adminRoute.post('/uploadbook', upload.single('image'), adminController.uploadBook);
+adminRoute.post('/uploadquote', upload.single('image'), adminController.uploadQuote);
+
+adminRoute.get('/searchquote', adminController.searchQuote);
+adminRoute.post('/deletequote', adminController.deleteQuote);
 
 module.exports = { adminRoute };

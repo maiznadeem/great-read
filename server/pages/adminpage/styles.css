@@ -9,7 +9,7 @@ body {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    max-width: 800px;
     margin: 50px auto;
     padding: 40px;
 }
@@ -111,6 +111,11 @@ body {
     resize: none;
 }
 
+.buttons {
+    display: flex;
+    gap: 5px;
+}
+
 #logoutButton {
     background-color: #001780;
     color: white;
@@ -142,6 +147,23 @@ body {
 }
 
 #updateOrDeleteButton:hover {
+    background-color: #000f50;
+}
+
+#addOrDeleteQuotes {
+    background-color: #001780;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#addOrDeleteQuotes:hover {
     background-color: #000f50;
 }
 

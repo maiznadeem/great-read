@@ -29,6 +29,37 @@ body {
 }
 
 /* Form styles for both dashboard and login page */
+
+.category-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    font-size: 14px;
+    margin: 30px 0px;
+}
+
+.category-checkboxes label {
+    display: flex;
+    font-weight: 300;
+    border: 1px solid #001780;
+    padding: 5px 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+    color: #001780;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.category-checkboxes input[type="checkbox"] {
+    display: none;
+}
+
+.selected label {
+    color: white !important;
+    background-color: #001780;
+    border: 1px solid #001780;
+}
+
 .form-group {
     margin-bottom: 20px;
     width: 100%;
@@ -56,13 +87,13 @@ body {
 /* Update and Delete Section */
 .left-section {
     float: left;
-    width: 45%; /* Adjust the width as needed */
+    width: 50%; /* Adjust the width as needed */
     margin-right: 5%;
 }
 
 .right-section {
     float: left;
-    width: 45%; /* Adjust the width as needed */
+    width: 50%; /* Adjust the width as needed */
 }
 
 .left-section button, .right-section button {
@@ -95,7 +126,7 @@ body {
 }
 
 #searchInput {
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -114,11 +145,20 @@ body {
     outline: none;
 }
 
+#searchButton:hover {
+    background-color: #000f50;
+}
+
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-items: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
 }
 
 #logoutButton {

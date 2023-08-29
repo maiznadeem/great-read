@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="buttons">
+            <button id="logoutButton">Logout</button>
+            <button id="addBook">Add Book</button>
+        </div>
+        <h1>Manage Quotes</h1>
+        
+        <!-- Left Section: Add Quote -->
+        <div class="container">
+            <div class="left-section">
+                <form id="addQuoteForm">
+                    <div class="form-group">
+                        <label for="author">Author:</label>
+                        <input type="text" name="author" id="author" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quote">Quote:</label>
+                        <textarea name="quote" id="quote" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image (Max 5MB):</label>
+                        <input type="file" name="image" id="image" accept="image/*" required>
+                    </div>
+
+                    <button id="addQuoteButton">Add Quote</button>
+
+                    <div class="form-group">
+                        <label for="quoteId">Quote ID:</label>
+                        <input type="text" name="quoteId" id="quoteId" required>
+                    </div>
+
+                    <button id="deleteQuoteButton">Delete Quote</button>
+                </form>
+            </div>
+
+            <!-- Right Section: Search and Display Quotes -->
+            <div class="right-section">
+                <h2>Search and Display Quotes</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search by quote or author...">
+                    <button id="searchButton">Search</button>
+                </div>
+                <div id="searchResults" class="quote-grid">
+                    <!-- Display search results here -->
+                </div>
+            </div>
+        </div>
+
+        <p id="responseMessage"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

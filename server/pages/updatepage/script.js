@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
     const searchResults = document.getElementById("searchResults");
-    const publishingYearInput = document.getElementById('publishingYear');
+    const publishingYearInput = document.getElementById('updatePublishingYear');
     const addButton = document.getElementById("addButton");
     const logoutButton = document.getElementById("logoutButton");
 
@@ -114,6 +114,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    addButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.history.back();
+    });
+    
     updateButton.addEventListener("click", function (e) {
         e.preventDefault();
         // Implement update book functionality here
@@ -136,15 +141,5 @@ document.addEventListener("DOMContentLoaded", function () {
         // Example: axios.get(`/api/search?term=${searchTerm}`)
         // Update searchResults with the retrieved data
         // Example: searchResults.innerHTML = /* display search results */
-    });
-
-    addButton.addEventListener("click", function () {
-        // Redirect to the /admin page when Add Book button is clicked
-        window.location.href = "/admin";
-    });
-
-    logoutButton.addEventListener("click", function () {
-        // Implement logout functionality here
-        // You can clear user tokens or session and redirect to the login page
     });
 });
