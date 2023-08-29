@@ -61,7 +61,7 @@ const Books = () => {
                 </div>
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-96'>
-                        <ClipLoader color={'#000'} loading={isLoading} size={50} />
+                        <ClipLoader color={'#8D5E20'} loading={isLoading} size={50} />
                     </div>
                 ) : books.length === 0 ? (
                     <div className='manrope-semibold text-center text-gray-700 h-96 flex items-center justify-center'>No results. Try including more categories :)</div>

@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import famousQuotes from '../utils/famousQuotes';
+import { getRandomQuotes } from '../utils/api';
 
 const ConnectDots = () => {
-    const [shuffledQuotes, setShuffledQuotes] = useState(famousQuotes.slice(0, 12));
+    const [shuffledQuotes, setShuffledQuotes] = useState([]);
     const [isShuffling, setIsShuffling] = useState(false);
 
-    const shuffleQuotes = () => {
+    const shuffleQuotes = async () => {
         if (!isShuffling) {
             setIsShuffling(true);
 
-            const quotesCopy = [...famousQuotes];
-            for (let i = quotesCopy.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [quotesCopy[i], quotesCopy[j]] = [quotesCopy[j], quotesCopy[i]];
-            }
+            try {
+                const quotesData = await getRandomQuotes();
+                console.log(quotesData);
+                setShuffledQuotes(quotesData);
 
-            setTimeout(() => {
-                setShuffledQuotes(quotesCopy.slice(0, 12));
+                setTimeout(() => {
+                    setIsShuffling(false);
+                }, 500);
+            } catch (error) {
+                console.error(error);
                 setIsShuffling(false);
-            }, 500);
+            }
         }
     };
 
     useEffect(() => {
-        setIsShuffling(false);
+        shuffleQuotes();
     }, []);
 
     return (
@@ -47,12 +49,15 @@ const ConnectDots = () => {
                     {shuffledQuotes.map((quote, index) => (
                         <div
                             key={index}
-                            className={`flex items-center justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
+                            className={`flex flex-col justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
                             style={{
                                 maxWidth: '300px',
                             }}
                         >
-                            <p className='manrope-regular text-lg text-center text-black'>"{quote}"</p>
+                            <div className='flex flex-col items-center justify-center h-full'>
+                                <p className='manrope-regular text-lg text-center text-black'>{quote?.quote}</p>
+                            </div>
+                            <p className='manrope-semibold text-xs text-center text-primary'>- {quote?.title}</p>
                         </div>
                     ))}
                 </div>

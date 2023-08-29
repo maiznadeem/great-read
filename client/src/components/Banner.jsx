@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import shelf from '../assets/shelf/Shelf.svg';
-import shelf1 from '../assets/shelf/Shelf1.jpg';
-import shelf2 from '../assets/shelf/Shelf2.jpg';
-import shelf3 from '../assets/shelf/Shelf3.jpg';
-import readerQuotes from '../utils/readerQuotes';
-import { getTopPicks } from '../utils/api';
+import { getTopPicks, getQuotes } from '../utils/api';
+import { ClipLoader } from 'react-spinners';
 
 const Banner = () => {
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
     const [fadeIn, setFadeIn] = useState(true);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [topPicks, setTopPicks] = useState(null);
+    const [quotes, setQuotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const getMonthName = (monthNumber) => {
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        return months[monthNumber - 1];
+    };
 
     const handleResize = () => {
         setScreenWidth(window.innerWidth);
@@ -20,8 +36,12 @@ const Banner = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getTopPicks();
-                setTopPicks(data);
+                const topPicksData = await getTopPicks();
+                setTopPicks(topPicksData);
+
+                const quotesData = await getQuotes();
+                setQuotes(quotesData);
+
                 setIsLoading(false);
             } catch (error) {
                 console.error(error);
@@ -30,44 +50,54 @@ const Banner = () => {
         fetchData();
 
         window.addEventListener('resize', handleResize);
+    }, []);
 
+    useEffect(() => {
         const quoteRotationInterval = setInterval(() => {
             setFadeIn(false);
             setTimeout(() => {
                 setCurrentQuoteIndex((prevIndex) =>
-                    prevIndex === readerQuotes.length - 1 ? 0 : prevIndex + 1
+                    prevIndex === quotes.length - 1 ? 0 : prevIndex + 1
                 );
                 setFadeIn(true);
-            }, 500);
+            }, 1000);
         }, 10000);
 
         return () => {
             window.removeEventListener('resize', handleResize);
             clearInterval(quoteRotationInterval);
         };
-    }, []);
+    }, [quotes]);
+    const currentQuote = quotes.length > 0 ? quotes[currentQuoteIndex] : null;
 
-    const currentQuote = readerQuotes[currentQuoteIndex];
 
     return (
         <section className='flex gap-12 mt-4 items-center flex-col-reverse lg:flex-row'>
-            <div className={`md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
-                <div className='flex flex-col items-center justify-center'>
-                    <div className='rounded'>
-                        <img
-                            src={currentQuote.image}
-                            alt={currentQuote.author}
-                            className='h-24 w-auto rounded-full shadow-xl mb-4'
-                        />
-                    </div>
-                    <p className='manrope-regular text-center text-black text-md'>
-                        {currentQuote.quote}
-                    </p>
-                    <p className='manrope-semibold text-primaryDark mt-4'>
-                        {currentQuote.author}
-                    </p>
+            {isLoading ? (
+                <div className='text-center flex items-center justify-center min-h-[70vh] w-full'>
+                    <ClipLoader color={'#8D5E20'} loading={isLoading} size={50} />
                 </div>
-            </div>
+            ) : (
+                <>
+                    {currentQuote && (
+                        <div className={`md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+                            <div className='flex flex-col items-center justify-center'>
+                                <div className='rounded'>
+                                    <img
+                                        src={currentQuote.image}
+                                        alt={currentQuote.author}
+                                        className='h-24 w-auto rounded-full shadow-xl mb-4'
+                                    />
+                                </div>
+                                <p className='manrope-regular text-center text-black text-md'>
+                                    {currentQuote.quote}
+                                </p>
+                                <p className='manrope-semibold text-primaryDark mt-4'>
+                                    {currentQuote.author}
+                                </p>
+                            </div>
+                        </div>
+                    )}
 
             {screenWidth > 768 && (
                 <div className='lg:w-3/4'>
@@ -93,32 +123,25 @@ const Banner = () => {
                                     <div className='w-[80%] mx-auto relative xl:w-[500px]'>
                                         <img className='shadow-xl' src={shelf} alt='Shelf' />
                                         <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                                            {isLoading ? (
-                                                <div>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <img
-                                                        src={topPicks?.books[0]?.image || ''}
-                                                        alt='Shelf'
-                                                        className='h-1/2 rounded-lg w-1/3'
-                                                    />
-                                                    <img
-                                                        src={topPicks?.books[1]?.image || ''}
-                                                        alt='Shelf'
-                                                        className='h-1/3 rounded-lg w-1/4'
-                                                    />
-                                                    <img
-                                                        src={topPicks?.books[2]?.image || ''}
-                                                        alt='Shelf'
-                                                        className='h-1/4 rounded-md w-1/5'
-                                                    />
-                                                </>
-                                            )}
+                                            <img
+                                                src={topPicks?.books[0]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-auto rounded-lg w-1/3'
+                                            />
+                                            <img
+                                                src={topPicks?.books[1]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-auto rounded-lg w-1/4'
+                                            />
+                                            <img
+                                                src={topPicks?.books[2]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-auto rounded-md w-1/5'
+                                            />
                                         </div>
                                     </div>
                                     <p className='manrope-semibold text-2xl py-4 text-center text-black'>
-                                        Picks for June 2023
+                                        Picks for {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
                                     </p>
                                 </div>
                             </div>
@@ -151,36 +174,31 @@ const Banner = () => {
                             <div className='w-[80%] mx-auto relative xl:w-[500px]'>
                                 <img className='shadow-xl' src={shelf} alt='Shelf' />
                                 <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                                    {isLoading ? (
-                                        <div>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <img
-                                                src={topPicks?.books[0]?.image || ''}
-                                                alt='Shelf'
-                                                className='h-1/2 rounded-lg w-1/3'
-                                            />
-                                            <img
-                                                src={topPicks?.books[1]?.image || ''}
-                                                alt='Shelf'
-                                                className='h-1/3 rounded-lg w-1/4'
-                                            />
-                                            <img
-                                                src={topPicks?.books[2]?.image || ''}
-                                                alt='Shelf'
-                                                className='h-1/4 rounded-md w-1/5'
-                                            />
-                                        </>
-                                    )}
+                                    <img
+                                        src={topPicks?.books[0]?.image || ''}
+                                        alt='Shelf'
+                                        className='h-auto rounded-lg w-1/3'
+                                    />
+                                    <img
+                                        src={topPicks?.books[1]?.image || ''}
+                                        alt='Shelf'
+                                        className='h-auto rounded-lg w-1/4'
+                                    />
+                                    <img
+                                        src={topPicks?.books[2]?.image || ''}
+                                        alt='Shelf'
+                                        className='h-auto rounded-md w-1/5'
+                                    />
                                 </div>
                             </div>
                             <p className='manrope-semibold text-2xl py-4 text-center text-black'>
-                                Picks for June 2023
+                                Picks for {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
                             </p>
                         </div>
                     </div>
                 </div>
+            )}
+            </>
             )}
         </section>
     );
