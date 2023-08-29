@@ -4,18 +4,30 @@ import shelf1 from '../assets/shelf/Shelf1.jpg';
 import shelf2 from '../assets/shelf/Shelf2.jpg';
 import shelf3 from '../assets/shelf/Shelf3.jpg';
 import readerQuotes from '../utils/readerQuotes';
+import { getTopPicks } from '../utils/api';
 
 const Banner = () => {
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
     const [fadeIn, setFadeIn] = useState(true);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [topPicks, setTopPicks] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleResize = () => {
         setScreenWidth(window.innerWidth);
     };
-      
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getTopPicks();
+                setTopPicks(data);
+                setIsLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
 
         window.addEventListener('resize', handleResize);
 
@@ -58,81 +70,118 @@ const Banner = () => {
             </div>
 
             {screenWidth > 768 && (
-            <div className='lg:w-3/4'>
-                <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
-                    <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
-                        <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
-                            <p className='manrope-semibold sm:text-5xl text-black'>
-                                <span className='text-primaryDark'>Think</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-5xl text-black'>
-                                <span className='text-primaryDark'>Be</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-5xl text-black'>
-                                <span className='text-primaryDark'>Do</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-lg text-black'>
-                                The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
-                            </p>
-                        </div>
-
-                        <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
-                            <div className='absolute top-[70%]'>
-                                <div className='w-[80%] mx-auto relative xl:w-[500px]'>
-                                    <img className='shadow-xl' src={shelf} alt='Shelf' />
-                                    <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                                        <img src={shelf1} alt='Shelf' className='h-auto rounded-xl w-1/3' />
-                                        <img src={shelf2} alt='Shelf' className='h-auto rounded-lg w-1/4' />
-                                        <img src={shelf3} alt='Shelf' className='h-auto rounded-md w-1/5' />
-                                    </div>
-                                </div>
-                                <p className='manrope-semibold text-2xl py-4 text-center text-black'>
-                                    Picks for June 2023
+                <div className='lg:w-3/4'>
+                    <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
+                        <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
+                            <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
+                                <p className='manrope-semibold sm:text-5xl text-black'>
+                                    <span className='text-primaryDark'>Think</span> Better.
                                 </p>
+                                <p className='manrope-semibold text-5xl text-black'>
+                                    <span className='text-primaryDark'>Be</span> Better.
+                                </p>
+                                <p className='manrope-semibold text-5xl text-black'>
+                                    <span className='text-primaryDark'>Do</span> Better.
+                                </p>
+                                <p className='manrope-semibold text-lg text-black'>
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
+                                </p>
+                            </div>
+
+                            <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
+                                <div className='absolute top-[70%]'>
+                                    <div className='w-[80%] mx-auto relative xl:w-[500px]'>
+                                        <img className='shadow-xl' src={shelf} alt='Shelf' />
+                                        <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
+                                            {isLoading ? (
+                                                <div>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src={topPicks?.books[0]?.image || ''}
+                                                        alt='Shelf'
+                                                        className='h-1/2 rounded-lg w-1/3'
+                                                    />
+                                                    <img
+                                                        src={topPicks?.books[1]?.image || ''}
+                                                        alt='Shelf'
+                                                        className='h-1/3 rounded-lg w-1/4'
+                                                    />
+                                                    <img
+                                                        src={topPicks?.books[2]?.image || ''}
+                                                        alt='Shelf'
+                                                        className='h-1/4 rounded-md w-1/5'
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <p className='manrope-semibold text-2xl py-4 text-center text-black'>
+                                        Picks for June 2023
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             )}
             {screenWidth <= 768 && (
-            <div className='lg:w-3/4'>
-                <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
-                    <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
-                        <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
-                            <p className='manrope-semibold text-5xl text-black'>
-                                <span className='text-primaryDark'>Think</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-5xl text-black'>
-                                <span className='text-primaryDark'>Be</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-5xl text-black'>
-                                <span className='text-primaryDark'>Do</span> Better.
-                            </p>
-                            <p className='manrope-semibold text-lg text-black'>
-                                The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
+                <div className='lg:w-3/4'>
+                    <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
+                        <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
+                            <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
+                                <p className='manrope-semibold text-5xl text-black'>
+                                    <span className='text-primaryDark'>Think</span> Better.
+                                </p>
+                                <p className='manrope-semibold text-5xl text-black'>
+                                    <span className='text-primaryDark'>Be</span> Better.
+                                </p>
+                                <p className='manrope-semibold text-5xl text-black'>
+                                    <span className='text-primaryDark'>Do</span> Better.
+                                </p>
+                                <p className='manrope-semibold text-lg text-black'>
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
+                        <div className='mt-[30vh]'>
+                            <div className='w-[80%] mx-auto relative xl:w-[500px]'>
+                                <img className='shadow-xl' src={shelf} alt='Shelf' />
+                                <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
+                                    {isLoading ? (
+                                        <div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <img
+                                                src={topPicks?.books[0]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-1/2 rounded-lg w-1/3'
+                                            />
+                                            <img
+                                                src={topPicks?.books[1]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-1/3 rounded-lg w-1/4'
+                                            />
+                                            <img
+                                                src={topPicks?.books[2]?.image || ''}
+                                                alt='Shelf'
+                                                className='h-1/4 rounded-md w-1/5'
+                                            />
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                            <p className='manrope-semibold text-2xl py-4 text-center text-black'>
+                                Picks for June 2023
                             </p>
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
-                            <div className='mt-[30vh]'>
-                                <div className='w-[80%] mx-auto relative xl:w-[500px]'>
-                                    <img className='shadow-xl' src={shelf} alt='Shelf' />
-                                    <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                                        <img src={shelf1} alt='Shelf' className='h-auto rounded-xl w-1/3' />
-                                        <img src={shelf2} alt='Shelf' className='h-auto rounded-lg w-1/4' />
-                                        <img src={shelf3} alt='Shelf' className='h-auto rounded-md w-1/5' />
-                                    </div>
-                                </div>
-                                <p className='manrope-semibold text-2xl py-4 text-center text-black'>
-                                    Picks for June 2023
-                                </p>
-                            </div>
-                        </div>
-            </div>
             )}
-
         </section>
     );
 };

@@ -19,4 +19,14 @@ export async function getBooks(offset, limit, categories) {
     }
 }
 
+export async function getTopPicks() {
+    try {
+        const response = await api.get('/get/toppicks');
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch top picks: ${error.message}`);
+    }
+}
+
+
 export default api;
