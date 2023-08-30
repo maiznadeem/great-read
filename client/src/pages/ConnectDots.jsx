@@ -29,7 +29,7 @@ const ConnectDots = () => {
     }, []);
 
     return (
-        <section className='mt-40 sm:my-14 mx-2 sm:mx-8 min-h-[80vh]'>
+        <section className='mt-40 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
                 <div className='flex flex-col w-full'>
                     <div className='flex flex-col gap-4 max-w-[800px]'>

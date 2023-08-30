@@ -104,7 +104,7 @@ const Banner = () => {
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
                             <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold sm:text-5xl text-black'>
+                                <p className='manrope-semibold text-5xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-5xl text-black'>
@@ -151,19 +151,19 @@ const Banner = () => {
             )}
             {screenWidth <= 768 && (
                 <div className='lg:w-3/4'>
-                    <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
+                    <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-4 py-6 sm:px-6 sm:py-10 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
-                            <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold text-5xl text-black'>
+                            <div className='flex flex-col gap-1 sm:gap-3 items-start justify-center w-full md:w-[40%]'>
+                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-5xl text-black'>
+                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
                                     <span className='text-primaryDark'>Be</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-5xl text-black'>
+                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-lg text-black'>
+                                <p className='manrope-semibold text-md sm:text-lg text-black'>
                                     The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
                                 </p>
                             </div>
