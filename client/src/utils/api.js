@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: "great-read-server.vercel.app"
 });
 
 export async function getBooks(offset, limit, categories) {
