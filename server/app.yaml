@@ -1,8 +1,0 @@
-runtime: nodejs16
-entrypoint: node index.js
-env_variables:
-  NODE_ENV: production
-  MONGO_DB_URL: 'mongodb+srv://MaizNadeem:5zTJPLBztnlq3Ewy@server-cluster.o3kvolw.mongodb.net/Great-Read?retryWrites=true&w=majority'
-  SESSION_SECRET: 'great-read-session-cookie-12345'
-  USER_NAME: 'iamadmin'
-  PASSWORD: 'mypasswordisadmin123'
