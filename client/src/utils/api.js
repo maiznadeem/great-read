@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "great-read-server.vercel.app"
+    baseURL: "https://great-read.uc.r.appspot.com"
 });
 
 export async function getBooks(offset, limit, categories) {
