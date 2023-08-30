@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const dbURL = process.env.MONGO_DB_URL;
 const secretKey = process.env.SESSION_SECRET;
 
