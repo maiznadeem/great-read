@@ -1,34 +1,276 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Elements
     const updateBookForm = document.getElementById("updateBookForm");
+    const addButton = document.getElementById("addButton");
+    const logoutButton = document.getElementById("logoutButton");
+    const getInfoButton = document.getElementById("getInfoButton");
     const updateButton = document.getElementById("updateButton");
     const deleteButton = document.getElementById("deleteButton");
+    const changeButton = document.getElementById("changeButton");
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
     const searchResults = document.getElementById("searchResults");
+    const responseMessage = document.getElementById("responseMessage");
     const publishingYearInput = document.getElementById('updatePublishingYear');
-    const addButton = document.getElementById("addButton");
-    const logoutButton = document.getElementById("logoutButton");
+    const updateTopPicksButton = document.getElementById("updateTopPicks");
+    const updateStatus = document.getElementById("updateStatus");
+
+    updateButton.disabled = true;
+    deleteButton.disabled = true;
+    changeButton.disabled = true;
+
+    updateButton.style.backgroundColor = 'lightgray';
+    deleteButton.style.backgroundColor = 'lightgray';
+    changeButton.style.backgroundColor = 'lightgray';
+
+    function resetBookFields() {
+        document.getElementById("bookId").value = '';
+        document.getElementById("updateTitle").value = '';
+        document.getElementById("updateAuthor").value = '';
+        document.getElementById("updatePublishingYear").value = '2023';
+        document.getElementById("amazon").value = '';
+        document.getElementById("perlego").value = '';
+        document.getElementById("quote").value = '';
+        const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+        categoryCheckboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+            const categoryItem = checkbox.closest('.category-item');
+            if (categoryItem) {
+                categoryItem.classList.remove('selected');
+            }
+        });
+        const fileInput = document.getElementById("image");
+        fileInput.value = '';
+    }
+    
+
+    function enableButtonsAndSetEditable(book) {
+        updateButton.disabled = false;
+        deleteButton.disabled = false;
+        changeButton.disabled = false;
+        updateButton.style.backgroundColor = '';
+        deleteButton.style.backgroundColor = '';
+        changeButton.style.backgroundColor = '';
+        getInfoButton.disabled = true;
+        getInfoButton.style.backgroundColor = 'lightgray';
+        document.getElementById("bookId").readOnly = true;
+        document.getElementById("updateTitle").value = book.title;
+        document.getElementById("updateAuthor").value = book.author;
+        document.getElementById("updatePublishingYear").value = book.publishingYear;
+        document.getElementById("amazon").value = book.amazon;
+        document.getElementById("perlego").value = book.perlego;
+        document.getElementById("quote").value = book.quote;
+        const categoryItems = document.querySelectorAll('.category-item');
+        categoryItems.forEach((categoryItem) => {
+            categoryItem.classList.remove('selected');
+        });
+        book.categories.forEach((category) => {
+            const checkbox = document.querySelector(`input[value="${category}"]`);
+            if (checkbox) {
+                checkbox.checked = true;
+                const categoryItem = checkbox.closest('.category-item');
+                if (categoryItem) {
+                    categoryItem.classList.add('selected');
+                }
+            }
+        });
+    }
+
+    getInfoButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        resetResponseMessage();
+        document.getElementById("updateTitle").value = '';
+        document.getElementById("updateAuthor").value = '';
+        document.getElementById("updatePublishingYear").value = '2023';
+        document.getElementById("amazon").value = '';
+        document.getElementById("perlego").value = '';
+        document.getElementById("quote").value = '';
+        const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+        categoryCheckboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+            const categoryItem = checkbox.closest('.category-item');
+            if (categoryItem) {
+                categoryItem.classList.remove('selected');
+            }
+        });
+        const fileInput = document.getElementById("image");
+        fileInput.value = '';
+        const bookId = document.getElementById("bookId").value.trim();
+        if (!isValidBookId(bookId)) {
+            handleResponseMessage("Invalid book ID. Please use only letters and numbers.", true);
+            return;
+        }
+        axios.get(`/admin/getbook/${bookId}`)
+            .then((response) => {
+                const book = response.data;
+                enableButtonsAndSetEditable(book);
+                handleResponseMessage("Book info fetched successfully.", false);
+            })
+            .catch((error) => {
+                console.error("Error fetching book info:", error);
+                handleResponseMessage("Book info not found. Please check the book ID.", true);
+            });
+    });
+
+    changeButton.addEventListener("click", function (e) {
+        e.preventDefault()
+        updateButton.disabled = true;
+        deleteButton.disabled = true;
+        changeButton.disabled = true;
+        updateButton.style.backgroundColor = 'lightgray';
+        deleteButton.style.backgroundColor = 'lightgray';
+        changeButton.style.backgroundColor = 'lightgray';
+        getInfoButton.disabled = false;
+        getInfoButton.style.backgroundColor = '';
+        document.getElementById("bookId").readOnly = false;
+        resetBookFields();
+    })
 
     const currentYear = new Date().getFullYear();
     publishingYearInput.setAttribute('max', currentYear);
-    
-    function isEmptyOrWhitespace(value) {
-        return /^\s*$/.test(value);
+
+    function fetchTopPicks() {
+        fetch('/get/toppicks')
+            .then((response) => response.json())
+            .then((data) => {
+                if (data && data.date && data.books && data.books.length === 3) {
+                    const topPickMonthInput = document.getElementById('topPickMonth');
+                    const topPickYearInput = document.getElementById('topPickYear');
+                    const book1IdInput = document.getElementById('book1Id');
+                    const book2IdInput = document.getElementById('book2Id');
+                    const book3IdInput = document.getElementById('book3Id');
+                    topPickMonthInput.value = data.date.month;
+                    topPickYearInput.value = data.date.year;
+                    book1IdInput.value = data.books[0]._id;
+                    book2IdInput.value = data.books[1]._id;
+                    book3IdInput.value = data.books[2]._id;
+                } else {
+                    handleError('Invalid top picks data received from the server.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching top picks:', error);
+            });
     }
-    
-    function containsSpecialCharacters(value) {
-        return /[\n\t\r]/.test(value);
+
+    fetchTopPicks();
+
+    function isValidBookId(value) {
+        return /^[a-zA-Z0-9]+$/.test(value);
     }
-    
+
+    function isValidMonth(value) {
+        const month = parseInt(value, 10);
+        return !isNaN(month) && month >= 1 && month <= 12;
+    }
+
+    function isValidYear(value) {
+        const year = parseInt(value, 10);
+        return !isNaN(year) && year >= 1200 && year <= 3000;
+    }
+
+    function handleUpdateStatus(message, isError) {
+        updateStatus.innerText = message;
+        updateStatus.style.color = isError ? 'red' : 'green';
+    }
+
+    function handleResponseMessage(message, isError) {
+        responseMessage.innerText = message;
+        responseMessage.style.color = isError ? 'red' : 'green';
+    }
+
+    function resetUpdateStatus() {
+        updateStatus.innerText = '';
+    }
+
     function resetResponseMessage() {
         responseMessage.innerText = '';
     }
 
-    function isURL(str) {
-        const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
-        return urlPattern.test(str);
+    function handleUpdateTopPicks(e) {
+        e.preventDefault();
+
+        resetUpdateStatus();
+    
+        const topPickMonthInput = document.getElementById('topPickMonth');
+        const topPickYearInput = document.getElementById('topPickYear');
+        const book1IdInput = document.getElementById('book1Id');
+        const book2IdInput = document.getElementById('book2Id');
+        const book3IdInput = document.getElementById('book3Id');
+    
+        const month = topPickMonthInput.value.trim();
+        const year = topPickYearInput.value.trim();
+        const book1Id = book1IdInput.value.trim();
+        const book2Id = book2IdInput.value.trim();
+        const book3Id = book3IdInput.value.trim();
+    
+        if (!isValidMonth(month)) {
+            handleUpdateStatus('Invalid month. Please enter a number between 1 and 12.', true);
+            return;
+        }
+        if (!isValidYear(year)) {
+            handleUpdateStatus('Invalid year. Please enter a number between 1200 and 3000.', true);
+            return;
+        }
+        if (!isValidBookId(book1Id) || !isValidBookId(book2Id) || !isValidBookId(book3Id)) {
+            handleUpdateStatus('Invalid book IDs. Please use only letters and numbers.', true);
+            return;
+        }
+        updateTopPicksButton.disabled = true;
+        updateTopPicksButton.innerText = 'Loading...';
+        const requestData = {
+            month: parseInt(month),
+            year: parseInt(year),
+            book1Id,
+            book2Id,
+            book3Id,
+        };
+        axios.post('/admin/updatetoppicks', requestData)
+            .then((response) => {
+                const success = response.status === 200;
+                updateTopPicksButton.disabled = false;
+                updateTopPicksButton.innerText = 'Update Top Picks';
+                if (success) {
+                    handleUpdateStatus('Top picks updated successfully.', false);
+                } else {
+                    handleUpdateStatus('Failed to update top picks. Please try again.', true);
+                }
+            })
+            .catch((error) => {
+                console.error('Error updating Top Picks:', error);
+                updateTopPicksButton.disabled = false;
+                updateTopPicksButton.innerText = 'Update Top Picks';
+                handleUpdateStatus('An error occurred while updating top picks. Please try again.', true);
+            });
     }
+    updateTopPicksButton.addEventListener('click', handleUpdateTopPicks);
+
+    searchButton.addEventListener("click", function () {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm === "") {
+            searchResults.innerHTML = "";
+            return;
+        }
+        axios.get(`/admin/searchbook?term=${searchTerm}`)
+            .then((response) => {
+                const books = response.data;
+                searchResults.innerHTML = "";
+                if (books.length > 0) {
+                    books.forEach((book) => {
+                        const bookDiv = document.createElement("div");
+                        bookDiv.classList.add("book");
+                        bookDiv.innerHTML = `<p>ID: ${book._id}</p>
+                                             <p>Title: ${book.title}</p>
+                                             <p>Author: ${book.author}</p>`;
+                        searchResults.appendChild(bookDiv);
+                    });
+                } else {
+                    searchResults.innerHTML = "<p>No matching books found.</p>";
+                }
+            })
+            .catch((error) => {
+                console.error("Error searching books:", error);
+            });
+    });
 
     const categories = [
         "Autobiography/Biography",
@@ -64,7 +306,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "Problem Solving"
     ];
 
-
     const categoryGrid = document.getElementById('categoryCheckboxes');
     
     categories.forEach(category => {
@@ -95,10 +336,107 @@ document.addEventListener("DOMContentLoaded", function () {
         categoryGrid.appendChild(categoryItem);
     });
 
-    function handleError(message) {
-        responseMessage.innerText = message;
-        responseMessage.style.color = 'red';
-    }
+    updateButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        resetResponseMessage();
+        const bookId = document.getElementById("bookId").value.trim();
+        const updateTitle = document.getElementById("updateTitle").value.trim();
+        const updateAuthor = document.getElementById("updateAuthor").value.trim();
+        const updatePublishingYear = document.getElementById("updatePublishingYear").value.trim();
+        const amazon = document.getElementById("amazon").value.trim();
+        const perlego = document.getElementById("perlego").value.trim();
+        const quote = document.getElementById("quote").value.trim();
+        const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+        const selectedCategories = [];
+        categoryCheckboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                selectedCategories.push(checkbox.value);
+            }
+        });
+        if (!isValidBookId(bookId)) {
+            handleResponseMessage("Invalid book ID. Please use only letters and numbers.", true);
+            return;
+        }
+        if (!updateTitle || !updateAuthor || !updatePublishingYear || selectedCategories.length === 0) {
+            handleResponseMessage("Please fill in all mandatory fields (Title, Author, Publishing Year, Categories).", true);
+            return;
+        }
+        const formData = new FormData();
+        formData.append("bookId", bookId);
+        formData.append("updateTitle", updateTitle);
+        formData.append("updateAuthor", updateAuthor);
+        formData.append("updatePublishingYear", updatePublishingYear);
+        formData.append("amazon", amazon);
+        formData.append("perlego", perlego);
+        formData.append("quote", quote);
+        formData.append("categories", JSON.stringify(selectedCategories));
+        const imageInput = document.getElementById("image");
+        if (imageInput.files.length > 0) {
+            formData.append("image", imageInput.files[0]);
+        }
+        axios.post("/admin/updatebook", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((response) => {
+            const success = response.status === 200;
+            if (success) {
+                handleResponseMessage("Book updated successfully.", false);
+
+                resetBookFields();
+                updateButton.disabled = true;
+                deleteButton.disabled = true;
+                changeButton.disabled = true;
+                updateButton.style.backgroundColor = 'lightgray';
+                deleteButton.style.backgroundColor = 'lightgray';
+                changeButton.style.backgroundColor = 'lightgray';
+                getInfoButton.disabled = false;
+                getInfoButton.style.backgroundColor = '';
+                document.getElementById("bookId").readOnly = false;
+
+            } else {
+                handleResponseMessage("Failed to update the book. Please try again.", true);
+            }
+        })
+        .catch((error) => {
+            console.error("Error updating book:", error);
+            handleResponseMessage("An error occurred while updating the book. Please try again.", true);
+        });
+    });
+    
+    deleteButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        resetResponseMessage();
+        const bookId = document.getElementById("bookId").value.trim();
+        if (!isValidBookId(bookId)) {
+            handleResponseMessage("Invalid book ID. Please use only letters and numbers.", true);
+            return;
+        }
+        axios.delete(`/admin/deletebook/${bookId}`)
+            .then((response) => {
+                const success = response.status === 200;
+                if (success) {
+                    handleResponseMessage("Book deleted successfully.", false);
+                    resetBookFields();
+                    updateButton.disabled = true;
+                    deleteButton.disabled = true;
+                    changeButton.disabled = true;
+                    updateButton.style.backgroundColor = 'lightgray';
+                    deleteButton.style.backgroundColor = 'lightgray';
+                    changeButton.style.backgroundColor = 'lightgray';
+                    getInfoButton.disabled = false;
+                    getInfoButton.style.backgroundColor = '';
+                    document.getElementById("bookId").readOnly = false;
+                } else {
+                    handleResponseMessage("Could not delete the book. Check ID again.", true);
+                }
+            })
+            .catch((error) => {
+                console.error("Error deleting book:", error);
+                handleResponseMessage("An error occurred while deleting the book. Please try again", true);
+            });
+    });
 
     logoutButton.addEventListener('click', function () {
         fetch('/logout', {
@@ -117,29 +455,5 @@ document.addEventListener("DOMContentLoaded", function () {
     addButton.addEventListener('click', function (e) {
         e.preventDefault();
         window.history.back();
-    });
-    
-    updateButton.addEventListener("click", function (e) {
-        e.preventDefault();
-        // Implement update book functionality here
-        // You can use the values from updateBookForm to send an update request to your API
-        // Example: axios.put("/api/updatebook", { /* book data */ })
-    });
-
-    deleteButton.addEventListener("click", function (e) {
-        e.preventDefault();
-        // Implement delete book functionality here
-        // You can use the values from updateBookForm to send a delete request to your API
-        // Example: axios.delete("/api/deletebook", { /* book data */ })
-    });
-
-    searchButton.addEventListener("click", function (e) {
-        e.preventDefault();
-        const searchTerm = searchInput.value;
-        // Implement search functionality here
-        // You can use axios to send a request to your API to search for books based on searchTerm
-        // Example: axios.get(`/api/search?term=${searchTerm}`)
-        // Update searchResults with the retrieved data
-        // Example: searchResults.innerHTML = /* display search results */
     });
 });

@@ -13,20 +13,50 @@
             <button id="logoutButton">Logout</button>
             <button id="addButton">Add Book</button>
         </div>
+
+        <h1>Change Top Picks</h1>
+        <div class="topPicksDiv">
+            <div class="form-group">
+                <label for="title">Month:</label>
+                <input type="number" name="topPickMonth" id="topPickMonth" min="1" max="12">
+            </div>
+            <div class="form-group">
+                <label for="title">Year:</label>
+                <input type="number" name="topPickYear" id="topPickYear" min="1200" max="3000">
+            </div>
+        </div>
+        <div class="topPicksDiv">
+            <div class="form-group">
+                <label for="title">Book 1 ID:</label>
+                <input type="text" name="title" id="book1Id" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Book 2 ID:</label>
+                <input type="text" name="title" id="book2Id" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Book 3 ID:</label>
+                <input type="text" name="title" id="book3Id" required>
+            </div>
+        </div>
+        <button id="updateTopPicks">Update Top Picks</button>
+        <p id="updateStatus"></p>
+
+
         <h1>Update and Delete a Book</h1>
         
         <!-- Left Section: Update Book Details -->
         <div class="container">
             <div class="left-section">
-                <form id="updateBookForm">
+                <form id="updateBookForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="updateTitle">Title:</label>
-                        <input type="text" name="updateTitle" id="updateTitle" required>
+                        <input type="text" name="updateTitle" id="updateTitle">
                     </div>
 
                     <div class="form-group">
                         <label for="updateAuthor">Author:</label>
-                        <input type="text" name="updateAuthor" id="updateAuthor" required>
+                        <input type="text" name="updateAuthor" id="updateAuthor">
                     </div>
 
                     <div class="form-group">
@@ -42,12 +72,12 @@
         
                     <div class="form-group">
                         <label for="amazon">Amazon Link:</label>
-                        <input type="url" name="amazon" id="amazon" required>
+                        <input type="url" name="amazon" id="amazon">
                     </div>
         
                     <div class="form-group">
                         <label for="perlego">Perlego Link:</label>
-                        <input type="url" name="perlego" id="perlego" required>
+                        <input type="url" name="perlego" id="perlego">
                     </div>
         
                     <div class="form-group">
@@ -57,24 +87,26 @@
         
                     <div class="form-group">
                         <label for="image">Upload Image (Max 5MB, Leave blank to retain previous image):</label>
-                        <input type="file" name="image" id="image" accept="image/*" required>
+                        <input type="file" name="image" id="image" accept="image/*">
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Book ID:</label>
-                        <input type="text" name="updateAuthor" id="updateAuthor" required>
-                    </div>
-
+                        <label for="bookId">Book ID:</label>
+                        <input type="text" name="bookId" id="bookId">
+                    </div>                    
+                    <button id="getInfoButton">Get Book Info</button>
                     <button id="updateButton">Update</button>
                     <button id="deleteButton">Delete</button>
+                    <button id="changeButton">Change ID</button>
                 </form>
+                <p id="responseMessage"></p>
             </div>
 
             <!-- Right Section: Search and Display Books -->
             <div class="right-section">
                 <h2>Search and Display Books</h2>
                 <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search for books...">
+                    <input type="text" id="searchInput" placeholder="Search by title or author...">
                     <button id="searchButton">Search</button>
                 </div>
                 <div id="searchResults" class="book-grid">
@@ -83,7 +115,10 @@
             </div>
         </div>
 
-        <p id="responseMessage"></p>
+        
+
+
+
     </div>
     <script src="script.js"></script>
 </body>

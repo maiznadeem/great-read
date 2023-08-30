@@ -58,21 +58,13 @@ getRoute.get('/quotes', async (req, res) => {
 
 getRoute.get('/randomquotes', async (req, res) => {
     try {
-        // Fetch all books from the collection
         const books = await Book.find({}, 'title quote').exec();
-
-        // Shuffle the books randomly
         const shuffledBooks = shuffleArray(books);
-
-        // Get the first 12 books from the shuffled list
         const randomBooks = shuffledBooks.slice(0, 12);
-
-        // Transform the books into the desired structure
         const response = randomBooks.map((book) => ({
             title: book.title,
             quote: book.quote,
         }));
-
         res.json(response);
     } catch (error) {
         console.error('Error fetching random quotes:', error);
@@ -80,7 +72,6 @@ getRoute.get('/randomquotes', async (req, res) => {
     }
 });
 
-// Function to shuffle an array randomly
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

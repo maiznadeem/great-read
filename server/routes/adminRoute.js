@@ -21,9 +21,15 @@ adminRoute.use('/update', express.static(updatePagePath));
 adminRoute.use('/quotes', express.static(quotePagePath));
 
 adminRoute.post('/uploadbook', upload.single('image'), adminController.uploadBook);
-adminRoute.post('/uploadquote', upload.single('image'), adminController.uploadQuote);
+adminRoute.get('/getbook/:id', adminController.getBook);
+adminRoute.post('/updatebook', upload.single('image'), adminController.updateBook);
+adminRoute.get('/searchbook', adminController.searchBook);
+adminRoute.delete('/deletebook/:id', adminController.deleteBook);
 
+adminRoute.post('/uploadquote', upload.single('image'), adminController.uploadQuote);
 adminRoute.get('/searchquote', adminController.searchQuote);
 adminRoute.post('/deletequote', adminController.deleteQuote);
+
+adminRoute.post('/updatetoppicks', adminController.updateTopPicks);
 
 module.exports = { adminRoute };
