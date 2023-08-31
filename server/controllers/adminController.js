@@ -11,6 +11,26 @@ const Book = require('../models/Book');
 const Quote = require('../models/Quote')
 const TopPicks = require('../models/TopPicks');
 
+const checkDuplicateTitle = async (req, res, next) => {
+    try {
+        const title = req.body.title;
+        console.log(title)
+        const existingBook = await Book.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } });
+        console.log(existingBook)
+        if (existingBook) {
+            return res.status(409).json({
+                error: 'Book with the same title already exists. Do you want to proceed with the upload?',
+                confirmationRequired: true,
+            });
+        }
+        next();
+    } catch (error) {
+        console.error('Error checking duplicate title:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
 async function uploadBook(req, res) {
 
     const errors = validationResult(req);
@@ -274,6 +294,7 @@ async function updateTopPicks(req, res) {
 }
 
 module.exports = {
+    checkDuplicateTitle,
     uploadBook,
     getBook,
     updateBook,

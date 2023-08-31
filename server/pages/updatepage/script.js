@@ -246,10 +246,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     searchButton.addEventListener("click", function () {
         const searchTerm = searchInput.value.trim();
-        if (searchTerm === "") {
-            searchResults.innerHTML = "";
-            return;
-        }
         axios.get(`/admin/searchbook?term=${searchTerm}`)
             .then((response) => {
                 const books = response.data;

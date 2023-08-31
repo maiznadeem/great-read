@@ -120,16 +120,16 @@ document.addEventListener('DOMContentLoaded', function () {
     
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
-        
+    
         resetResponseMessage();
-        
+    
         const title = form.querySelector('#title').value.trim();
         const author = form.querySelector('#author').value.trim();
         const publishingYear = form.querySelector('#publishingYear').value.trim();
         const amazon = form.querySelector('#amazon').value.trim();
         const perlego = form.querySelector('#perlego').value.trim();
         const quote = form.querySelector('#quote').value.trim();
-        
+    
         const selectedCategories = form.querySelectorAll('input[name="categories"]:checked');
         if (selectedCategories.length === 0) {
             handleError('Select at least one category.');
@@ -140,12 +140,12 @@ document.addEventListener('DOMContentLoaded', function () {
             handleError('Please provide a valid title. (should not contain special characters)');
             return;
         }
-        
+    
         if (isEmptyOrWhitespace(author) || containsSpecialCharacters(author)) {
             handleError('Please provide a valid author. (should not contain special characters)');
             return;
         }
-        
+    
         if (isEmptyOrWhitespace(quote) || containsSpecialCharacters(quote)) {
             handleError('Please provide a valid quote (without newline characters).');
             return;
@@ -161,19 +161,12 @@ document.addEventListener('DOMContentLoaded', function () {
             handleError('Please provide valid Amazon and Perlego links.');
             return;
         }
-        
-        const isConfirmed = confirm('Are you sure you want to submit the form?');
-        if (!isConfirmed) return;
     
-        submitButton.disabled = true;
-        submitButton.innerHTML = 'Uploading...';
-        submitButton.style.backgroundColor = 'lightgray';
-        submitButton.style.cursor = 'default';
+        const formData = new FormData(form);
     
         try {
-            const formData = new FormData(form);
             const response = await axios.post('/admin/uploadbook', formData);
-        
+    
             if (response.status === 200) {
                 responseMessage.innerText = 'Upload successful!';
                 responseMessage.style.color = 'green';
@@ -184,24 +177,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
         } catch (error) {
-            if (error.response.data.error)
-                handleError('An error occurred: ' + error.response.data.error);
-            else if (error.response) {
+            if (error.response && error.response.data.error) {
+                const isConfirmed = confirm("A book with the same title already exists. Do you wish to continue?");
+                if (!isConfirmed) return;
+                
+                try {
+                    const confirmUploadResponse = await axios.post('/admin/uploadbook/confirm', formData);
+                    
+                    if (confirmUploadResponse.status === 200) {
+                        responseMessage.innerText = 'Upload successful!';
+                        responseMessage.style.color = 'green';
+                        form.reset();
+                        const categoryItems = categoryGrid.querySelectorAll('.category-item');
+                        categoryItems.forEach(item => {
+                            item.classList.remove('selected');
+                        });
+                    }
+                } catch (confirmError) {
+                    handleError('An error occurred while confirming the upload: ' + confirmError.message);
+                }
+            } else if (error.response) {
                 const htmlResponse = error.response.data;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlResponse, 'text/html');
                 const errorMessage = doc.querySelector('pre').textContent;
                 const firstLine = errorMessage.split('\n')[0];
                 handleError(firstLine);
-            }
-            else 
+            } else {
                 handleError('An error occurred: ' + error.message);
+            }
         } finally {
             submitButton.disabled = false;
             submitButton.innerHTML = 'Upload';
             submitButton.style.backgroundColor = '';
             submitButton.style.cursor = 'pointer';
-        }        
+        }
     });
+       
     
 });

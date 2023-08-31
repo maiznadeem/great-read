@@ -114,7 +114,7 @@ const Banner = () => {
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books in areas that matter the most to you.
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books that matter the most to you.
                                 </p>
                             </div>
 
@@ -164,7 +164,7 @@ const Banner = () => {
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-md sm:text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books in areas that matter the most to you.
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books that matter the most to you.
                                 </p>
                             </div>
                         </div>

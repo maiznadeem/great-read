@@ -20,7 +20,8 @@ adminRoute.use(express.static(adminPagePath));
 adminRoute.use('/update', express.static(updatePagePath));
 adminRoute.use('/quotes', express.static(quotePagePath));
 
-adminRoute.post('/uploadbook', upload.single('image'), adminController.uploadBook);
+adminRoute.post('/uploadbook', upload.single('image'), adminController.checkDuplicateTitle, adminController.uploadBook);
+adminRoute.post('/uploadbook/confirm', upload.single('image'), adminController.uploadBook);
 adminRoute.get('/getbook/:id', adminController.getBook);
 adminRoute.post('/updatebook', upload.single('image'), adminController.updateBook);
 adminRoute.get('/searchbook', adminController.searchBook);
