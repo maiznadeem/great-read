@@ -8,12 +8,9 @@ const ConnectDots = () => {
     const shuffleQuotes = async () => {
         if (!isShuffling) {
             setIsShuffling(true);
-
             try {
                 const quotesData = await getRandomQuotes();
-                console.log(quotesData);
                 setShuffledQuotes(quotesData);
-
                 setTimeout(() => {
                     setIsShuffling(false);
                 }, 500);
@@ -29,12 +26,12 @@ const ConnectDots = () => {
     }, []);
 
     return (
-        <section className='mt-40 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
+        <section className='mt-28 sm:mt-40 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
                 <div className='flex flex-col w-full'>
                     <div className='flex flex-col gap-4 max-w-[800px]'>
-                        <p className='manrope-semibold text-3xl text-black'>Connect The Dots</p>
-                        <p className='manrope-regular text-2xl text-black'>
+                        <p className='manrope-semibold text-2xl sm:text-3xl text-black'>Connect The Dots</p>
+                        <p className='manrope-regular text-xl sm:text-2xl text-black'>
                             A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3000+ books.
                         </p>
                     </div>

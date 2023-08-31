@@ -80,7 +80,7 @@ const Banner = () => {
             ) : (
                 <>
                     {currentQuote && (
-                        <div className={`md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`mb-6 sm:mb-0 md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
                             <div className='flex flex-col items-center justify-center'>
                                 <div className='rounded'>
                                     <img
@@ -114,7 +114,7 @@ const Banner = () => {
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books in areas that matter the most to you.
                                 </p>
                             </div>
 
@@ -164,14 +164,14 @@ const Banner = () => {
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-md sm:text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on genres that inspire you. A central point to find books in areas that matter the most to you.
+                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books in areas that matter the most to you.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
-                        <div className='mt-[30vh]'>
-                            <div className='w-[80%] mx-auto relative xl:w-[500px]'>
+                        <div className='mt-[55%]'>
+                            <div className='w-[100%] mx-auto relative xl:w-[500px]'>
                                 <img className='shadow-xl' src={shelf} alt='Shelf' />
                                 <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
                                     <img

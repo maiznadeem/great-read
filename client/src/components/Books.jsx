@@ -72,7 +72,7 @@ const Books = () => {
                                 <Book key={index} book={book} />
                             ))}
                         </div>
-                        <div className='mt-24 flex flex-col items-center justify-center scale-65 sm:scale-100'>
+                        <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center'>
                             <DefaultPagination
                                 currentPage={currentPage}
                                 limit={limit}
@@ -82,7 +82,7 @@ const Books = () => {
                         </div>
                     </>
                 )}
-                <div className="flex items-center justify-center text-sm">
+                <div className="flex items-center justify-center text-xs sm:text-sm mb-8 sm:mb-0">
                     <label htmlFor="booksPerPage" className="manrope-semibold mr-2 text-gray-700">
                         Books per page:
                     </label>
