@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import shelf from '../assets/shelf/Shelf.svg';
+import shelf from '../assets/shelf/Shelf.png';
 import { getTopPicks, getQuotes } from '../utils/api';
 import { ClipLoader } from 'react-spinners';
 

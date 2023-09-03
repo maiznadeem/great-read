@@ -30,7 +30,42 @@ import branding from '../assets/icons/29_Branding.svg';
 import teamwork from '../assets/icons/30_Teamwork.svg';
 import problemSolving from '../assets/icons/31_Problem Solving.svg';
 
-const categoriesData = [
+const additionalCategories = [
+    {
+        id: 32,
+        name: 'The New York Times - Business',
+    },
+    {
+        id: 33,
+        name: 'The Wall Street Journal',
+    },
+    {
+        id: 34,
+        name: 'Amazon - Business',
+    },
+    {
+        id: 35,
+        name: 'Amazon - Personal Development',
+    },
+    {
+        id: 36,
+        name: 'Forbes - Business',
+    },
+    {
+        id: 37,
+        name: 'Goodreads - Business',
+    },
+    {
+        id: 38,
+        name: 'Barnes and Noble',
+    },
+    {
+        id: 39,
+        name: 'Financial Times and McKinsey',
+    },
+];
+
+const mainCategories = [
     {
         id: 1,
         name: 'Autobiography/Biography',
@@ -187,5 +222,9 @@ const categoriesData = [
         image: problemSolving,
     },
 ];
+
+mainCategories.sort((a, b) => a.name.localeCompare(b.name));
+
+const categoriesData = [...additionalCategories, ...mainCategories]
 
 export default categoriesData;

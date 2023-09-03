@@ -58,8 +58,16 @@ document.addEventListener('DOMContentLoaded', function () {
         "Communication",
         "Branding",
         "Teamwork",
-        "Problem Solving"
-    ];
+        "Problem Solving",
+        "The New York Times - Business",
+        "The Wall Street Journal",
+        "Amazon - Business",
+        "Amazon - Personal Development",
+        "Forbes - Business",
+        "Goodreads - Business", 
+        "Barnes and Noble",
+        "Financial Times and McKinsey",
+    ]
 
     const categoryGrid = document.getElementById('categoryCheckboxes');
     

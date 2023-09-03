@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import BestSeller from '../assets/icons/best seller.svg';
 import Category from './Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
@@ -54,8 +55,18 @@ const Books = () => {
         <section className='mx-4 sm:my-24 sm:mx-8'>
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3000+</span> books to find your best self.</p>
-                <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
-                    {categoriesData.map((category) => (
+
+                <div className='flex justify-start border-b-2 border-dotted border-primary'>
+                    <img src={BestSeller} alt="" />
+                    <div className='flex flex-wrap justify-start my-6 sm:my-14 gap-2'>
+                        {categoriesData.slice(0, 8).map((category) => (
+                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
+                        ))}
+                    </div>
+                </div>
+
+                <div className='flex flex-wrap justify-start my-6 sm:my-14 gap-2'>
+                    {categoriesData.slice(8).map((category) => (
                         <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
                     ))}
                 </div>
