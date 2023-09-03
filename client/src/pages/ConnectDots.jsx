@@ -37,7 +37,7 @@ const ConnectDots = () => {
                     </div>
                 </div>
                 <button
-                    className={`w-full text-xl flex justify-center items-center max-w-[300px] manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark transition-all ${isShuffling ? 'pointer-events-none' : ''}`}
+                    className={`w-full text-md sm:text-xl flex justify-center items-center max-w-[300px] manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark transition-all ${isShuffling ? 'pointer-events-none' : ''}`}
                     onClick={shuffleQuotes}
                 >
                     Shuffle

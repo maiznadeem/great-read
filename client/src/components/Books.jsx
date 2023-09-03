@@ -56,9 +56,9 @@ const Books = () => {
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3000+</span> books to find your best self.</p>
 
-                <div className='flex justify-start border-b-2 border-dotted border-primary'>
-                    <img src={BestSeller} alt="" />
-                    <div className='flex flex-wrap justify-start my-6 sm:my-14 gap-2'>
+                <div className='flex justify-center items-center flex-col sm:flex-row border-b-2 border-dotted border-primary'>
+                    <img  className='h-28 w-28' src={BestSeller} alt="Best Seller" />
+                    <div className='flex flex-wrap justify-start my-8 sm:my-14 gap-2'>
                         {categoriesData.slice(0, 8).map((category) => (
                             <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
                         ))}
