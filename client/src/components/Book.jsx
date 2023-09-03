@@ -34,7 +34,7 @@ const Book = ({ book }) => {
 
     const categoryIcons = book.categories.map(category => {
         const matchingCategory = categoriesData.find(item => item.name === category);
-        if (matchingCategory) {
+        if (matchingCategory && matchingCategory.image) {
             return (
                 <img
                     key={matchingCategory.id}
@@ -47,7 +47,7 @@ const Book = ({ book }) => {
             );
         }
         return null;
-    });
+    });    
 
     const categoryDisplay = showCategoryNames ? (
         <div className="flex flex-col space-y-2">
