@@ -61,3 +61,18 @@ body {
         width: 50%;
     }
 }
+
+@media (max-width: 639px) {
+    .header-container {
+        position: relative;
+    }
+    .header-container::before {
+        content: '';
+        position: absolute;
+        bottom: 12px;
+        height: 2px;
+        background-color: #8D5E20;
+        left: 4.5%;
+        width: 50%;
+    }
+}

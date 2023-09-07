@@ -42,7 +42,7 @@ const Header = () => {
                         }`}
                     />
                 </Link>
-                <button className="manrope-semibold bg-primary text-white text-xs py-2 px-4 sm:px-12 sm:text-lg rounded-xl shadow-lg hover:bg-primaryDark">
+                <button className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-lg sm:px-12 sm:text-lg sm:rounded-xl shadow-lg hover:bg-primaryDark">
                     <NavLink to={buttonLink}>{buttonText}</NavLink>
                 </button>
             </div>
