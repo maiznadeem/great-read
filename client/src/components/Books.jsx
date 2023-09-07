@@ -74,13 +74,11 @@ const Books = () => {
                     </div> 
                 }
                 { window.innerWidth < 768 && 
-                    <div className='flex gap-2 w-full items-center flex-col sm:flex-col'>
-                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
+                    <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
                             {categoriesData.slice(0, 8).map((category) => (
-                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                                <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
                             ))}
-                        </div>
-                    </div> 
+                    </div>
                 }
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-96'>
