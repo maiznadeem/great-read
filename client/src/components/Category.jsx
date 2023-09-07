@@ -11,7 +11,7 @@ const Category = ({ category, handleCategoryClick }) => {
     let containerClasses = `bg-${isActive ? 'primary' : 'white'} rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
 
     if (category.id >= 32 && category.id <= 39 ) {
-        containerClasses = `bg-${isActive ? 'primary' : 'white'} w-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
+        containerClasses = `bg-${isActive ? 'primary' : 'white'} w-fit rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
     }
 
     

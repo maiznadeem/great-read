@@ -37,9 +37,10 @@ const additionalCategories = [
         name: 'The New York Times - Business',
         image: bestseller,
     },
+
     {
-        id: 33,
-        name: 'The Wall Street Journal',
+        id: 39,
+        name: 'Financial Times and McKinsey',
         image: bestseller,
     },
     {
@@ -48,13 +49,13 @@ const additionalCategories = [
         image: bestseller,
     },
     {
-        id: 35,
-        name: 'Amazon - Personal Development',
+        id: 36,
+        name: 'Forbes - Business',
         image: bestseller,
     },
     {
-        id: 36,
-        name: 'Forbes - Business',
+        id: 33,
+        name: 'The Wall Street Journal',
         image: bestseller,
     },
     {
@@ -63,15 +64,16 @@ const additionalCategories = [
         image: bestseller,
     },
     {
+        id: 35,
+        name: 'Amazon - Personal Development',
+        image: bestseller,
+    },
+    {
         id: 38,
         name: 'Barnes and Noble',
         image: bestseller,
     },
-    {
-        id: 39,
-        name: 'Financial Times and McKinsey',
-        image: bestseller,
-    },
+
 ];
 
 const mainCategories = [

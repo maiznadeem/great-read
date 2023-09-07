@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import BestSeller from '../assets/icons/best-seller.svg';
 import Category from './Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
@@ -60,13 +59,29 @@ const Books = () => {
                         <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
                     ))}
                 </div>
-                <div className='flex justify-center w-full items-center flex-col sm:flex-col'>
-                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 my-2 sm:my-2'>
-                        {categoriesData.slice(0, 8).map((category) => (
-                        <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
-                        ))}
-                    </div>
-                </div>
+                { window.innerWidth >= 768 && 
+                    <div className='flex gap-2 w-full items-center flex-col sm:flex-col'>
+                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
+                            {categoriesData.slice(0, 4).map((category) => (
+                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                            ))}
+                        </div>
+                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
+                            {categoriesData.slice(4, 8).map((category) => (
+                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                            ))}
+                        </div>
+                    </div> 
+                }
+                { window.innerWidth < 768 && 
+                    <div className='flex gap-2 w-full items-center flex-col sm:flex-col'>
+                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
+                            {categoriesData.slice(0, 8).map((category) => (
+                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                            ))}
+                        </div>
+                    </div> 
+                }
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-96'>
                         <ClipLoader color={'#8D5E20'} loading={isLoading} size={50} />
