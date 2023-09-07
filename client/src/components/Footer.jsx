@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from '../assets/logos/logo-golden.svg';
+import Logo from '../assets/logos/logo.png';
 
 const Footer = () => {
     return (
@@ -11,7 +11,7 @@ const Footer = () => {
                     alt="Logo"
                     className="mx-auto h-8 md:h-16 w-auto mb-4"
                 />
-                <p className="manrope-regular text-xs text-[#A6A6A6]">Copyright @2023. All rights reserved.</p>
+                <p className="manrope-regular text-xs text-black">Copyright @2023. All rights reserved.</p>
             </div>
         </footer>
     );

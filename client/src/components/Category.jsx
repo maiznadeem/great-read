@@ -8,7 +8,13 @@ const Category = ({ category, handleCategoryClick }) => {
         handleCategoryClick(category.name);
     };
 
-    const containerClasses = `bg-${isActive ? 'primary' : 'white'} rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
+    let containerClasses = `bg-${isActive ? 'primary' : 'white'} rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
+
+    if (category.id >= 32 && category.id <= 39 ) {
+        containerClasses = `bg-${isActive ? 'primary' : 'white'} w-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
+    }
+
+    
     const textClasses = `text-${isActive ? 'white' : 'black'} manrope-semibold text-xs sm:text-md`;
 
     const image = category.image ? (

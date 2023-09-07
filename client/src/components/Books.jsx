@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BestSeller from '../assets/icons/best seller.svg';
+import BestSeller from '../assets/icons/best-seller.svg';
 import Category from './Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
@@ -55,20 +55,17 @@ const Books = () => {
         <section className='mx-4 sm:my-24 sm:mx-8'>
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3000+</span> books to find your best self.</p>
-
-                <div className='flex justify-center items-center flex-col sm:flex-row border-b-2 border-dotted border-primary'>
-                    <img  className='h-28 w-28' src={BestSeller} alt="Best Seller" />
-                    <div className='flex flex-wrap justify-start my-8 sm:my-14 gap-2'>
-                        {categoriesData.slice(0, 8).map((category) => (
-                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
-                        ))}
-                    </div>
-                </div>
-
-                <div className='flex flex-wrap justify-start my-6 sm:my-14 gap-2'>
+                <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
                     {categoriesData.slice(8).map((category) => (
                         <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
                     ))}
+                </div>
+                <div className='flex justify-center w-full items-center flex-col sm:flex-col'>
+                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 my-2 sm:my-2'>
+                        {categoriesData.slice(0, 8).map((category) => (
+                        <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                        ))}
+                    </div>
                 </div>
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-96'>

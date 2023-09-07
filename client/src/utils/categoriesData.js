@@ -29,39 +29,48 @@ import communication from '../assets/icons/28_Communication.svg';
 import branding from '../assets/icons/29_Branding.svg';
 import teamwork from '../assets/icons/30_Teamwork.svg';
 import problemSolving from '../assets/icons/31_Problem Solving.svg';
+import bestseller from '../assets/icons/best-seller.svg';
 
 const additionalCategories = [
     {
         id: 32,
         name: 'The New York Times - Business',
+        image: bestseller,
     },
     {
         id: 33,
         name: 'The Wall Street Journal',
+        image: bestseller,
     },
     {
         id: 34,
         name: 'Amazon - Business',
+        image: bestseller,
     },
     {
         id: 35,
         name: 'Amazon - Personal Development',
+        image: bestseller,
     },
     {
         id: 36,
         name: 'Forbes - Business',
+        image: bestseller,
     },
     {
         id: 37,
         name: 'Goodreads - Business',
+        image: bestseller,
     },
     {
         id: 38,
         name: 'Barnes and Noble',
+        image: bestseller,
     },
     {
         id: 39,
         name: 'Financial Times and McKinsey',
+        image: bestseller,
     },
 ];
 
