@@ -14,9 +14,7 @@ const TopPicks = require('../models/TopPicks');
 const checkDuplicateTitle = async (req, res, next) => {
     try {
         const title = req.body.title;
-        console.log(title)
         const existingBook = await Book.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } });
-        console.log(existingBook)
         if (existingBook) {
             return res.status(409).json({
                 error: 'Book with the same title already exists. Do you want to proceed with the upload?',
@@ -32,11 +30,6 @@ const checkDuplicateTitle = async (req, res, next) => {
 
 
 async function uploadBook(req, res) {
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
 
     try {
         if (!req.file) {
@@ -67,7 +60,7 @@ async function uploadBook(req, res) {
             quote: req.body.quote,
             image: publicUrl,
         });
-
+        
         await newBook.save();
 
         res.status(200).json({ message: 'Book uploaded successfully' });

@@ -90,20 +90,20 @@ const Book = ({ book }) => {
                     )}
                 </div>
                 <div className="flex space-x-2 items-center">
-                    <img
+                    { book.amazon &&  <img
                         src={amazonIcon}
                         alt="Amazon"
                         className="w-auto h-4 cursor-pointer hover:tooltip"
                         title="Amazon"
                         onClick={() => openLinkInNewTab(book.amazon)}
-                    />
-                    <img
+                    />}
+                    { book.perlego && <img
                         src={perlegoIcon}
                         alt="Perlego"
                         className="w-auto h-4 cursor-pointer hover:tooltip"
                         title="Perlego"
                         onClick={() => openLinkInNewTab(book.perlego)}
-                    />
+                    />}
                 </div>
             </div>
         </div>

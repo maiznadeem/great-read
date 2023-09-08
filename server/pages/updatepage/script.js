@@ -168,6 +168,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return !isNaN(year) && year >= 1200 && year <= 3000;
     }
 
+    function isURL(str) {
+        const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
+        return urlPattern.test(str);
+    }
+
     function handleUpdateStatus(message, isError) {
         updateStatus.innerText = message;
         updateStatus.style.color = isError ? 'red' : 'green';
@@ -364,6 +369,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (!updateTitle || !updateAuthor || !updatePublishingYear || selectedCategories.length === 0) {
             handleResponseMessage("Please fill in all mandatory fields (Title, Author, Publishing Year, Categories).", true);
+            return;
+        }
+        if (!(isURL(amazon) || isURL(perlego))) {
+            handleError('Please provide valid Amazon / Perlego link.');
             return;
         }
         const formData = new FormData();

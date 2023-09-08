@@ -53,7 +53,7 @@ const Books = () => {
     return (
         <section className='mx-4 sm:my-24 sm:mx-8'>
             <div>
-                <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3000+</span> books to find your best self.</p>
+                <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p>
                 <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
                     {categoriesData.slice(8).map((category) => (
                         <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />

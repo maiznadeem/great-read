@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/connectdots" element={<ConnectDots />} />
+            <Route path="/readingreflections" element={<ConnectDots />} />
           </Route>
         </Routes>
       </BrowserRouter>

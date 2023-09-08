@@ -57,11 +57,9 @@ const bookSchema = new mongoose.Schema({
   },
   amazon: {
     type: String,
-    required: true,
   },
   perlego: {
     type: String,
-    required: true,
   },
   quote: {
     type: String,

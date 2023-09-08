@@ -23,8 +23,8 @@ const Header = () => {
         };
     }, []);
 
-    const buttonText = location.pathname === '/' ? 'Connect The Dots' : 'Homepage';
-    const buttonLink = location.pathname === '/' ? '/connectdots' : '/';
+    const buttonText = location.pathname === '/' ? 'Reading Reflections' : 'Homepage';
+    const buttonLink = location.pathname === '/' ? '/readingreflections' : '/';
 
     return (
         <header

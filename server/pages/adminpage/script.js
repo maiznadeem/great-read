@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
     
-        if (!(isURL(amazon) && isURL(perlego))) {
-            handleError('Please provide valid Amazon and Perlego links.');
+        if (!(isURL(amazon) || isURL(perlego))) {
+            handleError('Please provide valid Amazon / Perlego link.');
             return;
         }
     
