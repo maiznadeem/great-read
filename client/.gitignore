@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 app.yaml
+dispatch.yaml
 .gcloudignore
 
 # Editor directories and files
