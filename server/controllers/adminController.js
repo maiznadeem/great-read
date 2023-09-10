@@ -36,7 +36,7 @@ async function uploadBook(req, res) {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
 
-        const bucketName = 'great-read-storage-bucket-maiz';
+        const bucketName = 'great-read-bucket';
         const folderName = 'books';
         const uniqueIdentifier = uuidv4();
         const objectName = folderName + '/' + uniqueIdentifier + '-' + req.file.originalname;
@@ -98,11 +98,13 @@ async function updateBook(req, res) {
         }
         let imageUrl = existingBook.image;
         if (req.file) {
-            const parts = imageUrl.split('/');
-            const fileName = parts[parts.length - 1];
-            const bucketName = 'great-read-storage-bucket-maiz';
-            const fileToDelete = storage.bucket(bucketName).file('books/' + fileName);
-            await fileToDelete.delete();
+            const bucketName = 'great-read-bucket';
+            if (imageUrl) {
+                const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
+                const bucket = storage.bucket(bucketName);
+                const file = bucket.file(objectName);
+                await file.delete();
+            }
             const folderName = 'books';
             const uniqueIdentifier = uuidv4();
             const objectName = folderName + '/' + uniqueIdentifier + '-' + req.file.originalname;
@@ -146,14 +148,15 @@ async function deleteBook(req, res) {
         if (!existingBook) {
             return res.status(404).json({ error: 'Book not found.' });
         }
-        if (existingBook.image) {
-            const parts = existingBook.image.split('/');
-            const fileName = parts[parts.length - 1];
-            const bucketName = 'great-read-storage-bucket-maiz';
-            const fileToDelete = storage.bucket(bucketName).file('books/' + fileName);
-            await fileToDelete.delete();
+        const imageUrl = existingBook.image;
+        if (imageUrl) {
+            const bucketName = 'great-read-bucket';
+            const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
+            const bucket = storage.bucket(bucketName);
+            const file = bucket.file(objectName);
+            await file.delete();
         }
-        await Book.findByIdAndDelete(bookId);
+        await existingBook.deleteOne();
 
         res.status(200).json({ message: 'Book deleted successfully.' });
     } catch (error) {
@@ -194,7 +197,7 @@ async function uploadQuote(req, res) {
 
         const uniqueIdentifier = uuidv4();
 
-        const bucketName = 'great-read-storage-bucket-maiz';
+        const bucketName = 'great-read-bucket';
         const folderName = 'quotes';
         const objectName = `${folderName}/${uniqueIdentifier}-${imageFile.originalname}`;
 
@@ -252,7 +255,7 @@ async function deleteQuote(req, res) {
         }
         const imageUrl = existingQuote.image;
         if (imageUrl) {
-            const bucketName = 'great-read-storage-bucket-maiz';
+            const bucketName = 'great-read-bucket';
             const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
             const bucket = storage.bucket(bucketName);
             const file = bucket.file(objectName);
