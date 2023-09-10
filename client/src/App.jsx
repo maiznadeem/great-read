@@ -19,6 +19,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/readingreflections" element={<ConnectDots />} />
           </Route>
+          <Route path="*" component={<div>404 NOT FOUND</div>} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
