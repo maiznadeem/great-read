@@ -117,7 +117,6 @@ async function updateBook(req, res) {
             imageUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
         }
         const categories = JSON.parse(req.body.categories);
-        console.log(categories)
         const updatedBook = {
             title: req.body.updateTitle,
             author: req.body.updateAuthor,
