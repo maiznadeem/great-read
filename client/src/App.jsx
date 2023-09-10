@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename="/great-read.com">
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
