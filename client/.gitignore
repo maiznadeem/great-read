@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+app.yaml
+.gcloudignore
 
 # Editor directories and files
 .vscode/*
