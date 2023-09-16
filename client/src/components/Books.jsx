@@ -93,7 +93,7 @@ const Books = () => {
                                 <Book key={index} book={book} />
                             ))}
                         </div>
-                        <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center'>
+                        <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center overflow-hidden'>
                             <DefaultPagination
                                 currentPage={currentPage}
                                 limit={limit}
