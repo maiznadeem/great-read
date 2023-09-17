@@ -47,8 +47,8 @@ const requestPasswordReset = async (email, protocol, hostname, port) => {
         token: hash,
         createdAt: Date.now(),
     }).save();
-    const baseUrl = `${protocol}://${hostname}`;
-    const link = `${baseUrl}:8080/reset/passwordReset?token=${resetToken}&id=${user._id}`;
+    // const baseUrl = `${protocol}://${hostname}`;
+    const link = `https://great-read-398408.uc.r.appspot.com/reset/passwordReset?token=${resetToken}&id=${user._id}`;
 
 
     sendEmail(
