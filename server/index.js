@@ -8,6 +8,7 @@ const path = require('path');
 
 const { adminRoute } = require('./routes/adminRoute');
 const { loginRoute } = require('./routes/loginRoute');
+const { resetRoute } = require('./routes/resetRoute');
 const { logoutRoute } = require('./routes/logoutRoute');
 const { getRoute } = require('./routes/getRoute');
 
@@ -28,6 +29,7 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/reset/passwordReset', express.static(path.join(__dirname, 'public', 'resetPassword')));
 
 function isAuthenticated(req, res, next) {
     if (req.session.isAuthenticated) {
@@ -38,6 +40,7 @@ function isAuthenticated(req, res, next) {
 }
 
 app.use('/login', loginRoute);
+app.use('/reset', resetRoute)
 app.use('/logout', logoutRoute);
 app.use('/get', getRoute);
 

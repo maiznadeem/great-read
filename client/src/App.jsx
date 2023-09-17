@@ -11,13 +11,9 @@ import ConnectDots from './pages/ConnectDots';
 const queryClient = new QueryClient();
 
 function App() {
-
-    if (window.location.protocol === 'http:') {
-        window.location.href = `https://${window.location.hostname}${window.location.pathname}${window.location.search}`;
-    }
     return (
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter basename="/great-read.com">
+            <BrowserRouter>
                 <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<HomePage />} />
