@@ -10,6 +10,7 @@ const storage = new Storage({
 const Book = require('../models/Book');
 const Quote = require('../models/Quote')
 const TopPicks = require('../models/TopPicks');
+const Category = require('../models/Category');
 
 const checkDuplicateTitle = async (req, res, next) => {
     try {
@@ -268,6 +269,87 @@ async function deleteQuote(req, res) {
     }
 }
 
+async function addCategory(req, res) {
+    try {
+        const { categoryName, isBestSeller } = req.body;
+        const categoryImageFile = req.file;
+
+        if (!categoryImageFile) {
+            return res.status(400).json({ error: 'No category image file uploaded.' });
+        }
+
+        const uniqueIdentifier = uuidv4();
+
+        const bucketName = 'great-read-bucket';
+        const folderName = 'categories';
+        const objectName = `${folderName}/${uniqueIdentifier}-${categoryImageFile.originalname}`;
+
+        const bucket = storage.bucket(bucketName);
+        const file = bucket.file(objectName);
+
+        await file.save(req.file.buffer, {
+            contentType: req.file.mimetype,
+        });
+
+        const categoryImage = `https://storage.googleapis.com/${bucketName}/${objectName}`;
+
+        const newCategory = new Category({
+            name: categoryName,
+            image: categoryImage,
+            bestseller: isBestSeller || false, // Default to false if not provided
+        });
+
+        await newCategory.save();
+
+        res.status(200).json({ message: 'Category added successfully' });
+    } catch (error) {
+        console.error('Error adding category:', error);
+        res.status(500).json({ error: 'Could not add the category.' });
+    }
+}
+
+
+async function searchCategory(req, res) {
+    try {
+        const searchTerm = req.query.term;
+        let categories;
+        if (!searchTerm || searchTerm.trim() === "") {
+            categories = await Category.find({}, { image: 0 });
+        } else {
+            categories = await Category.find({
+                name: { $regex: searchTerm, $options: 'i' },
+            }, { image: 0 });
+        }
+        res.json(categories);
+    } catch (error) {
+        console.error('Error searching categories:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+async function deleteCategory(req, res) {
+    try {
+        const categoryId = req.body.categoryId;
+        const existingCategory = await Category.findById(categoryId);
+        if (!existingCategory) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+        const categoryImage = existingCategory.image;
+        if (categoryImage) {
+            const bucketName = 'great-read-bucket';
+            const objectName = categoryImage.replace(`https://storage.googleapis.com/${bucketName}/`, '');
+            const bucket = storage.bucket(bucketName);
+            const file = bucket.file(objectName);
+            await file.delete();
+        }
+        await existingCategory.deleteOne();
+        res.status(200).json({ message: 'Category deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
 async function updateTopPicks(req, res) {
     try {
         const existingTopPicks = await TopPicks.findOne();
@@ -298,5 +380,8 @@ module.exports = {
     uploadQuote,
     searchQuote,
     deleteQuote,
+    addCategory,
+    searchCategory,
+    deleteCategory,
     updateTopPicks,
 };

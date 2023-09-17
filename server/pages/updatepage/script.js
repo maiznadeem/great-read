@@ -273,77 +273,41 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    const categories = [
-        "Autobiography/Biography",
-        "Managing Workforce",
-        "Success Recipes",
-        "Procrastination Killers",
-        "Mind Tabs",
-        "Finding Yourself",
-        "Breaking Your Limits",
-        "Decision Making",
-        "Innovation and Creativity",
-        "Productivity Vitamin",
-        "Community Builder",
-        "Your Habits",
-        "Network Web",
-        "Productivity Hill",
-        "Mindfulness",
-        "Understanding Humans",
-        "Time Management",
-        "A Company's Insider",
-        "Business Numeracy",
-        "Business Strategy",
-        "Art of Persuasion",
-        "Emotions",
-        "Leadership",
-        "Startups",
-        "Technology",
-        "Product Development",
-        "Finances",
-        "Communication",
-        "Branding",
-        "Teamwork",
-        "Problem Solving",
-        "The New York Times - Business",
-        "The Wall Street Journal",
-        "Amazon - Business",
-        "Amazon - Personal Development",
-        "Forbes - Business",
-        "Goodreads - Business", 
-        "Barnes and Noble",
-        "Financial Times and McKinsey",
-    ]
-    
-
     const categoryGrid = document.getElementById('categoryCheckboxes');
     
-    categories.forEach(category => {
-        const categoryItem = document.createElement('div');
-        categoryItem.classList.add('category-item');
-        
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.name = 'categories';
-        checkbox.value = category;
-    
-        const label = document.createElement('label');
-        label.textContent = category;
-    
-        categoryItem.appendChild(checkbox);
-        categoryItem.appendChild(label);
-    
-        categoryItem.addEventListener('click', () => {
-            if (checkbox.checked) {
-                checkbox.checked = false
-                categoryItem.classList.remove('selected');
-            } else {
-                checkbox.checked = true
-                categoryItem.classList.add('selected');
-            }
+    fetch('/get/categories')
+    .then((response) => response.json())
+    .then((categories) => {
+        categories.forEach((category) => {
+            const categoryItem = document.createElement('div');
+            categoryItem.classList.add('category-item');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'categories';
+            checkbox.value = category.name;
+
+            const label = document.createElement('label');
+            label.textContent = category.name;
+
+            categoryItem.appendChild(checkbox);
+            categoryItem.appendChild(label);
+
+            categoryItem.addEventListener('click', () => {
+                if (checkbox.checked) {
+                    checkbox.checked = false;
+                    categoryItem.classList.remove('selected');
+                } else {
+                    checkbox.checked = true;
+                    categoryItem.classList.add('selected');
+                }
+            });
+
+            categoryGrid.appendChild(categoryItem);
         });
-        
-        categoryGrid.appendChild(categoryItem);
+    })
+    .catch((error) => {
+        console.error('Error fetching categories:', error);
     });
 
     updateButton.addEventListener("click", function (e) {

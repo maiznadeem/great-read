@@ -3,6 +3,7 @@ const getRoute = express.Router();
 const Book = require('../models/Book');
 const TopPicks = require('../models/TopPicks');
 const Quote = require('../models/Quote');
+const Category = require('../models/Category');
 
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories } = req.body;
@@ -79,6 +80,16 @@ function shuffleArray(array) {
     }
     return array;
 }
+
+getRoute.get('/categories', async (req, res) => {
+    try {
+        const categories = await Category.find();
+        res.json(categories);
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 module.exports = { getRoute };

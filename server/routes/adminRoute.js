@@ -31,6 +31,10 @@ adminRoute.post('/uploadquote', upload.single('image'), adminController.uploadQu
 adminRoute.get('/searchquote', adminController.searchQuote);
 adminRoute.post('/deletequote', adminController.deleteQuote);
 
+adminRoute.post('/addcategory', upload.single('categoryImage'), adminController.addCategory);
+adminRoute.get('/searchcategory', adminController.searchCategory);
+adminRoute.post('/deletecategory', adminController.deleteCategory);
+
 adminRoute.post('/updatetoppicks', adminController.updateTopPicks);
 
 module.exports = { adminRoute };
