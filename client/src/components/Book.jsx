@@ -5,9 +5,7 @@ import perlegoIcon from '../assets/links/perlego.png';
 import invertedLeft from '../assets/links/inverted-comma-left.svg'
 import invertedrRight from '../assets/links/inverted-comma-right.svg'
 
-import categoriesData from '../utils/categoriesData';
-
-const Book = ({ book }) => {
+const Book = ({ book, categories }) => {
 
     const [showCategoryNames, setShowCategoryNames] = useState(false);
     useEffect(() => {
@@ -33,11 +31,11 @@ const Book = ({ book }) => {
     };
 
     const categoryIcons = book.categories.map(category => {
-        const matchingCategory = categoriesData.find(item => item.name === category);
+        const matchingCategory = categories.find(item => item.name === category);
         if (matchingCategory && matchingCategory.image) {
             return (
                 <img
-                    key={matchingCategory.id}
+                    key={matchingCategory._id}
                     src={matchingCategory.image}
                     alt={matchingCategory.name}
                     title={matchingCategory.name}

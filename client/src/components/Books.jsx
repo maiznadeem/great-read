@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Category from './Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
-import categoriesData from '../utils/categoriesData';
-import { getBooks } from '../utils/api';
+import { getBooks, getCategories } from '../utils/api';
 import { ClipLoader } from 'react-spinners';
 
 const Books = () => {
     const [books, setBooks] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(12);
@@ -26,7 +26,27 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
-    }, [currentPage, limit, activeCategories]);    
+        getCategories()
+            .then((data) => {
+                setCategories(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                setIsLoading(false);
+            });
+    }, [currentPage, limit, activeCategories]);
+
+    const bestsellerCategories = [];
+    const nonBestsellerCategories = [];
+
+    categories.forEach((category) => {
+        if (category.bestseller) {
+            bestsellerCategories.push(category);
+        } else {
+            nonBestsellerCategories.push(category);
+        }
+    });
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -55,28 +75,23 @@ const Books = () => {
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p>
                 <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
-                    {categoriesData.slice(8).map((category) => (
-                        <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} />
+                    {nonBestsellerCategories.map((category) => (
+                        <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} />
                     ))}
                 </div>
-                { window.innerWidth >= 768 && 
-                    <div className='flex gap-2 w-full items-center flex-col sm:flex-col'>
-                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
-                            {categoriesData.slice(0, 4).map((category) => (
-                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
-                            ))}
-                        </div>
-                        <div className='flex flex-row flex-wrap md:flex-nowrap gap-2 justify-center md:justify-between md:min-w-[750px]'>
-                            {categoriesData.slice(4, 8).map((category) => (
-                            <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                { window.innerWidth >= 768 &&
+                    <div className='flex justify-center items-center'>
+                        <div className='flex flex-wrap gap-2 items-center justify-between max-w-[750px]'>
+                            {bestsellerCategories.map((category) => (
+                            <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
                             ))}
                         </div>
                     </div> 
                 }
                 { window.innerWidth < 768 && 
                     <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
-                            {categoriesData.slice(0, 8).map((category) => (
-                                <Category key={category.id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                            {bestsellerCategories.map((category) => (
+                                <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
                             ))}
                     </div>
                 }
@@ -90,7 +105,7 @@ const Books = () => {
                     <>
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
-                                <Book key={index} book={book} />
+                                <Book key={index} book={book} categories={categories} />
                             ))}
                         </div>
                         <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center overflow-hidden'>
