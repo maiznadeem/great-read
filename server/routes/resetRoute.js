@@ -12,8 +12,6 @@ const signUpController = async (req, res, next) => {
 const resetPasswordRequestController = async (req, res, next) => {
     try {
         const port = req.app.get('port');
-        console.log(req.protocol + req.hostname + port);
-        
         const requestPasswordResetService = await requestPasswordReset(
             req.body.email,
             req.protocol, req.hostname, port
