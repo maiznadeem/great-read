@@ -62,11 +62,13 @@ const Books = () => {
             setActiveCategories((prevActiveCategories) =>
                 prevActiveCategories.filter((cat) => cat !== categoryName)
             );
+            setCurrentPage(1);
         } else {
             setActiveCategories((prevActiveCategories) => [
                 ...prevActiveCategories,
                 categoryName,
             ]);
+            setCurrentPage(1);
         }
     };
 
@@ -75,9 +77,15 @@ const Books = () => {
             <div>
                 <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p>
                 <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
-                    {nonBestsellerCategories.map((category) => (
-                        <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} />
-                    ))}
+                    {nonBestsellerCategories
+                        .sort((a, b) => {
+                            const nameA = a.name.toLowerCase();
+                            const nameB = b.name.toLowerCase();
+                            return nameA.localeCompare(nameB);
+                        })
+                        .map((category) => (
+                            <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} />
+                        ))}
                 </div>
                 { window.innerWidth >= 768 &&
                     <div className='flex justify-center items-center'>
