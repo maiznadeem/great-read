@@ -31,7 +31,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -51,7 +51,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -70,7 +70,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={totalPages}
                     onClick={() => handlePageChange(totalPages)}
-                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     {totalPages}
                 </button>
@@ -83,13 +83,13 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={1}
                     onClick={() => handlePageChange(1)}
-                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     1
                 </button>
             );
             buttons.push(
-                <span key="left-dots" className="text-black relative inline-flex items-center px-4 py-2 text-sm manrope-semibold">
+                <span key="left-dots" className="text-black relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold">
                     ...
                 </span>
             );
@@ -99,7 +99,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -120,14 +120,14 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={1}
                     onClick={() => handlePageChange(1)}
-                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     1
                 </button>
             );
             if (leftBound > 2) {
                 buttons.push(
-                    <span key="left-dots" className="text-black relative inline-flex items-center px-4 py-2 text-sm manrope-semibold">
+                    <span key="left-dots" className="text-black relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold">
                         ...
                     </span>
                 );
@@ -140,7 +140,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                     key={i}
                     onClick={() => handlePageChange(i)}
                     aria-current={current === i ? 'page' : undefined}
-                    className={`relative inline-flex items-center px-4 py-2 text-sm manrope-semibold ${
+                    className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                         current === i
                             ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                             : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -154,7 +154,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
         if (rightBound < totalPages) {
             if (rightBound < totalPages - 1) {
                 buttons.push(
-                    <span key="right-dots" className="relative text-black inline-flex items-center px-4 py-2 text-sm manrope-semibold">
+                    <span key="right-dots" className="relative text-black inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold">
                         ...
                     </span>
                 );
@@ -163,7 +163,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={totalPages}
                     onClick={() => handlePageChange(totalPages)}
-                    className="relative inline-flex items-center px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     {totalPages}
                 </button>
