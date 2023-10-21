@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'MTD UT Sugar Cane';
-    src: url('../public/SugarCane/MTD\ UT\ Sugar\ Cane.ttf') format('truetype');
+    src: url('/SugarCane/MTD\ UT\ Sugar\ Cane.ttf') format('truetype');
 }
 
 .sugarcane {

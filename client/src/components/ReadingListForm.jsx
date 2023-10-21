@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Slider from '@mui/material/Slider';
+
 import waves from '../assets/backgrounds/waves.png';
 import linear from '../assets/backgrounds/linear.png';
 
@@ -10,7 +12,8 @@ const ReadingListForm = () => {
     const [step, setStep] = useState(1);
     const [name, setName] = useState('');
     const [selectedTimePeriod, setSelectedTimePeriod] = useState('1 Week');
-    const [goal, setGoal] = useState('');
+    const [goal, setGoal] = useState(1);
+    const [select, setSelect] = useState('choose for me');
     const nextStep = () => {
         setStep(step + 1);
     };
@@ -20,16 +23,21 @@ const ReadingListForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+    const handleNameChange = (e) => {
+        const newName = e.target.value;
+        setName(newName);
+    };
     const steps = [
         {
             content: (
                 <div className="step-content">
                     <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
-                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>Create your reading goal</p>
+                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>{ name.trim() !== "" ? `Hi, ${name}` : "Create your reading goal"}</p>
                         <input
                             type="text"
                             className='bg-white border-gray-500 border-[1px] sm:py-4 sm:px-8 px-6 py-3 w-full max-w-[500px] text-md sm:text-xl manrope-regular text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500] focus:ring-opacity-50'
                             placeholder='Enter your name...'
+                            onChange={handleNameChange}
                         />
                         <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>You will be able to download it as a PDF and/or share it on your LinkedIn</p>
                     </div>
@@ -49,7 +57,7 @@ const ReadingListForm = () => {
                                     <input
                                         type="radio"
                                         name="timePeriod"
-                                        value="1 Week"
+                                        value="1 week"
                                         className="hidden"
                                         onChange={() => setSelectedTimePeriod('1 Week')}
                                     />
@@ -59,7 +67,7 @@ const ReadingListForm = () => {
                                     <input
                                         type="radio"
                                         name="timePeriod"
-                                        value="1 Month"
+                                        value="1 month"
                                         className="hidden"
                                         onChange={() => setSelectedTimePeriod('1 Month')}
                                     />
@@ -71,7 +79,7 @@ const ReadingListForm = () => {
                                     <input
                                         type="radio"
                                         name="timePeriod"
-                                        value="6 Months"
+                                        value="6 months"
                                         className="hidden"
                                         onChange={() => setSelectedTimePeriod('6 Months')}
                                     />
@@ -81,7 +89,7 @@ const ReadingListForm = () => {
                                     <input
                                         type="radio"
                                         name="timePeriod"
-                                        value="1 Year"
+                                        value="1 year"
                                         className="hidden"
                                         onChange={() => setSelectedTimePeriod('1 Year')}
                                     />
@@ -89,6 +97,64 @@ const ReadingListForm = () => {
                                 </label>
                             </div>
                         </div>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            content: (
+                <div className="step-content">
+                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
+                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>{ name.trim() !== "" ? `Hi ${name}, How many books would you like to read in ${selectedTimePeriod}?` : ""}</p>
+                        <p className='text-primary text-center text-xl sm:text-3xl manrope-semibold'>{goal == 1? "1 Book" : `${goal} Books`}</p>
+                        <Slider
+                            min={1}
+                            max={100}
+                            defaultValue={goal}
+                            valueLabelDisplay="auto"
+                            onChange={(e) => setGoal(e.target.value)}
+                            sx={{
+                                color: "#FFA500",
+                                maxWidth: "500px",
+                                '& .MuiSlider-thumb': {
+                                    backgroundColor: 'white',
+                                },
+                            }}
+                        />
+                    </div>
+                </div>
+            ),
+        },
+        {
+            content: (
+                <div className="step-content">
+                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
+                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>
+                            Hi {name}, How would you like to select {`${goal == 1 ? "1 book" : `${goal} books`}`}?
+                        </p>
+                        <div className="flex w-full gap-2 justify-center max-w-[500px]">
+                            <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'choose for me' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                                <input
+                                    type="radio"
+                                    name="select"
+                                    value="choose for me"
+                                    className="hidden"
+                                    onChange={() => setSelect('choose for me')}
+                                />
+                                <div className="button-radio">Choose for me*</div>
+                            </label>
+                            <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'i will choose' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                                <input
+                                    type="radio"
+                                    name="select"
+                                    value="i will choose"
+                                    className="hidden"
+                                    onChange={() => setSelect('i will choose')}
+                                />
+                                <div className="button-radio">I'll choose</div>
+                            </label>
+                        </div>
+                        <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>*You will have the option to choose the categories before your shelf is stacked for you.</p>
                     </div>
                 </div>
             ),
@@ -110,7 +176,7 @@ const ReadingListForm = () => {
                         </button>
                     )}
                     {step < steps.length && (
-                        <button type="button w-full" onClick={nextStep}>
+                        <button type="button w-full" onClick={nextStep} disabled={name.trim() == ""}>
                             <img src={enabled} alt="Next" className="h-8 w-8" />
                         </button>
                     )}
