@@ -31,7 +31,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
+                        className={`min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -51,7 +51,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
+                        className={`min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -70,7 +70,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={totalPages}
                     onClick={() => handlePageChange(totalPages)}
-                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     {totalPages}
                 </button>
@@ -83,7 +83,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={1}
                     onClick={() => handlePageChange(1)}
-                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     1
                 </button>
@@ -99,7 +99,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         key={i}
                         onClick={() => handlePageChange(i)}
                         aria-current={current === i ? 'page' : undefined}
-                        className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
+                        className={`min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                             current === i
                                 ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                                 : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -120,7 +120,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={1}
                     onClick={() => handlePageChange(1)}
-                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover-bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     1
                 </button>
@@ -140,7 +140,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                     key={i}
                     onClick={() => handlePageChange(i)}
                     aria-current={current === i ? 'page' : undefined}
-                    className={`relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
+                    className={`min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold ${
                         current === i
                             ? 'bg-primaryDark text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
                             : 'text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
@@ -163,7 +163,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                 <button
                     key={totalPages}
                     onClick={() => handlePageChange(totalPages)}
-                    className="relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    className="min-w-[40px] justify-center relative inline-flex items-center px-2 sm:px-4 py-2 text-sm manrope-semibold text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                 >
                     {totalPages}
                 </button>
@@ -180,7 +180,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                     <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm scale-65 sm:scale-100" aria-label="Pagination">
                         <button
                             onClick={() => handlePageChange(current - 1)}
-                            className={`relative inline-flex items-center rounded-l-md px-2 py-2 text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
+                            className={`min-w-[40px] justify-center relative inline-flex items-center rounded-l-md px-2 py-2 text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
                                 current === 1 ? 'pointer-events-none opacity-50' : ''
                             }`}
                             disabled={current === 1}
@@ -191,7 +191,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
                         {renderPageButtons()}
                         <button
                             onClick={() => handlePageChange(current + 1)}
-                            className={`relative inline-flex items-center rounded-r-md px-2 py-2 text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
+                            className={`min-w-[40px] justify-center relative inline-flex items-center rounded-r-md px-2 py-2 text-black ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 ${
                                 current === totalPages ? 'pointer-events-none opacity-50' : ''
                             }`}
                             disabled={current === totalPages}

@@ -17,7 +17,7 @@ function App() {
                 <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/readingreflections" element={<ConnectDots />} />
+                    <Route path="/notes" element={<ConnectDots />} />
                 </Route>
                 <Route path="*" component={<div>404 NOT FOUND</div>} />
                 </Routes>

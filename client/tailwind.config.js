@@ -19,7 +19,10 @@ export default {
             scale: {
                 '65': '0.65',
                 '60': '0.60'
-            }
+            },
+            fontFamily: {
+                'sugarcane': ['MTD UT Sugar Cane', 'sans-serif']
+            },
         },
     },
     plugins: [],
