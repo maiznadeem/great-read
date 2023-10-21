@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../assets/logos/Logo.svg';
+import { useReadingList } from '../context/ReadingListContext';
 
 const Header = () => {
     const [isHidden, setIsHidden] = useState(false);
-    const [isAtTop, setIsAtTop] = useState(true); // Initialize isAtTop as true
+    const [isAtTop, setIsAtTop] = useState(true);
     const location = useLocation();
+    const history = useNavigate();
+
+    const { isReadingListActive, toggleReadingList } = useReadingList();
 
     useEffect(() => {
         let lastScrollTop = 0;
@@ -30,11 +34,23 @@ const Header = () => {
     const buttonText = location.pathname === '/' ? 'Notes' : 'Homepage';
     const buttonLink = location.pathname === '/' ? '/notes' : '/';
 
+    const readingListButtonClass = isReadingListActive
+        ? "manrope-semibold bg-green-600 text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-green-700"
+        : "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark";
+
+    const handleNotesButtonClicked = () => {
+        if (isReadingListActive) {
+            toggleReadingList();
+        }
+        history(buttonLink);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <header
             className={`fixed top-0 left-0 w-full bg-backgroundPrimary ${
                 isHidden ? 'transform translate-y-[-80px]' : 'px-4 sm:px-8 py-4 border-primary'
-            } ${ isAtTop ? '' : 'border-b-2 border-primary shadow-md' } transition-all duration-300 ease-in-out z-10`}
+            } ${isAtTop ? '' : 'border-b-2 border-primary shadow-md'} transition-all duration-300 ease-in-out z-10`}
         >
             {isAtTop && (
                 <div className="absolute w-2/4 border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
@@ -45,25 +61,34 @@ const Header = () => {
                         src={Logo}
                         alt="Logo"
                         className={`transition-all duration-300 transform 
-                            ${ isHidden ? 'h-0' : '' } 
-                            ${ !isHidden && !isAtTop ? 'h-16' : '' }
-                            ${ !isHidden && isAtTop ? 'h-32 sm:h-36 max-h-96' : '' }`
-                        }
+                            ${isHidden ? 'h-0' : ''}
+                            ${!isHidden && !isAtTop ? 'h-16' : ''}
+                            ${!isHidden && isAtTop ? 'h-32 sm:h-36 max-h-96' : ''}
+                        `}
                     />
                 </Link>
                 <div className='flex flex-col gap-1 sm:gap-2'>
-                    <div className={`flex gap-1 sm:gap-2 ${ !isAtTop ? 'flex-row' : 'flex-col' } justify-center items-end sm:flex-row`}>
-                        <button className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark">
-                            Reading List
+                    <div className={`flex gap-1 sm:gap-2 ${!isAtTop ? 'flex-row' : 'flex-col'} justify-center items-end sm:flex-row`}>
+                        <button
+                            className={readingListButtonClass}
+                            onClick={() => {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                toggleReadingList()
+                            }}
+                        >
+                            <NavLink to="/">Reading List</NavLink>
                         </button>
-                        <button className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark">
-                            <NavLink to={buttonLink}>{buttonText}</NavLink>
+                        <button
+                            className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover-bg-primaryDark"
+                            onClick={handleNotesButtonClicked}
+                        >
+                            {buttonText}
                         </button>
                     </div>
-                    { isAtTop &&
+                    {isAtTop &&
                         <p className='font-sugarcane text-black text-2xl sm:text-5xl flex justify-center'>Bookmark your best self</p>
                     }
-                    </div>
+                </div>
             </div>
         </header>
     );

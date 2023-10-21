@@ -6,6 +6,7 @@ import { getBooks, getCategories } from '../utils/api';
 import { ClipLoader } from 'react-spinners';
 
 const Books = () => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [books, setBooks] = useState([]);
     const [categories, setCategories] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
@@ -13,6 +14,16 @@ const Books = () => {
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         setIsLoading(true);
@@ -35,7 +46,7 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
-    }, [currentPage, limit, activeCategories]);
+    }, [currentPage, limit, activeCategories, windowWidth]);
 
     const bestsellerCategories = [];
     const nonBestsellerCategories = [];
@@ -91,7 +102,7 @@ const Books = () => {
                             <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} />
                         ))}
                 </div>
-                { window.innerWidth >= 768 &&
+                { windowWidth >= 768 &&
                     <div className='flex justify-center items-center'>
                         <div className='flex flex-wrap gap-2 items-center justify-between max-w-[750px]'>
                             {bestsellerCategories.map((category) => (
@@ -100,7 +111,7 @@ const Books = () => {
                         </div>
                     </div> 
                 }
-                { window.innerWidth < 768 && 
+                { windowWidth < 768 && 
                     <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
                             {bestsellerCategories.map((category) => (
                                 <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
@@ -115,7 +126,7 @@ const Books = () => {
                     <div className='manrope-semibold text-center text-gray-700 h-96 flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
-                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
+                        <div id='booksection' className='scroll-m-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
                                 <Book key={index} book={book} categories={categories} />
                             ))}
@@ -142,8 +153,9 @@ const Books = () => {
                         onChange={(e) => handleBooksPerPageChange(Number(e.target.value))}
                     >
                         <option value="12">12</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
+                        <option value="36">36</option>
+                        <option value="72">72</option>
+                        <option value="96">96</option>
                     </select>
                 </div>
             </div>

@@ -4,9 +4,9 @@ import { getTopPicks, getQuotes } from '../utils/api';
 import { ClipLoader } from 'react-spinners';
 
 const Banner = () => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
     const [fadeIn, setFadeIn] = useState(true);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [topPicks, setTopPicks] = useState(null);
     const [quotes, setQuotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -29,9 +29,15 @@ const Banner = () => {
         return months[monthNumber - 1];
     };
 
-    const handleResize = () => {
-        setScreenWidth(window.innerWidth);
-    };
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,8 +54,6 @@ const Banner = () => {
             }
         };
         fetchData();
-
-        window.addEventListener('resize', handleResize);
     }, []);
 
     useEffect(() => {
@@ -64,7 +68,6 @@ const Banner = () => {
         }, 10000);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
             clearInterval(quoteRotationInterval);
         };
     }, [quotes]);
@@ -80,7 +83,7 @@ const Banner = () => {
             ) : (
                 <>
                     {currentQuote && (
-                        <div className={`mb-6 sm:mb-0 md:w-[600px] lg:w-1/4 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`mb-6 sm:mb-0 md:w-[600px] lg:w-[35%] transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
                             <div className='flex flex-col items-center justify-center'>
                                 <div className='rounded'>
                                     <img
@@ -99,28 +102,28 @@ const Banner = () => {
                         </div>
                     )}
 
-            {screenWidth > 768 && (
-                <div className='lg:w-3/4'>
+            {windowWidth > 768 && (
+                <div className='lg:w-[65%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-6 py-10 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
-                            <div className='flex flex-col gap-3 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold text-5xl text-black'>
+                            <div className='flex flex-col gap-2 items-start justify-center w-full md:w-[40%]'>
+                                <p className='manrope-semibold text-4xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-5xl text-black'>
+                                <p className='manrope-semibold text-4xl text-black'>
                                     <span className='text-primaryDark'>Be</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-5xl text-black'>
+                                <p className='manrope-semibold text-4xl text-black'>
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books that matter the most to you.
+                                <p className='manrope-semibold text-xl text-black'>
+                                    The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
                                 </p>
                             </div>
 
-                            <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
+                            <div className='flex flex-col gap-2 items-center justify-center w-full md:w-[60%]'>
                                 <div className='absolute top-[70%]'>
-                                    <div className='w-[80%] mx-auto relative xl:w-[500px]'>
+                                    <div className='w-[80%] mx-auto relative xl:w-[400px]'>
                                         <img className='shadow-xl' src={shelf} alt='Shelf' />
                                         <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
                                             <img
@@ -149,22 +152,22 @@ const Banner = () => {
                     </div>
                 </div>
             )}
-            {screenWidth <= 768 && (
-                <div className='lg:w-3/4'>
+            {windowWidth <= 768 && (
+                <div className='lg:w-[65%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl px-4 py-6 sm:px-6 sm:py-10 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
-                            <div className='flex flex-col gap-1 sm:gap-3 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
+                            <div className='flex flex-col gap-1 sm:gap-2 items-start justify-center w-full md:w-[40%]'>
+                                <p className='manrope-semibold text-3xl sm:text-4xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
+                                <p className='manrope-semibold text-3xl sm:text-4xl text-black'>
                                     <span className='text-primaryDark'>Be</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-4xl sm:text-5xl text-black'>
+                                <p className='manrope-semibold text-3xl sm:text-4xl text-black'>
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-md sm:text-lg text-black'>
-                                    The <span className='text-primaryDark'>internet's largest library</span> with a focus on non-fiction books that inspire you. A central point to find books that matter the most to you.
+                                    The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
                                 </p>
                             </div>
                         </div>

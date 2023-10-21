@@ -8,7 +8,7 @@ const Category = ({ category, handleCategoryClick }) => {
         handleCategoryClick(category.name);
     };
 
-    let containerClasses = `bg-${isActive ? 'primary' : 'white'} rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
+    let containerClasses = `bg-${isActive ? 'primary' : 'white'} h-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
 
     if (category.id >= 32 && category.id <= 39 && window.innerWidth < 768 ) {
         containerClasses = `bg-${isActive ? 'primary' : 'white'} w-full h-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
