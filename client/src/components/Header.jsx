@@ -63,7 +63,7 @@ const Header = () => {
                         className={`transition-all duration-300 transform 
                             ${isHidden ? 'h-0' : ''}
                             ${!isHidden && !isAtTop ? 'h-16' : ''}
-                            ${!isHidden && isAtTop ? 'h-32 sm:h-36 max-h-96' : ''}
+                            ${!isHidden && isAtTop ? 'h-32 sm:h-32 max-h-96' : ''}
                         `}
                     />
                 </Link>
@@ -85,9 +85,9 @@ const Header = () => {
                             {buttonText}
                         </button>
                     </div>
-                    {isAtTop &&
+                    {/* {isAtTop &&
                         <p className='font-sugarcane text-black text-2xl sm:text-5xl flex justify-center'>Bookmark your best self</p>
-                    }
+                    } */}
                 </div>
             </div>
         </header>

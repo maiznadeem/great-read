@@ -104,7 +104,7 @@ const ReadingListForm = () => {
         {
             content: (
                 <div className="step-content">
-                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
+                    <div className='flex flex-col items-center gap-4 py-4'>
                         <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>{ name.trim() !== "" ? `Hi ${name}, How many books would you like to read in ${selectedTimePeriod}?` : ""}</p>
                         <p className='text-primary text-center text-xl sm:text-3xl manrope-semibold'>{goal == 1? "1 Book" : `${goal} Books`}</p>
                         <Slider
@@ -129,8 +129,8 @@ const ReadingListForm = () => {
             content: (
                 <div className="step-content">
                     <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
-                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>
-                            Hi {name}, How would you like to select {`${goal == 1 ? "1 book" : `${goal} books`}`}?
+                        <p className='text-black text-center text-xl sm:text-2xl manrope-semibold'>
+                            Hi {name}, how would you like to select {`${goal == 1 ? "1 book" : `${goal} books`}`}?
                         </p>
                         <div className="flex w-full gap-2 justify-center max-w-[500px]">
                             <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'choose for me' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
@@ -162,7 +162,7 @@ const ReadingListForm = () => {
     ];
 
     return (
-        <div className='bg-[#F2EADF] py-6 px-8 sm:py-8 sm:px-12 rounded-md w-full' style={{
+        <div className='bg-[#F2EADF] py-6 px-8 sm:py-3 sm:px-4 rounded-lg w-full' style={{
             background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${waves}), url(${linear})`,
             backgroundSize: 'cover, cover, cover',
             backgroundPosition: 'center, center, center',
