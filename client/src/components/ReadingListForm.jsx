@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Slider from '@mui/material/Slider';
 
 import waves from '../assets/backgrounds/waves.png';
 import linear from '../assets/backgrounds/linear.png';
@@ -7,181 +6,93 @@ import linear from '../assets/backgrounds/linear.png';
 import enabled from '../assets/buttons/enabled.svg';
 import disabled from '../assets/buttons/disabled.svg';
 
+import { useReadingList } from '../context/ReadingListContext';
+
+import Step1 from '../utils/StepperContent/Step1';
+import Step2 from '../utils/StepperContent/Step2';
+import Step3 from '../utils/StepperContent/Step3';
+import Step4 from '../utils/StepperContent/Step4';
+import CategoryStep from "../utils/StepperContent/CategoryStep";
+
 const ReadingListForm = () => {
+
+    const { setNameValue, setPeriodValue, setGoalValue, setReadingInfoValue } = useReadingList();
+
+    const stepLength = 5;
 
     const [step, setStep] = useState(1);
     const [name, setName] = useState('');
     const [selectedTimePeriod, setSelectedTimePeriod] = useState('1 Week');
     const [goal, setGoal] = useState(1);
     const [select, setSelect] = useState('choose for me');
+    const [selectedCategories, setSelectedCategories]= useState([]);
     const nextStep = () => {
+        if (step == 4 && select == "i will choose") {
+            handleChoose();
+            return;
+        }
         setStep(step + 1);
     };
     const prevStep = () => {
         setStep(step - 1);
     };
+    const handleChoose = () => {
+        setNameValue(name);
+        setPeriodValue(selectedTimePeriod);
+        setGoalValue(goal);
+        setReadingInfoValue(true);
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (step < stepLength) {
+            nextStep();
+            return;
+        }
+        setNameValue(name);
+        setPeriodValue(selectedTimePeriod);
+        setGoalValue(goal);
+        setReadingInfoValue(true);
     };
     const handleNameChange = (e) => {
-        const newName = e.target.value;
+        e.preventDefault();
+        let newName = e.target.value;
+        const words = newName.split(' ');
+        for (let i = 0; i < words.length; i++) {
+            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        newName = words.join(' ');
+        if (newName.length > 40) {
+            newName = newName.slice(0, 40);
+        }
         setName(newName);
     };
-    const steps = [
-        {
-            content: (
-                <div className="step-content">
-                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
-                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>{ name.trim() !== "" ? `Hi, ${name}` : "Create your reading goal"}</p>
-                        <input
-                            type="text"
-                            className='bg-white border-gray-500 border-[1px] sm:py-4 sm:px-8 px-6 py-3 w-full max-w-[500px] text-md sm:text-xl manrope-regular text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFA500] focus:ring-opacity-50'
-                            placeholder='Enter your name...'
-                            onChange={handleNameChange}
-                        />
-                        <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>You will be able to download it as a PDF and/or share it on your LinkedIn</p>
-                    </div>
-                </div>
-            ),
-        },
-        {
-            content: (
-                <div className="step-content">
-                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
-                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>
-                            Hi {name}, What is the time period for your reading list goal?
-                        </p>
-                        <div className="flex flex-wrap w-full gap-2 justify-center max-w-[500px]">
-                            <div className="flex flex-col items-center w-[48%] gap-2">
-                                <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 Week' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                    <input
-                                        type="radio"
-                                        name="timePeriod"
-                                        value="1 week"
-                                        className="hidden"
-                                        onChange={() => setSelectedTimePeriod('1 Week')}
-                                    />
-                                    <div className="button-radio">1 Week</div>
-                                </label>
-                                <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 Month' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                    <input
-                                        type="radio"
-                                        name="timePeriod"
-                                        value="1 month"
-                                        className="hidden"
-                                        onChange={() => setSelectedTimePeriod('1 Month')}
-                                    />
-                                    <div className="button-radio">1 Month</div>
-                                </label>
-                            </div>
-                            <div className="flex flex-col items-center gap-2 w-[48%]">
-                                <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '6 Months' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                    <input
-                                        type="radio"
-                                        name="timePeriod"
-                                        value="6 months"
-                                        className="hidden"
-                                        onChange={() => setSelectedTimePeriod('6 Months')}
-                                    />
-                                    <div className="button-radio">6 Months</div>
-                                </label>
-                                <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 Year' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                    <input
-                                        type="radio"
-                                        name="timePeriod"
-                                        value="1 year"
-                                        className="hidden"
-                                        onChange={() => setSelectedTimePeriod('1 Year')}
-                                    />
-                                    <div className="button-radio">1 Year</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ),
-        },
-        {
-            content: (
-                <div className="step-content">
-                    <div className='flex flex-col items-center gap-4 py-4'>
-                        <p className='text-black text-center text-xl sm:text-3xl manrope-semibold'>{ name.trim() !== "" ? `Hi ${name}, How many books would you like to read in ${selectedTimePeriod}?` : ""}</p>
-                        <p className='text-primary text-center text-xl sm:text-3xl manrope-semibold'>{goal == 1? "1 Book" : `${goal} Books`}</p>
-                        <Slider
-                            min={1}
-                            max={100}
-                            defaultValue={goal}
-                            valueLabelDisplay="auto"
-                            onChange={(e) => setGoal(e.target.value)}
-                            sx={{
-                                color: "#FFA500",
-                                maxWidth: "500px",
-                                '& .MuiSlider-thumb': {
-                                    backgroundColor: 'white',
-                                },
-                            }}
-                        />
-                    </div>
-                </div>
-            ),
-        },
-        {
-            content: (
-                <div className="step-content">
-                    <div className='flex flex-col items-center gap-4 sm:gap-8 py-4 sm:py-8'>
-                        <p className='text-black text-center text-xl sm:text-2xl manrope-semibold'>
-                            Hi {name}, how would you like to select {`${goal == 1 ? "1 book" : `${goal} books`}`}?
-                        </p>
-                        <div className="flex w-full gap-2 justify-center max-w-[500px]">
-                            <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'choose for me' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                <input
-                                    type="radio"
-                                    name="select"
-                                    value="choose for me"
-                                    className="hidden"
-                                    onChange={() => setSelect('choose for me')}
-                                />
-                                <div className="button-radio">Choose for me*</div>
-                            </label>
-                            <label className={`button-label rounded-md w-full py-2 px-4 text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'i will choose' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
-                                <input
-                                    type="radio"
-                                    name="select"
-                                    value="i will choose"
-                                    className="hidden"
-                                    onChange={() => setSelect('i will choose')}
-                                />
-                                <div className="button-radio">I'll choose</div>
-                            </label>
-                        </div>
-                        <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>*You will have the option to choose the categories before your shelf is stacked for you.</p>
-                    </div>
-                </div>
-            ),
-        },
-    ];
 
     return (
-        <div className='bg-[#F2EADF] py-6 px-8 sm:py-3 sm:px-4 rounded-lg w-full' style={{
-            background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${waves}), url(${linear})`,
-            backgroundSize: 'cover, cover, cover',
-            backgroundPosition: 'center, center, center',
+        <div className='bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full' style={{
+            background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
+            backgroundSize: 'cover, auto 100%, cover',
+            backgroundPosition: 'center, right, center',
+            backgroundRepeat: 'no-repeat',
         }}>
             <form onSubmit={handleSubmit}>
-                {steps[step - 1].content}
+                {step === 1 && <Step1 name={name} handleNameChange={handleNameChange} />}
+                {step === 2 && <Step2 name={name} selectedTimePeriod={selectedTimePeriod} setSelectedTimePeriod={setSelectedTimePeriod} />}
+                {step === 3 && <Step3 name={name} selectedTimePeriod={selectedTimePeriod} goal={goal} setGoal={setGoal} />}
+                {step === 4 && <Step4 name={name} goal={goal} select={select} setSelect={setSelect} />}
+                {step === 5 && select === 'choose for me' && <CategoryStep name={name} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />}
                 <div className={`button-container flex w-full ${ step > 1 ? 'justify-between' : 'justify-end' }`}>
                     {step > 1 && (
                         <button type="button" onClick={prevStep}>
                             <img src={disabled} alt="Previous" className="h-8 w-8" />
                         </button>
                     )}
-                    {step < steps.length && (
-                        <button type="button w-full" onClick={nextStep} disabled={name.trim() == ""}>
+                    {step < stepLength && (
+                        <button type="button" onClick={nextStep} disabled={(step == 1 && name.trim() == "") || (step == 5 && selectedCategories.length <= 0)}>
                             <img src={enabled} alt="Next" className="h-8 w-8" />
                         </button>
                     )}
-                    {step === steps.length && (
-                        <button type="submit">
+                    {step === stepLength && (
+                        <button type="submit" disabled={(step == 1 && name.trim() == "") || (step == 5 && selectedCategories.length <= 0)}>
                             <img src={enabled} alt="Submit" className="h-8 w-8" />
                         </button>
                     )}

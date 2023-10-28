@@ -80,7 +80,7 @@ const Book = ({ book, categories }) => {
                     {showCategoryNames ? (
                         <div className='flex flex-col'>
                             {book.categories.map( (item, index) => (
-                                <span key={index} className="text-gray-600 text-sm">{item}</span>
+                                <span key={index} className="text-gray-600 text-[10px] manrope-regular">{item}</span>
                             ))}
                         </div>
                     ) : (

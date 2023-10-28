@@ -72,8 +72,8 @@ const Header = () => {
                         <button
                             className={readingListButtonClass}
                             onClick={() => {
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
                                 toggleReadingList()
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
                         >
                             <NavLink to="/">Reading List</NavLink>

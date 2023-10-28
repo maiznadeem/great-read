@@ -11,7 +11,7 @@ export default {
                 primaryDark: '#8D5E20',
                 secondary: '#623A06',
                 backgroundPrimary: '#ffffff',
-                footer: '#EFE5D8',
+                footer: '#F2EADF',
             },
             screens: {
                 'xl2': '1499px',
