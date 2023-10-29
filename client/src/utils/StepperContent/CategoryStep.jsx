@@ -51,11 +51,12 @@ const CategoryStep = ({ name, selectedCategories, setSelectedCategories }) => {
                         overflowX: 'auto',
                         width: '100%',
                         gap: '4px',
+                        columnGap: '16px',
                     }}
                         className='pb-2 sm:pb-4'
                     >
                     {categories.map((category) => (
-                        <div key={category._id} className='w-max' style={{ whiteSpace: 'nowrap' }}>
+                        <div key={category._id} style={{ whiteSpace: 'nowrap', width: 'calc(100% + 12px)' }}>
                             <Category category={category} handleCategoryClick={() => console.log("selected")} />
                         </div>
                     ))}
