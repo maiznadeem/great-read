@@ -3,7 +3,7 @@ import Category from './Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
 import { getBooks, getCategories } from '../utils/api';
-import { ClipLoader } from 'react-spinners';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Books = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -90,7 +90,7 @@ const Books = () => {
     return (
         <section className='mx-4 sm:my-24 sm:mx-8'>
             <div>
-                <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p>
+                {/* <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p> */}
                 <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
                     {nonBestsellerCategories
                         .sort((a, b) => {
@@ -120,7 +120,7 @@ const Books = () => {
                 }
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-96'>
-                        <ClipLoader color={'#8D5E20'} loading={isLoading} size={50} />
+                        <CircularProgress sx={{ color: '#8D5E20' }} />
                     </div>
                 ) : books.length === 0 ? (
                     <div className='manrope-semibold text-center text-gray-700 h-96 flex items-center justify-center'>No results. Try including more categories :)</div>
@@ -128,7 +128,7 @@ const Books = () => {
                     <>
                         <div id='booksection' className='scroll-m-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
-                                <Book key={index} book={book} categories={categories} />
+                                <Book key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}
                         </div>
                         <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center overflow-hidden'>

@@ -35,7 +35,7 @@ const Header = () => {
     const buttonLink = location.pathname === '/' ? '/notes' : '/';
 
     const readingListButtonClass = isReadingListActive
-        ? "manrope-semibold bg-green-600 text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-green-700"
+        ? "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
         : "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark";
 
     const handleNotesButtonClicked = () => {
@@ -53,7 +53,7 @@ const Header = () => {
             } ${isAtTop ? '' : 'border-b-2 border-primary shadow-md'} transition-all duration-300 ease-in-out z-10`}
         >
             {isAtTop && (
-                <div className="absolute w-2/4 border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
+                <div className="absolute w-[30%] border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
             )}
             <div className="flex justify-between items-center">
                 <Link to='/' className="text-white font-bold text-lg">
@@ -79,7 +79,7 @@ const Header = () => {
                             <NavLink to="/">Reading List</NavLink>
                         </button>
                         <button
-                            className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover-bg-primaryDark"
+                            className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
                             onClick={handleNotesButtonClicked}
                         >
                             {buttonText}

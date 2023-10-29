@@ -92,4 +92,37 @@ getRoute.get('/categories', async (req, res) => {
 });
 
 
+async function getRandomBooksByCategoriesFromDB(categories, goal) {
+    try {
+        const filteredBooks = await Book.find({
+            categories: { $in: categories }
+        });
+        const selectedBooks = shuffleArray(filteredBooks).slice(0, goal);
+
+        return selectedBooks;
+    } catch (error) {
+        console.error('Error fetching books by categories:', error);
+        throw new Error('Could not fetch books by categories from the database.');
+    }
+}
+
+getRoute.post('/getRandomBooks', async (req, res) => {
+    const { categories, goal } = req.body;
+    try {
+        const randomBooks = await getRandomBooksByCategoriesFromDB(categories, goal);
+        res.json(randomBooks);
+    } catch (error) {
+        console.error('Error fetching random books by categories:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = { getRoute };
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}

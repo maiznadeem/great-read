@@ -4,11 +4,20 @@ import amazonIcon from '../assets/links/amazon.png';
 import perlegoIcon from '../assets/links/perlego.png';
 import invertedLeft from '../assets/links/inverted-comma-left.svg'
 import invertedrRight from '../assets/links/inverted-comma-right.svg'
+import add from "../assets/buttons/Add.svg";
+import remove from "../assets/buttons/Remove.svg";
+import tick from "../assets/buttons/tick.png";
+import { useReadingList } from '../context/ReadingListContext';
 
 const Book = ({ book, categories }) => {
 
+    const { books, goal, updateBooksValue } = useReadingList();
+
+    const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [showCategoryNames, setShowCategoryNames] = useState(false);
+
     useEffect(() => {
+        setIsBookInReadingList(books.some((readingBook) => readingBook._id === book._id));
         const checkScreenWidth = () => {
             if (window.innerWidth <= 768) {
                 setShowCategoryNames(false);
@@ -19,7 +28,7 @@ const Book = ({ book, categories }) => {
         return () => {
             window.removeEventListener('resize', checkScreenWidth);
         };
-    }, []);
+    }, [books, book]);
 
     const toggleCategoryDisplay = () => {
         if (window.innerWidth <= 768) {
@@ -45,17 +54,7 @@ const Book = ({ book, categories }) => {
             );
         }
         return null;
-    });    
-
-    const categoryDisplay = showCategoryNames ? (
-        <div className="flex flex-col space-y-2">
-            {book.categories.map(category => (
-                <span key={category} className="text-gray-600 text-sm">{category}</span>
-            ))}
-        </div>
-    ) : (
-        <div className="flex space-x-4">{categoryIcons}</div>
-    );
+    });
 
     const openLinkInNewTab = (link) => {
         window.open(link, '_blank');
@@ -63,15 +62,42 @@ const Book = ({ book, categories }) => {
 
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
-            <div className='flex flex-row gap-4 flex-1'>
+            <div className='flex flex-row gap-4'>
                 <img
                     src={book.image}
                     alt={book.title}
-                    className="h-56 w-36 rounded-lg -mt-16 -ml-10 max-h-56 object-cover shadow-xl"
+                    className={`h-56 w-auto rounded-lg -mt-16 -ml-10 object-cover shadow-xl ${isBookInReadingList ? 'opacity-[0.5]' : ''} `}
                 />
+                {isBookInReadingList &&
+                    <div className='absolute top-[30px] left-[15px] flex flex-col justify-center items-center'>
+                        <img src={tick}  />
+                        <p className='manrope-semibold text-black'>On Shelf</p>
+                    </div>
+                }
                 <div className='flex justify-center items-center'>
                     <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
+                    {isBookInReadingList ? (
+                        <img 
+                            src={remove}
+                            className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
+                            onClick={() => {
+                                updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                setIsBookInReadingList(false);
+                            }}
+                        />
+                    ) : (
+                        books.length < goal && (
+                            <img 
+                                src={add}
+                                className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
+                                onClick={() => {
+                                    updateBooksValue([...books, book]);
+                                    setIsBookInReadingList(true);
+                                }}
+                            />
+                        )
+                    )}
                     <p className="manrope-regular text-gray-600 text-sm">{book.quote}</p>
                 </div>
             </div>

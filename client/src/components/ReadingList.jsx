@@ -8,7 +8,7 @@ const ReadingList = () => {
 
     return (
         <div className='flex flex-col items-center w-full pt-4 pb-8 sm:py-0 mt-4 sm:mt-8'>
-            <div className={`flex flex-col items-center gap-4 ${readingInfo ? 'lg:w-[1000px] md:max-w-[1000px]' : 'max-w-[100%] md:max-w-[600px]'}`}>
+            <div className={`flex flex-col items-center gap-4 ${readingInfo ? 'w-[100%] lg:w-[1000px] md:w-[100%] md:max-w-[100%]' : 'max-w-[100%] md:max-w-[600px]'}`}>
                     <p className='manrope-regular text-center text-xl sm:text-xl text-black max-w-[600px]'>
                         Your next <span className='text-primaryDark'>career move, inspiration or motivation</span> can be in one of the books you choose to read.
                     </p>

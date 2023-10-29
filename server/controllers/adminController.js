@@ -296,7 +296,7 @@ async function addCategory(req, res) {
         const newCategory = new Category({
             name: categoryName,
             image: categoryImage,
-            bestseller: isBestSeller || false, // Default to false if not provided
+            bestseller: isBestSeller || false,
         });
 
         await newCategory.save();

@@ -13,6 +13,7 @@ export function ReadingListProvider({ children }) {
     const [goal, setGoal] = useState('');
     const [readingInfo, setReadingInfo ] = useState(false);
     const [books, setBooks] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     const toggleReadingList = () => {
         setIsReadingListActive((prevState) => !prevState);
@@ -35,7 +36,15 @@ export function ReadingListProvider({ children }) {
     };
 
     const setBooksValue = (newValue) => {
-        setBooksValue(newValue);
+        setBooks([...books, ...newValue]);
+    };
+
+    const updateBooksValue = (newValue) => {
+        setBooks(newValue);
+    };
+
+    const setSelectedCategoriesValue = (newValue) => {
+        setSelectedCategories(newValue);
     };
 
     const toggleReadingInfo = () => {
@@ -51,11 +60,14 @@ export function ReadingListProvider({ children }) {
             goal,
             readingInfo,
             books,
+            selectedCategories,
             setNameValue,
             setPeriodValue,
             setGoalValue,
             setReadingInfoValue,
             setBooksValue,
+            updateBooksValue,
+            setSelectedCategoriesValue,
             toggleReadingInfo,
         }}>
             {children}

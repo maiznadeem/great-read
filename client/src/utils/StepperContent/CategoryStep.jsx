@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getCategories } from '../api';
 import Category from '../../components/Category';
 
-import { Scrollbars } from 'react-custom-scrollbars';
-import Grid from '@mui/material/Grid';
-
-const CategoryStep = ({ name, selectedCategories, setSelectedCategories }) => {
+const CategoryStep = ({ name, selectedCategories, setSelectedCategories, handleCategoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -51,13 +48,13 @@ const CategoryStep = ({ name, selectedCategories, setSelectedCategories }) => {
                         overflowX: 'auto',
                         width: '100%',
                         gap: '4px',
-                        columnGap: '16px',
+                        columnGap: '22px',
                     }}
                         className='pb-2 sm:pb-4'
                     >
                     {categories.map((category) => (
-                        <div key={category._id} style={{ whiteSpace: 'nowrap', width: 'calc(100% + 12px)' }}>
-                            <Category category={category} handleCategoryClick={() => console.log("selected")} />
+                        <div key={category._id} style={{ whiteSpace: 'nowrap', width: 'calc(100% + 18px)' }}>
+                            <Category category={category} handleCategoryClick={handleCategoryClick} />
                         </div>
                     ))}
                     </div> 

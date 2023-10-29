@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import shelf from '../assets/shelf/Shelf.png';
 import { getTopPicks } from '../utils/api';
-import { ClipLoader } from 'react-spinners';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Banner = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -84,24 +84,24 @@ const Banner = () => {
         <section className='flex mt-4 justify-center items-center'>
             {isLoading ? (
                 <div className='text-center flex items-center justify-center min-h-[60vh] w-full'>
-                    <ClipLoader color={'#8D5E20'} loading={isLoading} size={50} />
+                    <CircularProgress sx={{ color: '#8D5E20' }} />
                 </div>
             ) : (
             <>
-                <div className='md:w-[95%] lg:w-[80%]'>
+                <div className='md:w-[90%] lg:w-[60%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
                             <div className='flex flex-col gap-2 md:gap-4 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold text-4xl text-black'>
+                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-4xl text-black'>
+                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
                                     <span className='text-primaryDark'>Be</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-4xl text-black'>
+                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
-                                <p className='manrope-semibold text-xl sm:text-2xl text-black'>
+                                <p className='manrope-semibold text-lg sm:text-xl text-black'>
                                     The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
                                 </p>
                             </div>
