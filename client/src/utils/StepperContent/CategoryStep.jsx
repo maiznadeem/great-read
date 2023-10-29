@@ -44,15 +44,22 @@ const CategoryStep = ({ name, selectedCategories, setSelectedCategories }) => {
                 {isLoading ? (
                     <p className='flex justify-center items-center manrope-regular text-gray-400 min-h-[50px]'>Loading...</p>
                 ) : (
-                    <Scrollbars style={{ width: '100%', overflowX: 'auto', height: '50px' }}>
-                        <div className='flex'>
-                            {categories.map((category) => (
-                                <div key={category._id} className='mr-2 min-w-fit'>
-                                    <Category category={category} handleCategoryClick={() => console.log("selected")} />
-                                </div>
-                            ))}
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateRows: 'auto auto auto',
+                        gridAutoFlow: 'column',
+                        overflowX: 'auto',
+                        width: '100%',
+                        gap: '4px',
+                    }}
+                        className='pb-2 sm:pb-4'
+                    >
+                    {categories.map((category) => (
+                        <div key={category._id} className='w-max' style={{ whiteSpace: 'nowrap' }}>
+                            <Category category={category} handleCategoryClick={() => console.log("selected")} />
                         </div>
-                    </Scrollbars>
+                    ))}
+                    </div> 
                 )}
             </div>
         </div>
