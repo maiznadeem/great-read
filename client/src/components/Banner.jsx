@@ -53,7 +53,7 @@ const Banner = () => {
     const common = () => {
         return (
             <>
-                <div className='mx-auto relative lg:max-w-[500px]'>
+                <div className='mx-auto relative w-[90%] lg:max-w-[450px]'>
                     <img className='shadow-xl' src={shelf} alt='Shelf' />
                     <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
                         <img
@@ -90,7 +90,7 @@ const Banner = () => {
             <>
                 <div className='md:w-[90%] lg:w-[60%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
-                        <div className='flex flex-col md:flex-row items-center justify-between gap-8 h-full'>
+                        <div className='flex flex-col md:flex-row items-center justify-between sm:gap-8'>
                             <div className='flex flex-col gap-2 md:gap-4 items-start justify-center w-full md:w-[40%]'>
                                 <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
@@ -102,12 +102,12 @@ const Banner = () => {
                                     <span className='text-primaryDark'>Do</span> Better.
                                 </p>
                                 <p className='manrope-semibold text-lg sm:text-xl text-black'>
-                                    The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
+                                    The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that {windowWidth <= 1300 && windowWidth >= 1150 ? <br /> : <></>} will inspire you.
                                 </p>
                             </div>
                             <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
                                 { windowWidth > 768 ? (
-                                    <div className='absolute top-[70%]'>
+                                    <div className='absolute top-[65%]'>
                                         {common()}
                                     </div>
                                 ) : (

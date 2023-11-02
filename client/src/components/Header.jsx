@@ -53,7 +53,7 @@ const Header = () => {
             } ${isAtTop ? '' : 'border-b-2 border-primary shadow-md'} transition-all duration-300 ease-in-out z-10`}
         >
             {isAtTop && (
-                <div className="absolute w-[30%] border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
+                <div className="absolute w-[40%] sm:w-[30%] border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
             )}
             <div className="flex justify-between items-center">
                 <Link to='/' className="text-white font-bold text-lg">

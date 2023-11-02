@@ -87,12 +87,28 @@ const Shelf = () => {
         );
     };
 
+    let slidesToShow = 6;
+
+    if (windowSize <= 1100)
+        slidesToShow = 5;
+    if (windowSize <= 950)
+        slidesToShow = 4;
+    if (windowSize <= 800)
+        slidesToShow = 3;
+    if (windowSize <= 600)
+        slidesToShow = 2;
+    if (windowSize <= 100)
+        slidesToShow = 1;
+
+    const maxRows = 2;
+    const calculatedRows = Math.ceil(books.length / slidesToShow);
+
     const settings = {
         slidesToShow: 6,
         slidesToScroll: 6,
         infinite: false,
         lazyLoad: true,
-        rows: 2,
+        rows: calculatedRows <= maxRows ? calculatedRows : maxRows,
         nextArrow: <CustomNextArrow currentSlide={currentSlide} />,
         prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
         afterChange: (currentSlide) => {
@@ -156,7 +172,7 @@ const Shelf = () => {
                         <CircularProgress sx={{ color: '#8D5E20' }} />
                     ) : (
                         books.length === 0 ? (
-                            <p className="text-lg sm:text-xl font-regular text-gray-400">Add books to your shelf</p>
+                            <p className="text-lg sm:text-xl manrope-regular text-gray-400">Select books from below to add to your shelf</p>
                         ) : (
                             <Slider {...settings} ref={sliderRef} className='w-[90%] p-8'>
                                 {books.map((book) => (
