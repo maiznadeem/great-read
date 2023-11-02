@@ -61,7 +61,9 @@ const Books = () => {
 
     const handlePageChange = (newPage) => {
         var myDiv = document.getElementById("booksection");
-        myDiv.scrollIntoView({ behavior: "smooth" });
+        myDiv.scrollIntoView({
+            behavior: "smooth"
+        });
         setCurrentPage(newPage);
     };
 
@@ -126,7 +128,7 @@ const Books = () => {
                     <div className='manrope-semibold text-center text-gray-700 h-96 flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
-                        <div id='booksection' className='scroll-m-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
+                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
                                 <Book key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}

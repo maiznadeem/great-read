@@ -63,18 +63,30 @@ const Book = ({ book, categories }) => {
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
             <div className='flex flex-row gap-4'>
-                <img
-                    src={book.image}
-                    alt={book.title}
-                    className={`h-56 w-auto rounded-lg -mt-16 -ml-10 object-cover shadow-xl ${isBookInReadingList ? 'opacity-[0.5]' : ''} `}
-                />
-                {isBookInReadingList &&
-                    <div className='absolute top-[30px] left-[15px] flex flex-col justify-center items-center'>
-                        <img src={tick}  />
-                        <p className='manrope-semibold text-black'>On Shelf</p>
-                    </div>
-                }
-                <div className='flex justify-center items-center'>
+                <div className={`w-40 h-60 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden cursor-pointer ${isBookInReadingList ? 'bg-black' : ''}`}
+                    onClick={() => {
+                        if (isBookInReadingList) {
+                            updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                            setIsBookInReadingList(false);
+                        } else if (books.length < goal) {
+                            updateBooksValue([...books, book]);
+                            setIsBookInReadingList(true);
+                        }
+                    }}
+                >
+                    <img
+                        src={book.image}
+                        alt={book.title}
+                        className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList ? 'opacity-30' : 'opacity-100'}`}
+                    />
+                    {isBookInReadingList && (
+                        <div className='absolute inset-0 flex flex-col justify-center items-center gap-2'>
+                            <img src={tick} alt="Tick Icon" className="transition-opacity duration-300 ease-in-out" />
+                            <p className='manrope-semibold text-white text-center transition-opacity duration-300 ease-in-out'>On Shelf</p>
+                        </div>
+                        )}
+                </div>
+                <div className='flex justify-center items-center w-[70%]'>
                     <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
                     {isBookInReadingList ? (
