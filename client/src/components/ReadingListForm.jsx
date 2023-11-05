@@ -12,22 +12,21 @@ import Step1 from '../utils/StepperContent/Step1';
 import Step2 from '../utils/StepperContent/Step2';
 import Step3 from '../utils/StepperContent/Step3';
 import Step4 from '../utils/StepperContent/Step4';
-import CategoryStep from "../utils/StepperContent/CategoryStep";
 
 const ReadingListForm = () => {
 
-    const { setNameValue, setPeriodValue, setGoalValue, setReadingInfoValue, setSelectedCategoriesValue } = useReadingList();
+    const { setNameValue, setPeriodValue, setGoalValue, setReadingInfoValue, setSelectedCategoriesValue, setSelectionChoiceValue } = useReadingList();
 
-    const stepLength = 5;
+    const stepLength = 4;
 
     const [step, setStep] = useState(1);
     const [name, setName] = useState('');
-    const [selectedTimePeriod, setSelectedTimePeriod] = useState('1 Week');
+    const [selectedTimePeriod, setSelectedTimePeriod] = useState('1 week');
     const [goal, setGoal] = useState(1);
     const [select, setSelect] = useState('choose for me');
     const [selectedCategories, setSelectedCategories]= useState([]);
     const nextStep = () => {
-        if (step == 4 && select == "i will choose") {
+        if (step == 4) {
             handleChoose();
             return;
         }
@@ -40,19 +39,15 @@ const ReadingListForm = () => {
         setNameValue(name);
         setPeriodValue(selectedTimePeriod);
         setGoalValue(goal);
+        setSelectionChoiceValue(select);
         setReadingInfoValue(true);
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (step < stepLength) {
+        if (step <= stepLength) {
             nextStep();
             return;
         }
-        setNameValue(name);
-        setPeriodValue(selectedTimePeriod);
-        setGoalValue(goal);
-        setSelectedCategoriesValue(selectedCategories);
-        setReadingInfoValue(true);
     };
     const handleNameChange = (e) => {
         e.preventDefault();
@@ -67,19 +62,6 @@ const ReadingListForm = () => {
         }
         setName(newName);
     };
-    const handleCategoryClick = (categoryName) => {
-        if (selectedCategories.includes(categoryName)) {
-            setSelectedCategories((prevActiveCategories) =>
-                prevActiveCategories.filter((cat) => cat !== categoryName)
-            );
-        } else {
-            setSelectedCategories((prevActiveCategories) => [
-                ...prevActiveCategories,
-                categoryName,
-            ]);
-        }
-    };
-
 
     return (
         <div className='bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full' style={{
@@ -93,7 +75,7 @@ const ReadingListForm = () => {
                 {step === 2 && <Step2 name={name} selectedTimePeriod={selectedTimePeriod} setSelectedTimePeriod={setSelectedTimePeriod} />}
                 {step === 3 && <Step3 name={name} selectedTimePeriod={selectedTimePeriod} goal={goal} setGoal={setGoal} />}
                 {step === 4 && <Step4 name={name} goal={goal} select={select} setSelect={setSelect} />}
-                {step === 5 && select === 'choose for me' && <CategoryStep name={name} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} handleCategoryClick={handleCategoryClick} />}
+                {/* {step === 5 && select === 'choose for me' && <CategoryStep name={name} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} handleCategoryClick={handleCategoryClick} />} */}
                 <div className={`button-container flex w-full ${ step > 1 ? 'justify-between' : 'justify-end' }`}>
                     {step > 1 && (
                         <button type="button" onClick={prevStep}>

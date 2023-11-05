@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { getCategories } from '../api';
+import { getCategories, getRandomBooks } from '../api';
 import Category from '../../components/Category';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { useReadingList } from '../../context/ReadingListContext';
 
-const CategoryStep = ({ name, selectedCategories, setSelectedCategories, handleCategoryClick }) => {
+const CategoryStep = ({ handleCategoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const { selectedCategories, setSelectedCategoriesValue, goal, books } = useReadingList();
 
     useEffect(() => {
         setIsLoading(true);
@@ -33,35 +37,22 @@ const CategoryStep = ({ name, selectedCategories, setSelectedCategories, handleC
 
 
     return (
-        <div className="step-content">
-            <div className={`flex flex-col items-center gap-4 py-4 sm:py-8`}>
-                <p className='text-black text-center text-xl sm:text-2xl manrope-semibold'>
-                    Hi {name}, please select some categories
-                </p>
+        <Scrollbars style={{ width: '100%', height: '45px' }}>
+            <div className='flex items-center justify-center'>
                 {isLoading ? (
-                    <p className='flex justify-center items-center manrope-regular text-gray-400 min-h-[50px]'>Loading...</p>
+                    <p className='manrope-regular text-gray-400 min-h-[25px]'>Loading...</p>
                 ) : (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateRows: 'auto auto auto',
-                        gridAutoFlow: 'column',
-                        overflowX: 'auto',
-                        width: '100%',
-                        gap: '4px',
-                        columnGap: '22px',
-                    }}
-                        className='pb-2 sm:pb-4'
-                    >
+                <div className='flex w-[100%] gap-x-2'>
                     {categories.map((category) => (
-                        <div key={category._id} style={{ whiteSpace: 'nowrap', width: 'calc(100% + 18px)' }}>
-                            <Category category={category} handleCategoryClick={handleCategoryClick} />
-                        </div>
+                    <div key={category._id} className="flex-shrink-0">
+                        <Category category={category} handleCategoryClick={handleCategoryClick} />
+                    </div>
                     ))}
-                    </div> 
+                </div> 
                 )}
             </div>
-        </div>
-    )    
+        </Scrollbars>
+    )
 }
 
 export default CategoryStep

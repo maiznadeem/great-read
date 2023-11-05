@@ -11,6 +11,7 @@ export function ReadingListProvider({ children }) {
     const [name, setName] = useState('');
     const [period, setPeriod] = useState('');
     const [goal, setGoal] = useState('');
+    const [selectionChoice, setSelectionChoice] = useState('');
     const [readingInfo, setReadingInfo ] = useState(false);
     const [books, setBooks] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -30,6 +31,10 @@ export function ReadingListProvider({ children }) {
     const setGoalValue = (newGoal) => {
         setGoal(newGoal);
     };
+
+    const setSelectionChoiceValue = (newSelection) => {
+        setSelectionChoice(newSelection);
+    }
 
     const setReadingInfoValue = (newValue) => {
         setReadingInfo(newValue);
@@ -58,12 +63,14 @@ export function ReadingListProvider({ children }) {
             name,
             period,
             goal,
+            selectionChoice,
             readingInfo,
             books,
             selectedCategories,
             setNameValue,
             setPeriodValue,
             setGoalValue,
+            setSelectionChoiceValue,
             setReadingInfoValue,
             setBooksValue,
             updateBooksValue,

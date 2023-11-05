@@ -10,14 +10,17 @@ import disabled from "../assets/buttons/disabled.svg";
 import remove from "../assets/buttons/Remove.svg";
 import { useReadingList } from '../context/ReadingListContext';
 import { getRandomBooks } from '../utils/api';
+import CategoryStep from '../utils/StepperContent/CategoryStep';
 
 const Shelf = () => {
     const {
         name,
         goal,
         period,
+        selectionChoice,
         books,
         selectedCategories,
+        setSelectedCategoriesValue,
         setBooksValue,
         updateBooksValue,
     } = useReadingList();
@@ -26,21 +29,6 @@ const Shelf = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [currentSlide, setCurrentSlide] = useState(0);
-
-    useEffect(() => {
-        if (selectedCategories.length > 0 && books.length === 0) {
-            setIsLoading(true);
-            getRandomBooks(selectedCategories, goal)
-                .then((randomBooks) => {
-                    setBooksValue(randomBooks);
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    setIsLoading(false);
-                });
-        }
-    }, [selectedCategories, goal, books]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -52,6 +40,34 @@ const Shelf = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        if (books.length < goal && selectedCategories.length) {
+            setIsLoading(true);
+            getRandomBooks(selectedCategories, goal - books.length)
+                .then((randomBooks) => {
+                    setBooksValue(randomBooks);
+                    setIsLoading(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setIsLoading(false);
+                });
+        }
+    }, [selectedCategories]);
+
+    const handleCategoryClick = (categoryName) => {
+        if (selectedCategories.includes(categoryName)) {
+            setSelectedCategoriesValue((prevActiveCategories) =>
+                prevActiveCategories.filter((cat) => cat !== categoryName)
+            );
+        } else {
+            setSelectedCategoriesValue((prevActiveCategories) => [
+                ...prevActiveCategories,
+                categoryName,
+            ]);
+        }
+    };
 
     const CustomNextArrow = ({ currentSlide }) => {
         const itemsToShow = settings.responsive.find((item) => windowSize >= item.breakpoint)?.settings.slidesToShow || 0;
@@ -160,24 +176,33 @@ const Shelf = () => {
             backgroundPosition: 'center, right, center',
             backgroundRepeat: 'no-repeat',
         }}>
-            <div className="flex flex-col items-center gap-4 sm:gap-6 py-4 sm:py-8">
+            <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
                 <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">{name}'s Reading List</p>
                 <div>
-                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">{books.length} out of {goal === 1 ? "1 book" : `${goal} books`} chosen for your</p>
-                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">reading goal for {period}</p>
+                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">{books.length} out of {goal === 1 ? "1 book" : `${goal} books`}</p>
+                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">for {period}</p>
                 </div>
+                {selectionChoice == 'choose for me' && (
+                    <CategoryStep handleCategoryClick={handleCategoryClick} />
+                )}
                 <div className="w-full flex justify-center items-center bg-footer border-2 border-gray-400 border-dashed rounded-xl min-h-[200px]">
                     
                     {isLoading ? (
                         <CircularProgress sx={{ color: '#8D5E20' }} />
                     ) : (
-                        books.length === 0 ? (
-                            <p className="text-lg sm:text-xl manrope-regular text-gray-400">Select books from below to add to your shelf</p>
+                        books.length === 0 && selectionChoice == 'i will choose' ? (
+                            <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">Select books from below to add to your shelf.</p>
+                        ) 
+                        : books.length === 0 && selectionChoice == 'choose for me' ? (
+                            <>
+                                
+                                <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">Select your categories and we will stack your shelf.</p>
+                            </>
                         ) : (
-                            <Slider {...settings} ref={sliderRef} className='w-[90%] p-8'>
+                            <Slider {...settings} ref={sliderRef} className='w-[90%] lg:w-[600px] p-4'>
                                 {books.map((book) => (
                                     <div key={book._id} className='flex'>
-                                        <div className="w-[100%] flex justify-center h-40 overflow-hidden">
+                                        <div className="flex justify-center h-36 overflow-hidden">
                                             <div className='relative mt-[8px] mr-[8px]'>
                                                 <img 
                                                     src={remove}
@@ -186,7 +211,11 @@ const Shelf = () => {
                                                         updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
                                                     }}
                                                 />
-                                                <img src={book.image} alt="" className="w-24 rounded-lg h-full object-cover" />
+                                                <img src={book.image} alt="" className="w-20 rounded-lg h-32 object-cover cursor-pointer" 
+                                                    onClick={() => {
+                                                        updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                                    }}
+                                                />
                                             </div>
                                         </div>
                                     </div>
