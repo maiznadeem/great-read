@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const ReadingListContext = createContext();
 
@@ -7,7 +7,9 @@ export function useReadingList() {
 }
 
 export function ReadingListProvider({ children }) {
-    const [isReadingListActive, setIsReadingListActive] = useState(false);
+    const [isReadingListActive, setIsReadingListActive] = useState(
+        JSON.parse(sessionStorage.getItem('isReadingListActive')) || false
+    );
     const [name, setName] = useState('');
     const [period, setPeriod] = useState('');
     const [goal, setGoal] = useState('');
@@ -15,6 +17,10 @@ export function ReadingListProvider({ children }) {
     const [readingInfo, setReadingInfo ] = useState(false);
     const [books, setBooks] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    useEffect(() => {
+        sessionStorage.setItem('isReadingListActive', JSON.stringify(isReadingListActive));
+    }, [isReadingListActive]);
 
     const toggleReadingList = () => {
         setIsReadingListActive((prevState) => !prevState);
