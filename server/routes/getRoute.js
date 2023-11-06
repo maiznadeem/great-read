@@ -4,6 +4,7 @@ const Book = require('../models/Book');
 const TopPicks = require('../models/TopPicks');
 const Quote = require('../models/Quote');
 const Category = require('../models/Category');
+const Bookmark = require('../models/Bookmark');
 
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories } = req.body;
@@ -116,6 +117,34 @@ getRoute.post('/getRandomBooks', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+async function addSampleBookmarks() {
+    try {
+        const books = await Book.find({}).exec();
+        if (books.length === 0) {
+            throw new Error('No books found in the database.');
+        }
+
+        let bookmarks = [];
+        for (let bookmarkNo = 1; bookmarkNo <= 100; bookmarkNo++) {
+            for (let i = 0; i < 30; i++) {
+                const randomBookIndex = Math.floor(Math.random() * books.length);
+                const randomBook = books[randomBookIndex];
+                bookmarks.push({
+                    bookmarkNo: bookmarkNo,
+                    book: randomBook._id,
+                    note: `This is a sample note quote ${i} for bookmark ${bookmarkNo}`
+                });
+            }
+        }
+        await Bookmark.insertMany(bookmarks);
+        console.log('Sample bookmarks data added successfully.');
+    } catch (error) {
+        console.error('Error adding sample bookmarks:', error);
+    }
+}
+
+// addSampleBookmarks();
 
 module.exports = { getRoute };
 

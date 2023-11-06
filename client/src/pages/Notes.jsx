@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getRandomQuotes } from '../utils/api';
+import NotesSlider from '../components/NotesSlider';
 
-const ConnectDots = () => {
+const Notes = () => {
     const [shuffledQuotes, setShuffledQuotes] = useState([]);
     const [isShuffling, setIsShuffling] = useState(false);
 
@@ -36,12 +37,13 @@ const ConnectDots = () => {
                         </p>
                     </div>
                 </div>
-                <button
+                {/* <button
                     className={`w-full text-md sm:text-xl flex justify-center items-center max-w-[300px] manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark transition-all ${isShuffling ? 'pointer-events-none' : ''}`}
                     onClick={shuffleQuotes}
                 >
                     Shuffle
-                </button>
+                </button> */}
+                <NotesSlider />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4'>
                     {shuffledQuotes.map((quote, index) => (
                         <div
@@ -63,4 +65,4 @@ const ConnectDots = () => {
     );
 };
 
-export default ConnectDots;
+export default Notes;

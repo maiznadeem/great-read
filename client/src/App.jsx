@@ -7,7 +7,7 @@ import './App.css';
 import { ReadingListProvider } from './context/ReadingListContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
-import ConnectDots from './pages/ConnectDots';
+import Notes from './pages/Notes';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ function App() {
                     <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<HomePage />} />
-                        <Route path="/notes" element={<ConnectDots />} />
+                        <Route path="/notes" element={<Notes />} />
                     </Route>
                     <Route path="*" component={<div>404 NOT FOUND</div>} />
                     </Routes>
