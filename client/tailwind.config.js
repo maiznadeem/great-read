@@ -14,14 +14,15 @@ export default {
                 footer: '#F2EADF',
             },
             screens: {
+                'custxs': '350px',
+                'custsm': '800px',
+                'custmd': '950px',
+                'custlg': '1100px',
                 'xl2': '1499px',
             },
             scale: {
                 '65': '0.65',
                 '60': '0.60'
-            },
-            fontFamily: {
-                'sugarcane': ['MTD UT Sugar Cane', 'sans-serif']
             },
         },
     },
