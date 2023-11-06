@@ -170,7 +170,8 @@ const Shelf = () => {
     }; 
 
     return (
-        <div className="bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full" style={{
+        <div className="bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full sm:w-[80%] max-w-[680px]" 
+        style={{
             background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
             backgroundSize: 'cover, auto 100%, cover',
             backgroundPosition: 'center, right, center',
