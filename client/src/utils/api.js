@@ -1,16 +1,17 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://great-read-398408.uc.r.appspot.com"
-    // baseURL: "http://localhost:8081"
+    // baseURL: "https://great-read-398408.uc.r.appspot.com"
+    baseURL: "http://localhost:8081"
 });
 
-export async function getBooks(offset, limit, categories) {
+export async function getBooks(offset, limit, categories, contextBooks) {
     try {
         const requestData = {
             offset: offset,
             limit: limit,
-            categories: categories
+            categories: categories,
+            contextBooks: contextBooks,
         };
 
         const response = await api.post('/get/books', requestData);
@@ -56,15 +57,29 @@ export async function getCategories() {
     }
 }
 
-export async function getRandomBooks(categories, goal) {
+export async function getRandomBooks(categories, goal, books) {
     try {
         const response = await api.post('/get/getRandomBooks', {
             categories: categories,
             goal: goal,
+            books: books,
         });
         return response.data;
     } catch (error) {
-        throw new Error(`Failed to fetch random quotes: ${error.message}`);
+        throw new Error(`Failed to fetch random books: ${error.message}`);
+    }
+}
+
+export async function getRandomNotes(currentSlide) {
+    try {
+        const response = await api.get('/get/randomnotes', {
+            params: {
+                currentSlide: currentSlide
+            }
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch random notes: ${error.message}`);
     }
 }
 

@@ -4,12 +4,9 @@ import enabled from "../assets/buttons/enabled.svg";
 import disabled from "../assets/buttons/disabled.svg";
 import bookmarksUtil from '../utils/BookmarksUtil';
 
-const NotesSlider = () => {
+const NotesSlider = ({ currentSlide, setCurrentSlide }) => {
 
     const sliderRef = useRef(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [windowSize, setWindowSize] = useState(window.innerWidth);
-    const [currentSlide, setCurrentSlide] = useState(0);
 
     const CustomNextArrow = ({ currentSlide }) => {
         return (
@@ -54,6 +51,7 @@ const NotesSlider = () => {
         prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
         afterChange: (currentSlide) => {
             setCurrentSlide(currentSlide);
+            console.log(currentSlide);
         },
         responsive: [
             {
@@ -79,7 +77,7 @@ const NotesSlider = () => {
                     Select one of 100 bookmarks below, to see what notes are contained in it.
                 </p>
             </div>
-            <Slider {...settings} ref={sliderRef} className='w-full max-w-[300px] xs:max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custsm:max-w-[720px] custmd:max-w-[800px] lg:max-w-[900px] custlg:max-w-[1000px]'>
+            <Slider {...settings} ref={sliderRef} className='w-full max-w-[280px] xs:max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custsm:max-w-[720px] custmd:max-w-[800px] lg:max-w-[900px] custlg:max-w-[1000px]'>
                 {bookmarksUtil.map((bookmark) => (
                     <div key={bookmark.number} className='flex'>
                         <div className="flex justify-center overflow-hidden">

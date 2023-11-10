@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { getRandomQuotes } from '../utils/api';
+import { getRandomNotes } from '../utils/api';
 import NotesSlider from '../components/NotesSlider';
 
 const Notes = () => {
-    const [shuffledQuotes, setShuffledQuotes] = useState([]);
+    const [shuffledNotes, setShuffledNotes] = useState([]);
     const [isShuffling, setIsShuffling] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(1);
 
     const shuffleQuotes = async () => {
         if (!isShuffling) {
             setIsShuffling(true);
             try {
-                const quotesData = await getRandomQuotes();
-                setShuffledQuotes(quotesData);
+                const notesData = await getRandomNotes(currentSlide);
+                setShuffledNotes(notesData);
                 setTimeout(() => {
                     setIsShuffling(false);
                 }, 500);
@@ -24,7 +25,7 @@ const Notes = () => {
 
     useEffect(() => {
         shuffleQuotes();
-    }, []);
+    }, [currentSlide]);
 
     return (
         <section className='mt-6 sm:mt-12 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
@@ -42,9 +43,9 @@ const Notes = () => {
                 >
                     Shuffle
                 </button> */}
-                <NotesSlider />
+                <NotesSlider currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4'>
-                    {shuffledQuotes.map((quote, index) => (
+                    {shuffledNotes.map((note, index) => (
                         <div
                             key={index}
                             className={`flex flex-col justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
@@ -53,9 +54,9 @@ const Notes = () => {
                             }}
                         >
                             <div className='flex flex-col items-center justify-center h-full'>
-                                <p className='manrope-regular text-lg text-center text-black'>{quote?.quote}</p>
+                                <p className='manrope-regular text-lg text-center text-black'>{note?.note}</p>
                             </div>
-                            <p className='manrope-semibold text-xs text-center text-primary'>- {quote?.title}</p>
+                            <p className='manrope-semibold text-xs text-center text-primary'>- {note?.book.title}</p>
                         </div>
                     ))}
                 </div>

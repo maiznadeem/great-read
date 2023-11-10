@@ -4,6 +4,7 @@ import Book from './Book';
 import DefaultPagination from './DefaultPagination';
 import { getBooks, getCategories } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useReadingList } from '../context/ReadingListContext';
 
 const Books = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -14,6 +15,7 @@ const Books = () => {
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
+    const { books: contextBooks } = useReadingList();
 
     useEffect(() => {
         const handleResize = () => {
@@ -27,7 +29,7 @@ const Books = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        getBooks((currentPage - 1) * limit, limit, activeCategories)
+        getBooks((currentPage - 1) * limit, limit, activeCategories, contextBooks)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);

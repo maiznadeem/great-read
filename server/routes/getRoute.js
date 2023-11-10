@@ -7,7 +7,7 @@ const Category = require('../models/Category');
 const Bookmark = require('../models/Bookmark');
 
 getRoute.post('/books', async (req, res) => {
-    const { offset, limit, categories } = req.body;
+    const { offset, limit, categories, contextBooks } = req.body;
     try {
         const offsetNum = parseInt(offset);
         const limitNum = parseInt(limit);
@@ -93,10 +93,11 @@ getRoute.get('/categories', async (req, res) => {
 });
 
 
-async function getRandomBooksByCategoriesFromDB(categories, goal) {
+async function getRandomBooksByCategoriesFromDB(categories, goal, books) {
     try {
         const filteredBooks = await Book.find({
-            categories: { $in: categories }
+            categories: { $in: categories },
+            _id: { $nin: books.map(book => book._id) }
         });
         const selectedBooks = shuffleArray(filteredBooks).slice(0, goal);
 
@@ -108,9 +109,9 @@ async function getRandomBooksByCategoriesFromDB(categories, goal) {
 }
 
 getRoute.post('/getRandomBooks', async (req, res) => {
-    const { categories, goal } = req.body;
+    const { categories, goal, books } = req.body;
     try {
-        const randomBooks = await getRandomBooksByCategoriesFromDB(categories, goal);
+        const randomBooks = await getRandomBooksByCategoriesFromDB(categories, goal, books);
         res.json(randomBooks);
     } catch (error) {
         console.error('Error fetching random books by categories:', error);
@@ -145,6 +146,21 @@ async function addSampleBookmarks() {
 }
 
 // addSampleBookmarks();
+
+getRoute.get('/randomnotes', async (req, res) => {
+    const { currentSlide } = req.query;
+    try {
+        const notes = await Bookmark.find({ bookmarkNo: currentSlide }).populate('book').exec();
+        if (!notes || notes.length === 0) {
+            return res.status(404).json({ error: 'No notes found for the provided currentSlide' });
+        }
+        const shuffledNotes = shuffleArray(notes);
+        res.json(shuffledNotes);
+    } catch (error) {
+        console.error('Error fetching random notes:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 module.exports = { getRoute };
 

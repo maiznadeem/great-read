@@ -44,7 +44,7 @@ const Shelf = () => {
     useEffect(() => {
         if (books.length < goal && selectedCategories.length) {
             setIsLoading(true);
-            getRandomBooks(selectedCategories, goal - books.length)
+            getRandomBooks(selectedCategories, goal - books.length, books)
                 .then((randomBooks) => {
                     setBooksValue(randomBooks);
                     setIsLoading(false);

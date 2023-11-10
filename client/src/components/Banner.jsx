@@ -91,7 +91,7 @@ const Banner = () => {
                 <div className='md:w-[90%] lg:w-[60%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between sm:gap-8'>
-                            <div className='flex flex-col gap-2 md:gap-4 items-start justify-center w-full md:w-[40%]'>
+                            <div className='flex flex-col gap-1 items-start justify-center w-full md:w-[40%]'>
                                 <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
                                     <span className='text-primaryDark'>Think</span> Better.
                                 </p>
