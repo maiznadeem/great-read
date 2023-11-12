@@ -7,24 +7,32 @@ const Notes = () => {
     const [isShuffling, setIsShuffling] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(1);
 
-    const shuffleQuotes = async () => {
-        if (!isShuffling) {
-            setIsShuffling(true);
-            try {
-                const notesData = await getRandomNotes(currentSlide);
-                setShuffledNotes(notesData);
-                setTimeout(() => {
-                    setIsShuffling(false);
-                }, 500);
-            } catch (error) {
-                console.error(error);
-                setIsShuffling(false);
-            }
-        }
+    const handleCurrentSlideChange = (newValue) => {
+        setIsShuffling(true);
+        setCurrentSlide(newValue);
     };
 
     useEffect(() => {
-        shuffleQuotes();
+        const abortController = new AbortController();
+        getRandomNotes(currentSlide, {
+            signal: abortController.signal,
+        })
+        .then(async data => {
+            return data;
+        })
+        .then(
+            result => {
+                if (abortController.signal.aborted) {
+                    return;
+                }
+                setShuffledNotes(result);
+                setIsShuffling(false);
+            },
+            e => console.warn('fetch failure', e),
+        )
+        return () => {
+            abortController.abort();
+        };
     }, [currentSlide]);
 
     return (
@@ -43,12 +51,12 @@ const Notes = () => {
                 >
                     Shuffle
                 </button> */}
-                <NotesSlider currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} />
+                <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4'>
                     {shuffledNotes.map((note, index) => (
                         <div
                             key={index}
-                            className={`flex flex-col justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
+                            className={`flex flex-col justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-300 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
                             style={{
                                 maxWidth: '300px',
                             }}

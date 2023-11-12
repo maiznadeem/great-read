@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react'
 import Slider from 'react-slick';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import enabled from "../assets/buttons/enabled.svg";
 import disabled from "../assets/buttons/disabled.svg";
 import bookmarksUtil from '../utils/BookmarksUtil';
 
-const NotesSlider = ({ currentSlide, setCurrentSlide }) => {
+const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
 
     const sliderRef = useRef(null);
 
@@ -44,14 +45,12 @@ const NotesSlider = ({ currentSlide, setCurrentSlide }) => {
         slidesToScroll: 1,
         infinite: true,
         centerPadding: "60px",
-        lazyLoad: 'progressive',
         swipeToSlide: true,
         rows: 1,
         nextArrow: <CustomNextArrow currentSlide={currentSlide} />,
         prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
-        afterChange: (currentSlide) => {
-            setCurrentSlide(currentSlide);
-            console.log(currentSlide);
+        afterChange: (newSlide) => {
+            setCurrentSlide(newSlide+1);
         },
         responsive: [
             {
@@ -78,9 +77,10 @@ const NotesSlider = ({ currentSlide, setCurrentSlide }) => {
                 </p>
             </div>
             <Slider {...settings} ref={sliderRef} className='w-full max-w-[280px] xs:max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custsm:max-w-[720px] custmd:max-w-[800px] lg:max-w-[900px] custlg:max-w-[1000px]'>
-                {bookmarksUtil.map((bookmark) => (
+                {bookmarksUtil.map((bookmark, index) => (
                     <div key={bookmark.number} className='flex'>
-                        <div className="flex justify-center overflow-hidden">
+                        <div className={`relative flex justify-center pt-4`}>
+                                { index === currentSlide-1 && <ArrowDropDownIcon className='text-green-600 absolute top-[-30px]'  style={{ fontSize: '70px' }} /> }
                                 <img 
                                     src={bookmark.image}
                                     alt=""
