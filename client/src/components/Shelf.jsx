@@ -30,6 +30,7 @@ const Shelf = forwardRef((props, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const prevSelectedCategories = useRef(selectedCategories);
 
     useEffect(() => {
         if (ref) {
@@ -49,7 +50,7 @@ const Shelf = forwardRef((props, ref) => {
     }, []);
 
     useEffect(() => {
-        if (books.length < goal && selectedCategories.length) {
+        if (books.length < goal && selectedCategories.length && selectedCategories !== prevSelectedCategories.current) {
             setIsLoading(true);
             getRandomBooks(selectedCategories, goal - books.length, books)
                 .then((randomBooks) => {
@@ -61,6 +62,7 @@ const Shelf = forwardRef((props, ref) => {
                     setIsLoading(false);
                 });
         }
+        prevSelectedCategories.current = selectedCategories;
     }, [selectedCategories]);
 
     const handleCategoryClick = (categoryName) => {
