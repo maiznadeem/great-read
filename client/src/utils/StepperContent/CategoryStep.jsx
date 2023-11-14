@@ -22,17 +22,6 @@ const CategoryStep = ({ handleCategoryClick }) => {
             });
     }, []);
 
-    const bestsellerCategories = [];
-    const nonBestsellerCategories = [];
-
-    categories.forEach((category) => {
-        if (category.bestseller) {
-            bestsellerCategories.push(category);
-        } else {
-            nonBestsellerCategories.push(category);
-        }
-    });
-
 
     return (
         <Scrollbars style={{ width: '100%', height: '45px' }}>

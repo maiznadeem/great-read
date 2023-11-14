@@ -136,7 +136,7 @@ const Books = () => {
                         <CircularProgress sx={{ color: '#8D5E20' }} />
                     </div>
                 ) : books.length === 0 ? (
-                    <div className='manrope-semibold text-center text-gray-700 h-96 flex items-center justify-center'>No results. Try including more categories :)</div>
+                    <div className='manrope-semibold text-center text-gray-700 h-[90vh] flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
                         <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import shelf from '../assets/shelf/Shelf.png';
 import { getTopPicks } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Skeleton } from '@mui/material';
 
 const Banner = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [topPicks, setTopPicks] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [imageLoaded, setIsImageLoaded] = useState(0);
 
     const getMonthName = (monthNumber) => {
         const months = [
@@ -50,27 +52,43 @@ const Banner = () => {
         fetchData();
     }, []);
 
+    const handleImageLoad = () => {
+        setIsImageLoaded((prev) => prev + 1);
+    };
+
     const common = () => {
         return (
             <>
                 <div className='mx-auto relative w-[90%] lg:max-w-[450px]'>
                     <img className='shadow-xl' src={shelf} alt='Shelf' />
                     <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                        <img
-                            src={topPicks?.books[0]?.image || ''}
-                            alt='Shelf'
-                            className='h-auto rounded-lg w-1/3'
-                        />
-                        <img
-                            src={topPicks?.books[1]?.image || ''}
-                            alt='Shelf'
-                            className='h-auto rounded-lg w-1/4'
-                        />
-                        <img
-                            src={topPicks?.books[2]?.image || ''}
-                            alt='Shelf'
-                            className='h-auto rounded-md w-1/5'
-                        />
+                        <div className='h-auto rounded-lg w-1/3 relative overflow-hidden'>
+                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
+                            <img
+                                src={topPicks?.books[0]?.image || ''}
+                                alt='Shelf'
+                                className='w-full h-full object-cover'
+                                onLoad={handleImageLoad}
+                            />
+                        </div>
+                        <div className='h-auto rounded-lg w-1/4 relative overflow-hidden'>
+                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
+                            <img
+                                src={topPicks?.books[1]?.image || ''}
+                                alt='Shelf'
+                                className='w-full h-full object-cover'
+                                onLoad={handleImageLoad}
+                            />
+                        </div>
+                        <div className='h-auto rounded-lg w-1/5 relative overflow-hidden'>
+                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
+                            <img
+                                src={topPicks?.books[2]?.image || ''}
+                                alt='Shelf'
+                                className='w-full h-full object-cover'
+                                onLoad={handleImageLoad}
+                            />
+                        </div>
                     </div>
                 </div>
                 <p className='manrope-semibold text-2xl py-4 text-center text-black'>

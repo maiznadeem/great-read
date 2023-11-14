@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from '@mui/material/Skeleton';
 
 import amazonIcon from '../assets/links/amazon.png';
 import perlegoIcon from '../assets/links/perlego.png';
@@ -15,6 +16,12 @@ const Book = ({ book, categories }) => {
 
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [showCategoryNames, setShowCategoryNames] = useState(false);
+
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+    const handleImageLoad = () => {
+        setIsImageLoaded(true);
+    };
 
     useEffect(() => {
         setIsBookInReadingList(books.some((readingBook) => readingBook._id === book._id));
@@ -74,9 +81,19 @@ const Book = ({ book, categories }) => {
                         }
                     }}
                 >
+                    {!isImageLoaded && 
+                        <Skeleton 
+                            variant="rectangular"
+                            animation="wave"
+                            width={160}
+                            height={240}
+                            sx={{ bgcolor: '#f0f0f0' }}
+                        />
+                    }
                     <img
                         src={book.image}
                         alt={book.title}
+                        onLoad={handleImageLoad}
                         className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList ? 'opacity-30' : 'opacity-100'}`}
                     />
                     {isBookInReadingList && (
