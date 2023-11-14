@@ -54,7 +54,7 @@ const Notes = () => {
                     Shuffle
                 </button> */}
                 <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
-                <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4'>
+                <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4 min-h-[600px]'>
                     {shuffledNotes.map((note, index) => (
                         <div
                             key={index}

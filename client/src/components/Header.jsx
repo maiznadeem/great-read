@@ -38,12 +38,19 @@ const Header = () => {
         ? "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
         : "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark";
 
+
+    const handleReadingListButtonClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        toggleReadingList()
+        history("/");
+    }
+
     const handleNotesButtonClicked = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (isReadingListActive) {
             toggleReadingList();
         }
         history(buttonLink);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -71,12 +78,9 @@ const Header = () => {
                     <div className={`flex gap-1 sm:gap-2 ${!isAtTop ? 'flex-row' : 'flex-col'} justify-center items-end sm:flex-row`}>
                         <button
                             className={readingListButtonClass}
-                            onClick={() => {
-                                toggleReadingList()
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }}
+                            onClick={handleReadingListButtonClick}
                         >
-                            <NavLink to="/">Reading List</NavLink>
+                            Reading List
                         </button>
                         <button
                             className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"

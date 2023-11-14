@@ -10,25 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@egjs/react-flicking": "^4.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@heroicons/react": "^2.0.18",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.15",
     "@mui/styles": "^5.14.15",
-    "@react-spring/web": "^9.7.3",
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-paginate": "^8.2.0",
     "react-query": "^3.39.3",
     "react-query-devtools": "^2.6.3",
     "react-router-dom": "^6.15.0",
     "react-slick": "^0.29.0",
-    "react-spinners": "^0.13.8",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
