@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getCategories } from '../api';
 import Category from '../../components/Category';
 import { Scrollbars } from 'react-custom-scrollbars';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const CategoryStep = ({ handleCategoryClick }) => {
 
@@ -35,9 +36,11 @@ const CategoryStep = ({ handleCategoryClick }) => {
 
     return (
         <Scrollbars style={{ width: '100%', height: '45px' }}>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center h-[45px]'>
                 {isLoading ? (
-                    <p className='manrope-regular text-gray-400 min-h-[25px]'>Loading...</p>
+                    <div className='flex justify-center items-center w-1/3 min-w-[200px]'>
+                        <LinearProgress sx={{ width: '100%', backgroundColor: '#8D5E20', '& .MuiLinearProgress-bar': { backgroundColor: '#cca170' } }} />
+                     </div>
                 ) : (
                     <div className='flex w-[100%] gap-x-2'>
                         {categories.map((category) => (

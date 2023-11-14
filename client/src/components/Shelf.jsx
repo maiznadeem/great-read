@@ -120,8 +120,6 @@ const Shelf = forwardRef((props, ref) => {
         slidesToShow = 3;
     if (windowSize <= 600)
         slidesToShow = 2;
-    if (windowSize <= 100)
-        slidesToShow = 1;
 
     const maxRows = 2;
     const calculatedRows = Math.ceil(books.length / slidesToShow);
@@ -165,13 +163,6 @@ const Shelf = forwardRef((props, ref) => {
                     slidesToScroll: 2,
                 }
             },
-            {
-                breakpoint: 100,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
         ]
     }; 
 
