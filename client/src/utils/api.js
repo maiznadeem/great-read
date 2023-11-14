@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://great-read-398408.uc.r.appspot.com"
-    // baseURL: "http://localhost:8081"
+    // baseURL: "https://great-read-398408.uc.r.appspot.com"
+    baseURL: "http://localhost:8081"
 });
 
 export async function getBooks(offset, limit, categories, contextBooks) {

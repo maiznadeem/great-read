@@ -8,6 +8,8 @@ const Notes = () => {
     const [currentSlide, setCurrentSlide] = useState(1);
 
     const handleCurrentSlideChange = (newValue) => {
+        if (currentSlide == newValue)
+            return;
         setIsShuffling(true);
         setCurrentSlide(newValue);
     };

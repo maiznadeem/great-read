@@ -155,7 +155,8 @@ getRoute.get('/randomnotes', async (req, res) => {
             return res.status(404).json({ error: 'No notes found for the provided currentSlide' });
         }
         const shuffledNotes = shuffleArray(notes);
-        res.json(shuffledNotes);
+        const slice = shuffledNotes.slice(0, 12);
+        res.json(slice);
     } catch (error) {
         console.error('Error fetching random notes:', error);
         res.status(500).json({ error: 'Internal server error' });

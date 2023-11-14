@@ -69,6 +69,10 @@ const Shelf = () => {
         }
     };
 
+    const handleRemoveBook = (bookId) => {
+        updateBooksValue((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
+    };
+
     const CustomNextArrow = ({ currentSlide }) => {
         const itemsToShow = settings.responsive.find((item) => windowSize >= item.breakpoint)?.settings.slidesToShow || 0;
         const isEnd = currentSlide >= (books.length / settings.rows) - itemsToShow - 1;
@@ -170,7 +174,7 @@ const Shelf = () => {
     }; 
 
     return (
-        <div className="bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full sm:w-[80%] md:w-[100%] max-w-[680px]" 
+        <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full sm:w-[80%] md:w-[100%] max-w-[680px]" 
         style={{
             background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
             backgroundSize: 'cover, auto 100%, cover',
@@ -196,7 +200,6 @@ const Shelf = () => {
                         ) 
                         : books.length === 0 && selectionChoice == 'choose for me' ? (
                             <>
-                                
                                 <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">Select your categories and we will stack your shelf.</p>
                             </>
                         ) : (
@@ -208,14 +211,10 @@ const Shelf = () => {
                                                 <img 
                                                     src={remove}
                                                     className='h-4 w-4 absolute top-[-8px] right-[-8px] cursor-pointer'
-                                                    onClick={() => {
-                                                        updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                                                    }}
+                                                    onClick={handleRemoveBook}
                                                 />
                                                 <img src={book.image} alt="" className="w-20 rounded-lg h-32 object-cover cursor-pointer" 
-                                                    onClick={() => {
-                                                        updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                                                    }}
+                                                    onClick={handleRemoveBook}
                                                 />
                                             </div>
                                         </div>

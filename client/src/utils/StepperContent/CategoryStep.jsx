@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { getCategories, getRandomBooks } from '../api';
+import { getCategories } from '../api';
 import Category from '../../components/Category';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { useReadingList } from '../../context/ReadingListContext';
 
 const CategoryStep = ({ handleCategoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    const { selectedCategories, setSelectedCategoriesValue, goal, books } = useReadingList();
 
     useEffect(() => {
         setIsLoading(true);
@@ -42,13 +39,13 @@ const CategoryStep = ({ handleCategoryClick }) => {
                 {isLoading ? (
                     <p className='manrope-regular text-gray-400 min-h-[25px]'>Loading...</p>
                 ) : (
-                <div className='flex w-[100%] gap-x-2'>
-                    {categories.map((category) => (
-                    <div key={category._id} className="flex-shrink-0">
-                        <Category category={category} handleCategoryClick={handleCategoryClick} />
-                    </div>
-                    ))}
-                </div> 
+                    <div className='flex w-[100%] gap-x-2'>
+                        {categories.map((category) => (
+                            <div key={category._id} className="flex-shrink-0">
+                                <Category category={category} handleCategoryClick={handleCategoryClick} />
+                            </div>
+                        ))}
+                    </div> 
                 )}
             </div>
         </Scrollbars>
