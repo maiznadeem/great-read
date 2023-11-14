@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { getRandomNotes } from '../utils/api';
 import NotesSlider from '../components/NotesSlider';
+import BookmarkCard from '../components/BookmarkCard';
 
 const Notes = () => {
     const [shuffledNotes, setShuffledNotes] = useState([]);
     const [isShuffling, setIsShuffling] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(1);
+    const [resetFlip, setResetFlip] = useState(false);
 
     const handleCurrentSlideChange = (newValue) => {
         if (currentSlide == newValue)
             return;
         setIsShuffling(true);
+        setResetFlip((prev) => !prev);
         setCurrentSlide(newValue);
     };
 
@@ -56,18 +59,7 @@ const Notes = () => {
                 <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4 min-h-[600px]'>
                     {shuffledNotes.map((note, index) => (
-                        <div
-                            key={index}
-                            className={`flex flex-col justify-center min-w-[300px] min-h-[300px] p-4 border rounded-lg shadow-lg bg-[#EFE5D857] transition-opacity duration-300 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}
-                            style={{
-                                maxWidth: '300px',
-                            }}
-                        >
-                            <div className='flex flex-col items-center justify-center h-full'>
-                                <p className='manrope-regular text-lg text-center text-black'>{note?.note}</p>
-                            </div>
-                            <p className='manrope-semibold text-xs text-center text-primary'>- {note?.book.title}</p>
-                        </div>
+                        <BookmarkCard key={index} note={note} isShuffling={isShuffling} resetFlip={resetFlip} />
                     ))}
                 </div>
             </div>

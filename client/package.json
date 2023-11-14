@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host --port 8080",
+    "dev": "vite --host --port 5173",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -24,6 +24,7 @@
     "react-query-devtools": "^2.6.3",
     "react-router-dom": "^6.15.0",
     "react-slick": "^0.29.0",
+    "react-spring": "^9.7.3",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
