@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Modal } from '@mui/material';
 import Shelf from './Shelf';
 
 const ReadingInfoModal = ({ open, handleClose }) => {
+
+    const shelfRef = useRef();
+    
     return (
         <Modal
             open={open}
@@ -14,7 +17,7 @@ const ReadingInfoModal = ({ open, handleClose }) => {
                 margin: 2,
             }}
         >
-            <Shelf />
+            <Shelf ref={shelfRef} />
         </Modal>
     );
 };

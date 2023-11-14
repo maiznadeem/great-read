@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useReadingList } from '../context/ReadingListContext';
 
-const Category = ({ category, handleCategoryClick }) => {
+const Category = ({ category, handleCategoryClick, setActiveCategory }) => {
     const [isActive, setIsActive] = useState(false);
+
+    const { selectedCategories } = useReadingList();
+
+    useEffect(() => {
+        if (setActiveCategory) {
+            selectedCategories.includes(category.name) ? setIsActive(true) : setIsActive(false);
+        }
+    }, [selectedCategories, setActiveCategory]);    
 
     const handleClick = () => {
         setIsActive(!isActive);
@@ -17,7 +26,6 @@ const Category = ({ category, handleCategoryClick }) => {
         containerClasses = `bg-${isActive ? 'primary' : 'white'} w-fit rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
     }
 
-    
     const textClasses = `text-${isActive ? 'white' : 'black'} manrope-semibold text-xs sm:text-md`;
 
     const image = category.image ? (

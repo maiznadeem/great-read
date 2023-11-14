@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, forwardRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,7 +12,7 @@ import { useReadingList } from '../context/ReadingListContext';
 import { getRandomBooks } from '../utils/api';
 import CategoryStep from '../utils/StepperContent/CategoryStep';
 
-const Shelf = () => {
+const Shelf = forwardRef((props, ref) => {
     const {
         name,
         goal,
@@ -25,10 +25,17 @@ const Shelf = () => {
         updateBooksValue,
     } = useReadingList();
 
+
     const sliderRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        if (ref) {
+            ref.current = sliderRef.current;
+        }
+    }, [ref]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,10 +74,6 @@ const Shelf = () => {
                 categoryName,
             ]);
         }
-    };
-
-    const handleRemoveBook = (bookId) => {
-        updateBooksValue((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
     };
 
     const CustomNextArrow = ({ currentSlide }) => {
@@ -127,7 +130,6 @@ const Shelf = () => {
         slidesToShow: 6,
         slidesToScroll: 6,
         infinite: false,
-        lazyLoad: true,
         rows: calculatedRows <= maxRows ? calculatedRows : maxRows,
         nextArrow: <CustomNextArrow currentSlide={currentSlide} />,
         prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
@@ -211,10 +213,14 @@ const Shelf = () => {
                                                 <img 
                                                     src={remove}
                                                     className='h-4 w-4 absolute top-[-8px] right-[-8px] cursor-pointer'
-                                                    onClick={handleRemoveBook}
+                                                    onClick={() => {
+                                                        updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                                    }}
                                                 />
                                                 <img src={book.image} alt="" className="w-20 rounded-lg h-32 object-cover cursor-pointer" 
-                                                    onClick={handleRemoveBook}
+                                                    onClick={() => {
+                                                        updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                                    }}
                                                 />
                                             </div>
                                         </div>
@@ -227,6 +233,6 @@ const Shelf = () => {
             </div>
         </div>
     );
-}
+});
 
 export default Shelf;
