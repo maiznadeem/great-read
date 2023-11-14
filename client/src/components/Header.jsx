@@ -40,17 +40,21 @@ const Header = () => {
 
 
     const handleReadingListButtonClick = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        toggleReadingList()
         history("/");
+        toggleReadingList();
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 500)
     }
 
     const handleNotesButtonClicked = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (isReadingListActive) {
             toggleReadingList();
         }
         history(buttonLink);
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 500)
     };
 
     return (

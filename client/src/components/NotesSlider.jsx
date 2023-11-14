@@ -71,8 +71,8 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
 
     return (
         <div className='flex flex-col justify-center items-center'>
-            <div className='flex max-w-[600px] mb-6'>
-                <p className='manrope-regular text-center text-xl sm:text-2xl text-black'>
+            <div className='flex max-w-[500px] mb-6'>
+                <p className='manrope-regular text-center text-xl text-black'>
                     Select one of 100 bookmarks below, to see what notes are contained in it.
                 </p>
             </div>

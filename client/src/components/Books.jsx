@@ -29,6 +29,19 @@ const Books = () => {
 
     useEffect(() => {
         setIsLoading(true);
+        getCategories()
+        .then((data) => {
+            setCategories(data);
+            setIsLoading(false);
+        })
+        .catch((error) => {
+            console.error(error.message);
+            setIsLoading(false);
+        });
+    }, [])
+
+    useEffect(() => {
+        setIsLoading(true);
         getBooks((currentPage - 1) * limit, limit, activeCategories, contextBooks)
             .then((data) => {
                 setBooks(data.books);
@@ -39,16 +52,8 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
-        getCategories()
-            .then((data) => {
-                setCategories(data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                console.error(error.message);
-                setIsLoading(false);
-            });
-    }, [currentPage, limit, activeCategories, windowWidth]);
+
+    }, [currentPage, limit, activeCategories]);
 
     const bestsellerCategories = [];
     const nonBestsellerCategories = [];
@@ -62,18 +67,22 @@ const Books = () => {
     });
 
     const handlePageChange = (newPage) => {
-        var myDiv = document.getElementById("booksection");
-        myDiv.scrollIntoView({
-            behavior: "smooth"
-        });
-        setCurrentPage(newPage);
+        const targetElement = document.getElementById("booksection");
+        const offset = targetElement.offsetTop - 170;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+        setTimeout(() => {
+            setCurrentPage(newPage);
+        }, 500);
     };
-
+    
     const handleBooksPerPageChange = (newLimit) => {
-        var myDiv = document.getElementById("booksection");
-        myDiv.scrollIntoView({ behavior: "smooth" });
-        setLimit(newLimit);
-        setCurrentPage(1);
+        const targetElement = document.getElementById("booksection");
+        const offset = targetElement.offsetTop - 170;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+        setTimeout(() => {
+            setLimit(newLimit);
+            setCurrentPage(1);
+        }, 500);
     };
 
     const handleCategoryClick = (categoryName) => {
@@ -123,7 +132,7 @@ const Books = () => {
                     </div>
                 }
                 {isLoading ? (
-                    <div className='text-center text-black flex items-center justify-center h-96'>
+                    <div className='text-center text-black flex items-center justify-center h-[90vh]'>
                         <CircularProgress sx={{ color: '#8D5E20' }} />
                     </div>
                 ) : books.length === 0 ? (

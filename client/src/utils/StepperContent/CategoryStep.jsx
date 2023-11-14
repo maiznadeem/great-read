@@ -39,7 +39,7 @@ const CategoryStep = ({ handleCategoryClick }) => {
             <div className='flex items-center justify-center h-[45px]'>
                 {isLoading ? (
                     <div className='flex justify-center items-center w-1/3 min-w-[200px]'>
-                        <LinearProgress sx={{ width: '100%', backgroundColor: '#8D5E20', '& .MuiLinearProgress-bar': { backgroundColor: '#cca170' } }} />
+                        <LinearProgress sx={{ width: '100%', backgroundColor: '#cca170', '& .MuiLinearProgress-bar': { backgroundColor: '#8D5E20' } }} />
                      </div>
                 ) : (
                     <div className='flex w-[100%] gap-x-2'>

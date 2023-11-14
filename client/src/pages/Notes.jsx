@@ -41,8 +41,8 @@ const Notes = () => {
         <section className='mt-6 sm:mt-12 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
                 <div className='flex flex-col gap-4 items-center w-full'>
-                    <div className='flex max-w-[800px]'>
-                        <p className='manrope-regular text-center text-xl sm:text-2xl text-black'>
+                    <div className='flex max-w-[600px]'>
+                        <p className='manrope-regular text-center text-xl text-black'>
                             A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3,000+ books.
                         </p>
                     </div>
