@@ -46,7 +46,7 @@ const Notes = () => {
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
                 <div className='flex flex-col gap-4 items-center w-full max-w-[600px]'>
                     <p className='manrope-regular text-center text-xl text-black'>
-                        A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3,000+ books.
+                        A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3,000 books.
                     </p>
                     <DownloadNotes />
                 </div>
