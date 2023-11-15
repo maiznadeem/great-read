@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getRandomNotes } from '../utils/api';
 import NotesSlider from '../components/NotesSlider';
 import BookmarkCard from '../components/BookmarkCard';
+import DownloadNotes from '../components/DownloadNotes';
 
 const Notes = () => {
     const [shuffledNotes, setShuffledNotes] = useState([]);
@@ -43,12 +44,11 @@ const Notes = () => {
     return (
         <section className='mt-6 sm:mt-12 sm:my-14 mx-4 sm:mx-8 min-h-[80vh]'>
             <div className='flex flex-col gap-8 items-center justify-center w-full'>
-                <div className='flex flex-col gap-4 items-center w-full'>
-                    <div className='flex max-w-[600px]'>
-                        <p className='manrope-regular text-center text-xl text-black'>
-                            A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3,000+ books.
-                        </p>
-                    </div>
+                <div className='flex flex-col gap-4 items-center w-full max-w-[600px]'>
+                    <p className='manrope-regular text-center text-xl text-black'>
+                        A collection of more than <span className='text-primaryDark'>10,000</span> interesting insights, ideas, and concepts from over 3,000+ books.
+                    </p>
+                    <DownloadNotes />
                 </div>
                 {/* <button
                     className={`w-full text-md sm:text-xl flex justify-center items-center max-w-[300px] manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark transition-all ${isShuffling ? 'pointer-events-none' : ''}`}
@@ -58,7 +58,7 @@ const Notes = () => {
                 </button> */}
                 <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4 min-h-[600px]'>
-                    {shuffledNotes.map((note, index) => (
+                    {shuffledNotes.length > 0 && shuffledNotes.map((note, index) => (
                         <BookmarkCard key={index} note={note} isShuffling={isShuffling} resetFlip={resetFlip} />
                     ))}
                 </div>
