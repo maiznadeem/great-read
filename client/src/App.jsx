@@ -28,6 +28,19 @@ function App() {
                 fontFamily: 'Manrope',
             },
         },
+        components: {
+            MuiTooltip: {
+                styleOverrides: {
+                    tooltip: {
+                        fontFamily: 'Manrope',
+                        fontSize: 12,
+                        backgroundColor: 'white',
+                        color: 'black',
+                        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+                    },
+                },
+            },
+        },
     });
 
     return (

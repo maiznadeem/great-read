@@ -9,6 +9,8 @@ import add from "../assets/buttons/Add.svg";
 import remove from "../assets/buttons/Remove.svg";
 import tick from "../assets/buttons/tick.png";
 import { useReadingList } from '../context/ReadingListContext';
+import { Tooltip } from '@mui/material';
+import Zoom from '@mui/material/Zoom';
 
 const Book = ({ book, categories }) => {
 
@@ -50,14 +52,14 @@ const Book = ({ book, categories }) => {
         const matchingCategory = categories.find(item => item.name === category);
         if (matchingCategory && matchingCategory.image) {
             return (
-                <img
-                    key={matchingCategory._id}
-                    src={matchingCategory.image}
-                    alt={matchingCategory.name}
-                    title={matchingCategory.name}
-                    className="w-auto h-6 cursor-pointer hover:tooltip"
-                    onClick={toggleCategoryDisplay}
-                />
+                <Tooltip key={matchingCategory._id} title={matchingCategory.name} TransitionComponent={Zoom}>
+                    <img
+                        src={matchingCategory.image}
+                        alt={matchingCategory.name}
+                        className="w-auto h-6 cursor-pointer hover:tooltip"
+                        onClick={toggleCategoryDisplay}
+                    />
+                </Tooltip>
             );
         }
         return null;
