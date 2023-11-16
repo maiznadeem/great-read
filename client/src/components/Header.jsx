@@ -57,6 +57,16 @@ const Header = () => {
         }, 500)
     };
 
+    const handleHomeClicked = () => {
+        if (isReadingListActive) {
+            toggleReadingList();
+        }
+        history("/");
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 500)
+    };
+
     return (
         <header
             className={`fixed top-0 left-0 w-full bg-backgroundPrimary ${
@@ -67,7 +77,7 @@ const Header = () => {
                 <div className="absolute w-[40%] sm:w-[30%] border-b-[3px] border-primary" style={{ bottom: '0' }}></div>
             )}
             <div className="flex justify-between items-center">
-                <Link to='/' className="text-white font-bold text-lg">
+                <button onClick={handleHomeClicked} className="text-white font-bold text-lg">
                     <img
                         src={Logo}
                         alt="Logo"
@@ -77,14 +87,14 @@ const Header = () => {
                             ${!isHidden && isAtTop ? 'h-32 sm:h-32 max-h-96' : ''}
                         `}
                     />
-                </Link>
+                </button>
                 <div className='flex flex-col gap-1 sm:gap-2'>
                     <div className={`flex gap-1 sm:gap-2 ${!isAtTop ? 'flex-row' : 'flex-col'} justify-center items-end sm:flex-row`}>
                         <button
                             className={readingListButtonClass}
                             onClick={handleReadingListButtonClick}
                         >
-                            Reading List
+                            { isReadingListActive ? 'Homepage' : 'Reading List' }
                         </button>
                         <button
                             className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
