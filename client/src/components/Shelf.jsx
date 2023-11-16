@@ -21,7 +21,6 @@ const Shelf = forwardRef((props, ref) => {
         books,
         selectedCategories,
         setSelectedCategoriesValue,
-        setBooksValue,
         updateBooksValue,
     } = useReadingList();
 
@@ -50,11 +49,11 @@ const Shelf = forwardRef((props, ref) => {
     }, []);
 
     useEffect(() => {
-        if (books.length < goal && selectedCategories.length && selectedCategories !== prevSelectedCategories.current) {
+        if (selectedCategories.length && selectedCategories !== prevSelectedCategories.current) {
             setIsLoading(true);
-            getRandomBooks(selectedCategories, goal - books.length, books)
+            getRandomBooks(selectedCategories, goal, [])
                 .then((randomBooks) => {
-                    setBooksValue(randomBooks);
+                    updateBooksValue(randomBooks);
                     setIsLoading(false);
                 })
                 .catch((error) => {

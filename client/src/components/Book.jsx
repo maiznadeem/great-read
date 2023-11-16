@@ -12,7 +12,7 @@ import { useReadingList } from '../context/ReadingListContext';
 
 const Book = ({ book, categories }) => {
 
-    const { books, goal, updateBooksValue } = useReadingList();
+    const { books, goal, updateBooksValue, isReadingListActive } = useReadingList();
 
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [showCategoryNames, setShowCategoryNames] = useState(false);
@@ -70,18 +70,20 @@ const Book = ({ book, categories }) => {
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
             <div className='flex flex-row gap-4'>
-                <div className={`w-40 h-60 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden cursor-pointer ${isBookInReadingList ? 'bg-black' : ''}`}
+                <div className={`w-40 h-60 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden ${isReadingListActive ? 'cursor-pointer' : '' } ${isBookInReadingList && isReadingListActive ? 'bg-black' : ''}`}
                     onClick={() => {
-                        if (isBookInReadingList) {
-                            updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                            setIsBookInReadingList(false);
-                        } else if (books.length < goal) {
-                            updateBooksValue([...books, book]);
-                            setIsBookInReadingList(true);
+                        if (isReadingListActive) {   
+                            if (isBookInReadingList) {
+                                updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                setIsBookInReadingList(false);
+                            } else if (books.length < goal) {
+                                updateBooksValue([...books, book]);
+                                setIsBookInReadingList(true);
+                            }
                         }
                     }}
                 >
-                    {!isImageLoaded && 
+                    { !isImageLoaded && 
                         <Skeleton 
                             variant="rectangular"
                             animation="wave"
@@ -94,39 +96,43 @@ const Book = ({ book, categories }) => {
                         src={book.image}
                         alt={book.title}
                         onLoad={handleImageLoad}
-                        className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList ? 'opacity-30' : 'opacity-100'}`}
+                        className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList && isReadingListActive ? 'opacity-30' : 'opacity-100'}`}
                     />
-                    {isBookInReadingList && (
+                    { isReadingListActive && isBookInReadingList &&
                         <div className='absolute inset-0 flex flex-col justify-center items-center gap-2'>
                             <img src={tick} alt="Tick Icon" className="transition-opacity duration-300 ease-in-out" />
                             <p className='manrope-semibold text-white text-center transition-opacity duration-300 ease-in-out'>On Shelf</p>
                         </div>
-                        )}
+                    }
                 </div>
                 <div className='flex justify-center items-center w-[70%]'>
                     <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
-                    {isBookInReadingList ? (
-                        <img 
-                            src={remove}
-                            className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
-                            onClick={() => {
-                                updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                                setIsBookInReadingList(false);
-                            }}
-                        />
-                    ) : (
-                        books.length < goal && (
+                    { isReadingListActive && 
+                        <>
+                        {isBookInReadingList ? (
                             <img 
-                                src={add}
+                                src={remove}
                                 className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                                 onClick={() => {
-                                    updateBooksValue([...books, book]);
-                                    setIsBookInReadingList(true);
+                                    updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
+                                    setIsBookInReadingList(false);
                                 }}
                             />
-                        )
-                    )}
+                        ) : (
+                            books.length < goal && (
+                                <img 
+                                    src={add}
+                                    className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
+                                    onClick={() => {
+                                        updateBooksValue([...books, book]);
+                                        setIsBookInReadingList(true);
+                                    }}
+                                />
+                            )
+                        )}
+                        </>
+                    }
                     <p className="manrope-regular text-gray-600 text-sm">{book.quote}</p>
                 </div>
             </div>
