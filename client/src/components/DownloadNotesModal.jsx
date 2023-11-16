@@ -126,7 +126,12 @@ const DownloadNotesModal = ({ open, handleClose, pages }) => {
                     helperText={errors.name}
                     sx={{
                         marginBottom: 2,
-                        input: {backgroundColor: 'white'},
+                    }}
+                    InputProps={{
+                        sx: {
+                            backgroundColor: 'white',
+                            borderRadius: 2,
+                        }
                     }}
                 />
                 <TextField
@@ -140,7 +145,12 @@ const DownloadNotesModal = ({ open, handleClose, pages }) => {
                     helperText={errors.email}
                     sx={{
                         marginBottom: 2,
-                        input: {backgroundColor: 'white'}
+                    }}
+                    InputProps={{
+                        sx: {
+                            backgroundColor: 'white',
+                            borderRadius: 2,
+                        }
                     }}
                 />
                 <h3 className="text-xl manrope-regular text-black my-4">
@@ -166,7 +176,12 @@ const DownloadNotesModal = ({ open, handleClose, pages }) => {
                     />
                 </RadioGroup>
                 <div className='w-full flex justify-center my-4'>
-                    <Button variant="contained" className='w-36' onClick={handleConfirm}>
+                    <Button 
+                        variant="contained"
+                        className='w-36'
+                        sx={{ borderRadius: 2 }}
+                        onClick={handleConfirm}
+                    >
                         Confirm
                     </Button>
                 </div>

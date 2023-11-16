@@ -109,16 +109,18 @@ const Banner = () => {
                 <div className='md:w-[90%] lg:w-[60%]'>
                     <div className='bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
                         <div className='flex flex-col md:flex-row items-center justify-between sm:gap-8'>
-                            <div className='flex flex-col gap-1 items-start justify-center w-full md:w-[40%]'>
-                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                    <span className='text-primaryDark'>Think</span> Better.
-                                </p>
-                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                    <span className='text-primaryDark'>Be</span> Better.
-                                </p>
-                                <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                    <span className='text-primaryDark'>Do</span> Better.
-                                </p>
+                            <div className='flex flex-col gap-2 sm:gap-6 items-start justify-center w-full md:w-[40%]'>
+                                <div className='flex flex-col gap-1'>
+                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
+                                        <span className='text-primaryDark'>Think</span> Better.
+                                    </p>
+                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
+                                        <span className='text-primaryDark'>Be</span> Better.
+                                    </p>
+                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
+                                        <span className='text-primaryDark'>Do</span> Better.
+                                    </p>
+                                </div>
                                 <p className='manrope-semibold text-lg sm:text-xl text-black'>
                                     The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that {windowWidth <= 1300 && windowWidth >= 1150 ? <br /> : <></>} will inspire you.
                                 </p>
