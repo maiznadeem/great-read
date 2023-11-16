@@ -72,7 +72,7 @@ const Books = () => {
         window.scrollTo({ top: offset, behavior: "smooth" });
         setTimeout(() => {
             setCurrentPage(newPage);
-        }, 500);
+        }, 700);
     };
     
     const handleBooksPerPageChange = (newLimit) => {
@@ -82,7 +82,7 @@ const Books = () => {
         setTimeout(() => {
             setLimit(newLimit);
             setCurrentPage(1);
-        }, 500);
+        }, 700);
     };
 
     const handleCategoryClick = (categoryName) => {
