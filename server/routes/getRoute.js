@@ -9,18 +9,34 @@ const Bookmark = require('../models/Bookmark');
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories, contextBooks } = req.body;
     try {
-        const offsetNum = parseInt(offset);
-        const limitNum = parseInt(limit);
-        let query = Book.find({});
+        let offsetNum = parseInt(offset);
+        let limitNum = parseInt(limit);
+        let query = Book.find();
         let totalCountQuery = Book.countDocuments();
+        let topPicks = await TopPicks.findOne().populate({
+            path: 'books',
+            model: 'Book'
+        }).exec();
         if (categories && categories.length > 0) {
+            topPicks.books = topPicks.books.filter((book) =>
+                categories.some(category => book.categories.includes(category))
+            );
             query = query.where('categories').in(categories);
             totalCountQuery = totalCountQuery.where('categories').in(categories);
         }
-        const books = await query
+        query = query.where('_id').nin(topPicks.books.map(book => book._id));
+        if (0 <= offsetNum && offsetNum < topPicks.books.length) {        
+            limitNum = limitNum - topPicks.books.length;
+        } else {
+            offsetNum = offsetNum - topPicks.books.length;
+        }
+        let books = await query
             .skip(offsetNum)
             .limit(limitNum)
             .exec();
+        if (offset == 0) {
+            books = [ ...topPicks.books, ...books ];
+        }
         const totalCount = await totalCountQuery.exec();
         res.json({
             books,
