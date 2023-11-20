@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import shelf from '../assets/shelf/Shelf.png';
 import { getTopPicks } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Skeleton } from '@mui/material';
+import TopPickCarousel from './TopPickCarousel';
+import TopPickCard from './TopPickCard';
+
+const TopPickImage = ( {book} ) => {
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    return (
+        <div className='h-48 w-32 rounded-lg overflow-hidden'>
+            { !isImageLoaded && <Skeleton variant="rectangular" className='w-full h-full absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} animation="wave" /> }
+            <img
+                src={book.image}
+                className='w-full h-full object-cover'
+                onLoad={() => setIsImageLoaded(true)}
+            />
+        </div>
+    )
+}
 
 const Banner = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [topPicks, setTopPicks] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [imageLoaded, setIsImageLoaded] = useState(0);
-
+    
     const getMonthName = (monthNumber) => {
         const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
+            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
         ];
         return months[monthNumber - 1];
     };
@@ -52,51 +55,26 @@ const Banner = () => {
         fetchData();
     }, []);
 
-    const handleImageLoad = () => {
-        setIsImageLoaded((prev) => prev + 1);
-    };
-
-    const common = () => {
-        return (
-            <>
-                <div className='mx-auto relative w-[90%] lg:max-w-[450px]'>
-                    <img className='shadow-xl' src={shelf} alt='Shelf' />
-                    <div className='absolute bottom-1/2 flex items-end justify-center gap-4'>
-                        <div className='h-auto rounded-lg w-1/3 relative overflow-hidden'>
-                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
-                            <img
-                                src={topPicks?.books[0]?.image || ''}
-                                alt='Shelf'
-                                className='w-full h-full object-cover'
-                                onLoad={handleImageLoad}
-                            />
-                        </div>
-                        <div className='h-auto rounded-lg w-1/4 relative overflow-hidden'>
-                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
-                            <img
-                                src={topPicks?.books[1]?.image || ''}
-                                alt='Shelf'
-                                className='w-full h-full object-cover'
-                                onLoad={handleImageLoad}
-                            />
-                        </div>
-                        <div className='h-auto rounded-lg w-1/5 relative overflow-hidden'>
-                            { imageLoaded < 3 && <Skeleton variant="rectangular" width={500} height={500} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} /> }
-                            <img
-                                src={topPicks?.books[2]?.image || ''}
-                                alt='Shelf'
-                                className='w-full h-full object-cover'
-                                onLoad={handleImageLoad}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <p className='manrope-semibold text-2xl py-4 text-center text-black'>
-                    Picks for {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
-                </p>
-            </>
-        )
-    }
+    let cards = [
+        {
+            key: 1,
+            content: (
+                <TopPickCard book={topPicks?.books[0]} />
+            )
+        },
+        {
+            key: 2,
+            content: (
+                <TopPickCard book={topPicks?.books[1]} />
+            )
+        },
+        {
+            key: 3,
+            content: (
+                <TopPickCard book={topPicks?.books[2]} />
+            )
+        },
+    ]
 
     return (
         <section className='flex mt-4 justify-center items-center'>
@@ -106,36 +84,37 @@ const Banner = () => {
                 </div>
             ) : (
             <>
-                <div className='md:w-[90%] lg:w-[60%]'>
-                    <div className='bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
-                        <div className='flex flex-col md:flex-row items-center justify-between sm:gap-8'>
-                            <div className='flex flex-col gap-2 sm:gap-6 items-start justify-center w-full md:w-[40%]'>
-                                <div className='flex flex-col gap-1'>
-                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                        <span className='text-primaryDark'>Think</span> Better.
-                                    </p>
-                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                        <span className='text-primaryDark'>Be</span> Better.
-                                    </p>
-                                    <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
-                                        <span className='text-primaryDark'>Do</span> Better.
-                                    </p>
-                                </div>
-                                <p className='manrope-semibold text-lg sm:text-xl text-black'>
-                                    The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that {windowWidth <= 1300 && windowWidth >= 1150 ? <br /> : <></>} will inspire you.
-                                </p>
+                <div className='w-full'>
+                    <div className=''>
+                        <p className='manrope-semibold text-2xl sm:text-3xl text-black'>
+                            <span className='text-primaryDark'>Think</span> Better.
+                            <span className='text-primaryDark'> Be</span> Better.
+                            <span className='text-primaryDark'> Do</span> Better.
+                        </p>
+                        <p className='manrope-semibold text-lg sm:text-xl text-black'>
+                            The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that {windowWidth <= 1300 && windowWidth >= 1150 ? <br /> : <></>} will inspire you.
+                        </p>
+                    </div>
+                    <div className='flex gap-4 w-full'>
+                        <div className='w-full bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
+                        
+                        </div>
+                        <div className='flex justify-center items-center flex-col w-[100%] bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-4 sm:px-8 py-2 sm:py-4 relative'>
+                            <div className='flex justify-center items-center w-[100%] max-w-[500px]'>
+                                <TopPickCarousel
+                                    cards={cards}
+                                    height="300px"
+                                    width="80%"
+                                    margin="0 auto"
+                                    showArrows={false}
+                                />
                             </div>
-                            <div className='flex flex-col gap-3 items-center justify-center w-full md:w-[60%]'>
-                                { windowWidth > 768 ? (
-                                    <div className='absolute top-[65%]'>
-                                        {common()}
-                                    </div>
-                                ) : (
-                                    <div className='mt-[50%]'>
-                                            {common()}
-                                    </div>
-                                )}
-                            </div>
+                            <p className='manrope-semibold text-2xl py-4 text-center text-black'>
+                                Picks for {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
+                            </p>
+                        </div>
+                        <div className='w-full bg-[#EFE5D8] rounded-xl shadow-xl mb-10 sm:mb-0 px-6 sm:px-12 py-6 sm:py-20 relative'>
+                        
                         </div>
                     </div>
                 </div>
