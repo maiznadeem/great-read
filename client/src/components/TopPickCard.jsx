@@ -1,9 +1,12 @@
+import { Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 
 function TopPickCard({ book }) {
-    const [show, setShown] = useState(false);
 
+    const [show, setShown] = useState(false);
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    
     const props3 = useSpring({
         transform: show ? "scale(1.03)" : "scale(1)",
         boxShadow: show
@@ -25,9 +28,11 @@ function TopPickCard({ book }) {
             onMouseEnter={() => setShown(true)}
             onMouseLeave={() => setShown(false)}
         >
+            { !isImageLoaded && <Skeleton variant="rectangular" width={170} height={270} className='absolute inset-0' sx={{ bgcolor: '#f0f0f0' }} animation="wave" /> }
             <img
                 src={book.image}
                 style={{ objectFit: "cover" }}
+                onLoad={() => setIsImageLoaded(true)}
             />
         </animated.div>
     );
