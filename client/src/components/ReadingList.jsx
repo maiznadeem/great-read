@@ -20,7 +20,7 @@ const ReadingList = () => {
     });
 
     return (
-        <div className='flex flex-col items-center w-full mt-4 sm:mt-20'>
+        <div className='flex flex-col items-center w-full mt-10 sm:mt-20'>
             <animated.div
                 style={{ ...fadeInOut, ...zoomInOut }}
                 className={`flex flex-col items-center gap-4 rounded-xl shadow-xl ${readingInfo ? 'w-[100%] md:w-[80%] md:max-w-[100%] lg:w-[680px]' : 'max-w-[100%] md:max-w-[600px]'}`}

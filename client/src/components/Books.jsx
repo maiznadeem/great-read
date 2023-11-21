@@ -101,7 +101,7 @@ const Books = () => {
     };
 
     return (
-        <section className='mx-4 mt-20 sm:my-20 sm:mx-8'>
+        <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
             <div>
                 {/* <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p> */}
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
@@ -139,7 +139,7 @@ const Books = () => {
                     <div className='manrope-semibold text-center text-gray-700 h-[90vh] flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
-                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
+                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
                                 <Book key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}
