@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { IconButton } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
 
 import waves from '../assets/backgrounds/waves.png';
 import linear from '../assets/backgrounds/linear.png';
@@ -64,10 +62,6 @@ const ReadingListForm = () => {
         }
         setName(newName);
     };
-    
-    const handleReadingListClose = () => {
-        toggleReadingList();
-    }
 
     return (
         <div className='bg-footer py-3 px-6 sm:py-3 sm:px-8 rounded-xl w-full' style={{
@@ -76,17 +70,6 @@ const ReadingListForm = () => {
             backgroundPosition: 'center, right, center',
             backgroundRepeat: 'no-repeat',
         }}>
-            <IconButton
-                onClick={handleReadingListClose}
-                sx={{
-                    position: 'absolute',
-                    top: '8px',
-                    right: '8px',
-                    color: 'text.primary',
-                }}
-            >
-                <ClearIcon />
-            </IconButton>
             <form onSubmit={handleSubmit}>
                 {step === 1 && <Step1 name={name} handleNameChange={handleNameChange} />}
                 {step === 2 && <Step2 name={name} selectedTimePeriod={selectedTimePeriod} setSelectedTimePeriod={setSelectedTimePeriod} />}

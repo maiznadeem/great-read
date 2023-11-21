@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getTopPicks } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import TopPickCarousel from './TopPickCarousel';
@@ -9,7 +9,6 @@ import { useReadingList } from '../context/ReadingListContext';
 const Banner = () => {
     const [topPicks, setTopPicks] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const location = useLocation();
     const history = useNavigate();
     const { isReadingListActive, toggleReadingList } = useReadingList();
     
@@ -55,8 +54,27 @@ const Banner = () => {
     ]
 
     const handleReadingListClick = () => {
-        history("/");
-        toggleReadingList();
+        if (isReadingListActive) {
+            toggleReadingList();
+        } else {
+            toggleReadingList();
+            setTimeout(() => {
+                const targetElement = document.getElementById("readinglistsection");
+                if (targetElement) {
+                    const targetHeight = targetElement.clientHeight;
+                    const windowHeight = window.innerHeight;
+                    const offset = targetElement.offsetTop - (windowHeight - targetHeight) / 2;
+                    window.scrollTo({ top: offset, behavior: "smooth" });
+                }
+            }, 50);10
+        }
+    };
+    
+    const handleNotesButtonClick = () => {
+        history("/notes");
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 500)
     }
 
     return (
@@ -88,6 +106,7 @@ const Banner = () => {
                             </p>
                             <div className='w-full flex justify-center'>
                                 <button
+                                    onClick={handleNotesButtonClick}
                                     className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark"
                                 >
                                     I'm in!    

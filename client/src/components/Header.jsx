@@ -35,9 +35,6 @@ const Header = () => {
     const buttonLink = location.pathname === '/' ? '/notes' : '/';
 
     const handleNotesButtonClicked = () => {
-        if (isReadingListActive) {
-            toggleReadingList();
-        }
         history(buttonLink);
         setTimeout(() => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -58,7 +55,7 @@ const Header = () => {
         <header
             className={`fixed top-0 left-0 w-full bg-backgroundPrimary ${
                 isHidden ? 'transform translate-y-[-80px]' : 'px-4 sm:px-8 py-4 border-primary'
-            } ${isAtTop ? '' : 'border-b-2 border-primary shadow-md'} transition-all duration-300 ease-in-out z-10`}
+            } ${isAtTop ? '' : 'border-b-2 border-primary shadow-md'} transition-all duration-300 ease-in-out z-50`}
         >
             {isAtTop && (
                 <div className="absolute w-[40%] sm:w-[30%] border-b-[3px] border-primary" style={{ bottom: '0' }}></div>

@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef, forwardRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { IconButton } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
 import waves from '../assets/backgrounds/waves.png';
 import linear from '../assets/backgrounds/linear.png';
@@ -79,10 +77,6 @@ const Shelf = forwardRef((props, ref) => {
             ]);
         }
     };
-
-    const handleReadingListClose = () => {
-        toggleReadingList();
-    }
 
     const CustomNextArrow = ({ currentSlide }) => {
         const itemsToShow = settings.responsive.find((item) => windowSize >= item.breakpoint)?.settings.slidesToShow || 0;
@@ -183,17 +177,6 @@ const Shelf = forwardRef((props, ref) => {
                 backgroundRepeat: 'no-repeat',
             }}
         >
-            <IconButton
-                onClick={handleReadingListClose}
-                sx={{
-                    position: 'absolute',
-                    top: '8px',
-                    right: '8px',
-                    color: 'text.primary',
-                }}
-            >
-                <ClearIcon />
-            </IconButton>
             <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
                 <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">{name}'s Reading List</p>
                 <div>

@@ -33,7 +33,7 @@ const HomePage = () => {
             <Banner />
             {mount && <ReadingList />}
             <Books />
-            {readingInfo && (
+            {readingInfo && isReadingListActive && (
                 <>
                     <Button variant="contained"
                         sx={{
