@@ -31,21 +31,8 @@ const Header = () => {
         };
     }, []);
 
-    const buttonText = location.pathname === '/' ? 'Notes' : 'Homepage';
+    const buttonText = location.pathname === '/' ? 'Access Notes' : 'Homepage';
     const buttonLink = location.pathname === '/' ? '/notes' : '/';
-
-    const readingListButtonClass = isReadingListActive
-        ? "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
-        : "manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark";
-
-
-    const handleReadingListButtonClick = () => {
-        history("/");
-        toggleReadingList();
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 500)
-    }
 
     const handleNotesButtonClicked = () => {
         if (isReadingListActive) {
@@ -90,12 +77,6 @@ const Header = () => {
                 </button>
                 <div className='flex flex-col gap-1 sm:gap-2'>
                     <div className={`flex gap-1 sm:gap-2 ${!isAtTop ? 'flex-row' : 'flex-col'} justify-center items-end sm:flex-row`}>
-                        <button
-                            className={readingListButtonClass}
-                            onClick={handleReadingListButtonClick}
-                        >
-                            { isReadingListActive ? 'Homepage' : 'Reading List' }
-                        </button>
                         <button
                             className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
                             onClick={handleNotesButtonClicked}

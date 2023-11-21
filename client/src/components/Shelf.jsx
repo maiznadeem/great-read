@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef, forwardRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import CircularProgress from '@mui/material/CircularProgress';
 import waves from '../assets/backgrounds/waves.png';
 import linear from '../assets/backgrounds/linear.png';
@@ -22,6 +24,7 @@ const Shelf = forwardRef((props, ref) => {
         selectedCategories,
         setSelectedCategoriesValue,
         updateBooksValue,
+        toggleReadingList,
     } = useReadingList();
 
 
@@ -76,6 +79,10 @@ const Shelf = forwardRef((props, ref) => {
             ]);
         }
     };
+
+    const handleReadingListClose = () => {
+        toggleReadingList();
+    }
 
     const CustomNextArrow = ({ currentSlide }) => {
         const itemsToShow = settings.responsive.find((item) => windowSize >= item.breakpoint)?.settings.slidesToShow || 0;
@@ -169,12 +176,24 @@ const Shelf = forwardRef((props, ref) => {
 
     return (
         <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full sm:w-[80%] md:w-[100%] max-w-[680px]" 
-        style={{
-            background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
-            backgroundSize: 'cover, auto 100%, cover',
-            backgroundPosition: 'center, right, center',
-            backgroundRepeat: 'no-repeat',
-        }}>
+            style={{
+                background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
+                backgroundSize: 'cover, auto 100%, cover',
+                backgroundPosition: 'center, right, center',
+                backgroundRepeat: 'no-repeat',
+            }}
+        >
+            <IconButton
+                onClick={handleReadingListClose}
+                sx={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '8px',
+                    color: 'text.primary',
+                }}
+            >
+                <ClearIcon />
+            </IconButton>
             <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
                 <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">{name}'s Reading List</p>
                 <div>

@@ -52,7 +52,7 @@ export default function TopPickCarousel(props) {
 
     return (
         <div
-            style={{ width: "50%", height: props.height, margin: props.margin }}
+            style={{ width: "80%", maxWidth: "300px", height: props.height, margin: props.margin }}
         >
             <Carousel
                 slides={cards}

@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getTopPicks } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import TopPickCarousel from './TopPickCarousel';
 import TopPickCard from './TopPickCard';
+import { useReadingList } from '../context/ReadingListContext';
 
 const Banner = () => {
     const [topPicks, setTopPicks] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const location = useLocation();
+    const history = useNavigate();
+    const { isReadingListActive, toggleReadingList } = useReadingList();
     
     const getMonthName = (monthNumber) => {
         const months = [
@@ -49,6 +54,11 @@ const Banner = () => {
         },
     ]
 
+    const handleReadingListClick = () => {
+        history("/");
+        toggleReadingList();
+    }
+
     return (
         <section className='flex mt-4 justify-center items-center'>
             {isLoading ? (
@@ -57,7 +67,7 @@ const Banner = () => {
                 </div>
             ) : (
             <>
-                <div className='w-[100%] sm:w-[85%] flex flex-col items-center'>
+                <div className='w-full sm:w-[90%] max-w-[1100px] flex flex-col items-center'>
                     <div className='flex flex-col items-center gap-4 pb-6'>
                         <p className='manrope-semibold text-2xl sm:text-3xl text-black text-center max-w-[500px]'>
                             <span className='text-primaryDark'>Think</span> Better.
@@ -69,7 +79,7 @@ const Banner = () => {
                         </p>
                     </div>
                     <div className='flex w-full justify-between gap-4 flex-wrap lg:flex-nowrap'>
-                        <div className='w-full md:w-full lg:w-1/3 flex flex-col justify-around items-start bg-[#EFE5D8] rounded-xl shadow-xl relative px-6 sm:px-12 py-6 sm:py-8'>
+                        <div className='w-full lg:w-1/3 flex flex-col justify-around items-start bg-[#EFE5D8] rounded-xl shadow-xl relative px-6 sm:px-12 py-6 sm:py-8'>
                             <p className='manrope-semibold text-3xl text-black'>
                                 Insights & Ideas
                             </p>
@@ -84,8 +94,8 @@ const Banner = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='w-full lg:w-1/3 flex flex-col justify-center items-center bg-[#EFE5D8] rounded-xl shadow-xl px-4 sm:px-8 py-2 sm:py-8 relative -order-last lg:-order-none'>
-                            <p className='manrope-semibold text-3xl py-4 text-center text-black'>
+                        <div className='w-full lg:w-1/3 flex flex-col justify-around items-center bg-[#EFE5D8] rounded-xl shadow-xl px-6 sm:px-2 py-6 sm:py-8 relative -order-last lg:-order-none'>
+                            <p className='manrope-semibold text-3xl text-center text-black'>
                                 Top 3 Picks
                             </p>
                             <div className='flex justify-center items-center w-[100%] max-w-[500px] scale-75'>
@@ -97,11 +107,11 @@ const Banner = () => {
                                     showArrows={false}
                                 />
                             </div>
-                            <p className='manrope-semibold text-2xl py-4 text-center text-black'>
+                            <p className='manrope-semibold text-2xl text-center text-black'>
                                 Picks for {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
                             </p>
                         </div>
-                        <div className='w-full md:w-full lg:w-1/3 flex flex-col justify-around items-start bg-[#EFE5D8] rounded-xl shadow-xl relative px-6 sm:px-12 py-6 sm:py-8'>
+                        <div className='w-full lg:w-1/3 flex flex-col justify-around items-start bg-[#EFE5D8] rounded-xl shadow-xl relative px-6 sm:px-12 py-6 sm:py-8'>
                             <p className='manrope-semibold text-3xl text-black'>
                                 Reading List
                             </p>
@@ -113,6 +123,7 @@ const Banner = () => {
                             </p>
                             <div className='w-full flex justify-center'>
                                 <button
+                                    onClick={handleReadingListClick}
                                     className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark"
                                 >
                                     Start    

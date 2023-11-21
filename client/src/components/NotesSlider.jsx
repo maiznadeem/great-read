@@ -13,7 +13,7 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
         return (
             <img
                 src={enabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 right-[-20px] z-10 sm:right-[-40px] cursor-pointer`}
+                className={`h-8 w-8 absolute shadow-md rounded-full top-1/2 transform -translate-y-1/2 right-[-20px] z-10 sm:right-[-40px] cursor-pointer`}
                 alt="Next"
                 onClick={() => {
                     if (sliderRef.current) {
@@ -28,7 +28,7 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
         return (
             <img
                 src={disabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 left-[-20px] z-10 sm:left-[-40px] cursor-pointer`}
+                className={`h-8 w-8 absolute shadow-md rounded-full top-1/2 transform -translate-y-1/2 left-[-20px] z-10 sm:left-[-40px] cursor-pointer`}
                 alt="Previous"
                 onClick={() => {
                     if (sliderRef.current) {

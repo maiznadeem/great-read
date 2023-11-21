@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Banner from '../components/Banner';
 import Books from '../components/Books';
@@ -11,13 +11,27 @@ import ReadingInfoModal from '../components/ReadingInfoModal';
 const HomePage = () => {
 
     const { isReadingListActive, readingInfo } = useReadingList();
+    const [mount, setMount] = useState(isReadingListActive);
     const [modalOpen, setModalOpen] = useState(false);
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
 
+    useEffect(() => {
+        if (!isReadingListActive) {
+            const delay = setTimeout(() => {
+                setMount(false);
+            }, 200);
+            return () => clearTimeout(delay);
+        }
+        else {
+            setMount(true);
+        }
+    }, [isReadingListActive]);
+
     return (
         <section className='px-4 pt-2 sm:pt-6 sm:px-8'>
-            {isReadingListActive ? <ReadingList /> : <Banner />}
+            <Banner />
+            {mount && <ReadingList />}
             <Books />
             {readingInfo && (
                 <>

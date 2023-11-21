@@ -101,10 +101,10 @@ const Books = () => {
     };
 
     return (
-        <section className='mx-4 sm:my-24 sm:mx-8'>
+        <section className='mx-4 mt-20 sm:my-20 sm:mx-8'>
             <div>
                 {/* <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p> */}
-                <div className='flex flex-wrap justify-center my-6 sm:my-14 gap-2'>
+                <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
                     {nonBestsellerCategories
                         .sort((a, b) => {
                             const nameA = a.name.toLowerCase();

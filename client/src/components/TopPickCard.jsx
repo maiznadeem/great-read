@@ -19,10 +19,10 @@ function TopPickCard({ book }) {
             style={{
                 display: 'flex',
                 justifyContent: 'center',
-                width: '170px',
-                height: '270px',
+                width: '160px',
+                height: '260px',
                 overflow: "hidden",
-                borderRadius: '15px',
+                borderRadius: '12px',
                 ...props3,
             }}
             onMouseEnter={() => setShown(true)}
