@@ -62,7 +62,7 @@ const Banner = () => {
                         <p className='manrope-semibold text-2xl sm:text-3xl text-black text-center max-w-[500px]'>
                             <span className='text-primaryDark'>Think</span> Better.
                             <span className='text-primaryDark'> Be</span> Better.
-                            <span className='text-primaryDark'> Do</span> Better.
+                            <span className='block sm:inline'><span className='text-primaryDark'> Do</span> Better.</span>
                         </p>
                         <p className='manrope-semibold text-lg sm:text-xl text-black text-center max-w-[400px]'>
                             The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
@@ -78,7 +78,7 @@ const Banner = () => {
                             </p>
                             <div className='w-full flex justify-center'>
                                 <button
-                                    className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
+                                    className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark"
                                 >
                                     I'm in!    
                                 </button>
@@ -105,15 +105,15 @@ const Banner = () => {
                             <p className='manrope-semibold text-3xl text-black'>
                                 Reading List
                             </p>
-                            <p className='manrope-semibold text-lg pt-4 sm:text-xl text-black'>
+                            <p className='manrope-semibold text-lg pt-4 pb-1 sm:text-xl text-black'>
                                 Your next <span className='text-primaryDark'>career move, inspiration or motivation</span> can be in one of the books you choose to read.
                             </p>
-                            <p className='manrope-semibold text-lg pb-4 sm:text-xl text-black'>
+                            <p className='manrope-semibold text-lg pb-4 pt-1 sm:text-xl text-black'>
                                 What are you waiting for?
                             </p>
                             <div className='w-full flex justify-center'>
                                 <button
-                                    className="manrope-semibold bg-primary text-white text-[10px] py-[6px] px-[10px] rounded-md sm:px-6 sm:text-[14px] w-24 sm:w-36 sm:rounded-md shadow-lg hover:bg-primaryDark"
+                                    className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark"
                                 >
                                     Start    
                                 </button>

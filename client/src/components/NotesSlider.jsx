@@ -13,7 +13,7 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
         return (
             <img
                 src={enabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 right-[-40px] cursor-pointer`}
+                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 right-[-20px] z-10 sm:right-[-40px] cursor-pointer`}
                 alt="Next"
                 onClick={() => {
                     if (sliderRef.current) {
@@ -28,7 +28,7 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
         return (
             <img
                 src={disabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 left-[-40px] cursor-pointer`}
+                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 left-[-20px] z-10 sm:left-[-40px] cursor-pointer`}
                 alt="Previous"
                 onClick={() => {
                     if (sliderRef.current) {
@@ -76,7 +76,7 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
                     Select one of 100 bookmarks below, to see what notes are contained in it.
                 </p>
             </div>
-            <Slider {...settings} ref={sliderRef} className='w-full max-w-[280px] xs:max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custsm:max-w-[720px] custmd:max-w-[800px] lg:max-w-[900px] custlg:max-w-[1000px]'>
+            <Slider {...settings} ref={sliderRef} className='w-full max-w-[300px] xs:max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custsm:max-w-[720px] custmd:max-w-[800px] lg:max-w-[900px] custlg:max-w-[1000px]'>
                 {bookmarksUtil.map((bookmark, index) => (
                     <div key={bookmark.number} className='flex'>
                         <div className={`relative flex justify-center pt-4`}>
