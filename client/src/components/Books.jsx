@@ -57,6 +57,7 @@ const Books = () => {
 
     useEffect(() => {
         if(pageRefresh) {
+            setActiveCategories([]);
             setCurrentPage(1);
             togglePageRefresh();
         }
@@ -119,22 +120,22 @@ const Books = () => {
                             return nameA.localeCompare(nameB);
                         })
                         .map((category) => (
-                            <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} />
+                            <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} />
                         ))}
                 </div>
                 { windowWidth >= 768 &&
-                    <div className='flex justify-center items-center'>
+                    <div id='bestcategories' className='flex justify-center items-center'>
                         <div className='flex flex-wrap gap-2 items-center justify-between max-w-[750px]'>
                             {bestsellerCategories.map((category) => (
-                            <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                            <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
                             ))}
                         </div>
                     </div> 
                 }
                 { windowWidth < 768 && 
-                    <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
+                    <div id='bestcategories' className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
                             {bestsellerCategories.map((category) => (
-                                <Category key={category._id} category={category} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                                <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
                             ))}
                     </div>
                 }

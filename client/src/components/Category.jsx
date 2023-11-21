@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useReadingList } from '../context/ReadingListContext';
 
-const Category = ({ category, handleCategoryClick, setActiveCategory }) => {
+const Category = ({ category, homePageCategories, handleCategoryClick, setActiveCategory }) => {
     const [isActive, setIsActive] = useState(false);
 
     const { selectedCategories } = useReadingList();
@@ -10,7 +10,10 @@ const Category = ({ category, handleCategoryClick, setActiveCategory }) => {
         if (setActiveCategory) {
             selectedCategories.includes(category.name) ? setIsActive(true) : setIsActive(false);
         }
-    }, [selectedCategories, setActiveCategory]);    
+        else {
+            homePageCategories.includes(category.name) ? setIsActive(true) : setIsActive(false);
+        }
+    }, [selectedCategories, homePageCategories, setActiveCategory]);    
 
     const handleClick = () => {
         setIsActive(!isActive);

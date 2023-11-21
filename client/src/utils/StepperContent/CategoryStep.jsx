@@ -34,7 +34,7 @@ const CategoryStep = ({ handleCategoryClick }) => {
                     <div className='flex w-[100%] gap-x-2'>
                         {categories.map((category) => (
                             <div key={category._id} className="flex-shrink-0">
-                                <Category category={category} handleCategoryClick={handleCategoryClick} setActiveCategory={true} />
+                                <Category category={category} homePageCategories={[]} handleCategoryClick={handleCategoryClick} setActiveCategory={true} />
                             </div>
                         ))}
                     </div> 
