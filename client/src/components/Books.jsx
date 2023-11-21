@@ -15,7 +15,7 @@ const Books = () => {
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
-    const { books: contextBooks } = useReadingList();
+    const { books: contextBooks, pageRefresh, togglePageRefresh } = useReadingList();
 
     useEffect(() => {
         const handleResize = () => {
@@ -54,6 +54,13 @@ const Books = () => {
             });
 
     }, [currentPage, limit, activeCategories]);
+
+    useEffect(() => {
+        if(pageRefresh) {
+            setCurrentPage(1);
+            togglePageRefresh();
+        }
+    }, [pageRefresh])
 
     const bestsellerCategories = [];
     const nonBestsellerCategories = [];

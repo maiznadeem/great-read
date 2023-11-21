@@ -1,8 +1,10 @@
 import Carousel from "react-spring-3d-carousel";
 import { useState, useEffect } from "react";
 import { config } from "react-spring";
+import { useReadingList } from "../context/ReadingListContext";
 
 export default function TopPickCarousel(props) {
+
     const table = props.cards.map((element, index) => {
         return {
             ...element, 
@@ -10,10 +12,14 @@ export default function TopPickCarousel(props) {
         };
     });
 
-    const [goToSlide, setGoToSlide] = useState(null);
+    const [goToSlide, setGoToSlide] = useState(0);
     const [isPaused, setPaused] = useState(false);
     const [cards] = useState(table);
     const [timeoutId, setTimeoutId] = useState(null);
+
+    const { togglePageRefresh } = useReadingList();
+
+    let slideNum = 0;
 
     const customSlideStyle = (offsetFromCenter, index) => {
         const opacity = 1 - Math.abs(offsetFromCenter) / 5;
@@ -26,6 +32,15 @@ export default function TopPickCarousel(props) {
     };
 
     const handleSlideClick = (index) => {
+        if (slideNum == index) {
+            setTimeout(() => {
+                const targetElement = document.getElementById("booksection");
+                const offset = targetElement.offsetTop - 100;
+                window.scrollTo({ top: offset, behavior: "smooth" });
+            }, 50);
+            togglePageRefresh();
+        }
+        slideNum = index;
         setGoToSlide(index);
         setPaused(true);
         if (timeoutId) {
@@ -35,6 +50,7 @@ export default function TopPickCarousel(props) {
             setPaused(false);
         }, 3000);
         setTimeoutId(newTimeoutId);
+        
     };
 
     useEffect(() => {

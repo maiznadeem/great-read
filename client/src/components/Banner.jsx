@@ -66,7 +66,7 @@ const Banner = () => {
                     const offset = targetElement.offsetTop - (windowHeight - targetHeight) / 2;
                     window.scrollTo({ top: offset, behavior: "smooth" });
                 }
-            }, 50);10
+            }, 50);
         }
     };
     
