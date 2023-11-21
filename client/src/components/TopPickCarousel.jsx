@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { config } from "react-spring";
 import { useReadingList } from "../context/ReadingListContext";
 
+let slideNum = 0;
+
 export default function TopPickCarousel(props) {
 
     const table = props.cards.map((element, index) => {
@@ -18,8 +20,6 @@ export default function TopPickCarousel(props) {
     const [timeoutId, setTimeoutId] = useState(null);
 
     const { togglePageRefresh } = useReadingList();
-
-    let slideNum = 0;
 
     const customSlideStyle = (offsetFromCenter, index) => {
         const opacity = 1 - Math.abs(offsetFromCenter) / 5;
@@ -40,7 +40,6 @@ export default function TopPickCarousel(props) {
             }, 50);
             togglePageRefresh();
         }
-        slideNum = index;
         setGoToSlide(index);
         setPaused(true);
         if (timeoutId) {
@@ -65,6 +64,10 @@ export default function TopPickCarousel(props) {
             clearTimeout(timeoutId);
         };
     }, [isPaused, cards.length, timeoutId]);
+
+    useEffect(() => {
+        slideNum = goToSlide;
+    }, [goToSlide])
 
     return (
         <div
