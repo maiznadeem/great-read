@@ -11,7 +11,7 @@ const Step1 = ({ name, handleNameChange }) => {
                     placeholder='Enter your name...'
                     onChange={handleNameChange}
                 />
-                <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>You will be able to download it as a PDF and/or share it on your LinkedIn</p>
+                <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>You will be able to download it as a PDF and/or share it on your LinkedIn.</p>
             </div>
         </div>
     )
