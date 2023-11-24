@@ -58,9 +58,13 @@ const Notes = () => {
                 </button> */}
                 <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4 min-h-[600px]'>
-                    {shuffledNotes.length > 0 && shuffledNotes.map((note, index) => (
-                        <BookmarkCard key={index} note={note} isShuffling={isShuffling} resetFlip={resetFlip} />
-                    ))}
+                    {shuffledNotes.length > 0 ? (
+                        shuffledNotes.map((note, index) => (
+                            <BookmarkCard key={index} note={note} isShuffling={isShuffling} resetFlip={resetFlip} />
+                        ))
+                    ) : (
+                        <p>No notes available.</p>
+                    )}
                 </div>
             </div>
         </section>

@@ -3,9 +3,8 @@ import { Modal } from '@mui/material';
 import Shelf from './Shelf';
 
 const ReadingInfoModal = ({ open, handleClose }) => {
-
     const shelfRef = useRef();
-    
+
     return (
         <Modal
             open={open}
@@ -17,7 +16,15 @@ const ReadingInfoModal = ({ open, handleClose }) => {
                 margin: 2,
             }}
         >
-            <Shelf ref={shelfRef} />
+            <div
+                style={{
+                    maxHeight: '90vh',
+                    overflowY: 'auto',
+                }}
+                className='rounded-xl'
+            >
+                <Shelf ref={shelfRef} />
+            </div>
         </Modal>
     );
 };

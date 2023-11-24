@@ -11,6 +11,8 @@ import remove from "../assets/buttons/Remove.svg";
 import { useReadingList } from '../context/ReadingListContext';
 import { getRandomBooks } from '../utils/api';
 import CategoryStep from '../utils/StepperContent/CategoryStep';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const Shelf = forwardRef((props, ref) => {
     const {
@@ -169,7 +171,7 @@ const Shelf = forwardRef((props, ref) => {
     }; 
 
     return (
-        <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full sm:w-[80%] md:w-[100%] max-w-[680px]" 
+        <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]" 
             style={{
                 background: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${linear}), url(${waves})`,
                 backgroundSize: 'cover, auto 100%, cover',
@@ -223,6 +225,23 @@ const Shelf = forwardRef((props, ref) => {
                             </Slider>
                         )
                     )}
+                </div>
+                <div className='flex flex-col justify-center items-center gap-3 w-full text-black text-xs'>
+                    <p className='text-sm sm:text-md text-center'>You will be able to download it as a PDF and/or share it on your LinkedIn.</p>
+                    <div className='flex gap-4'>
+                        <button 
+                            className='w-28 bg-white rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1'
+                        >
+                            <PictureAsPdfIcon className='text-red-700' />
+                            Download
+                        </button>
+                        <button 
+                            className='w-28 bg-white rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1'
+                        >
+                            <LinkedInIcon className='text-blue-700' />
+                            Share
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
