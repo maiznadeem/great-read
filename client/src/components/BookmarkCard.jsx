@@ -44,7 +44,7 @@ const BookmarkCard = ({ note, isShuffling, resetFlip }) => {
             >
                 <animated.div className={`front w-full h-full ${flipped ? 'hidden' : ''} flex flex-col justify-center items-center`}>
                     <p className="manrope-regular text-lg text-center text-black">{note?.note}</p>
-                    <p className="p-4 manrope-semibold text-xs text-center text-primary">- {note?.book.title}</p>
+                    <p className="p-4 manrope-semibold text-xs text-center text-primary">- {note?.book?.title}</p>
                 </animated.div>
                 <animated.div className={`back w-full h-full ${flipped ? 'block' : 'hidden'}`} style={{ transform: `rotateY(${flipped ? 180 : 0}deg)`, opacity: textOpacity }}>
                     <div className='flex flex-col gap-6 justify-center items-center'>
