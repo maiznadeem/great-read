@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useReadingList } from '../context/ReadingListContext';
+import React from 'react';
 
-const Category = ({ category, isActive, handleCategoryClick, setActiveCategory }) => {  
+const Category = ({ category, isActive, handleCategoryClick }) => {  
 
     const handleClick = () => {
         handleCategoryClick(category.name);
     };
 
-    let containerClasses = `bg-${isActive ? 'primary' : 'white'} h-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
-
+    const containerClasses = `bg-${isActive ? 'primary' : 'white'} h-full rounded-lg shadow-md p-2 flex items-center justify-between hover:cursor-pointer transition-all duration-300 ease-in-out`;
     const textClasses = `text-${isActive ? 'white' : 'black'} manrope-semibold text-xs sm:text-md`;
 
     const image = category.image ? (

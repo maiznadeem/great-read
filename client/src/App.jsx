@@ -22,6 +22,9 @@ function App() {
             error: {
                 main: '#CC0000',
             },
+            customOrange: {
+                main: '#FFA500',
+            },
         },
         typography: {
             allVariants: {

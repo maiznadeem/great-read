@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://localhost:5173", "https://great-read.com", "https://great-read-mu.vercel.app"],
+      "method": ["GET"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
