@@ -111,7 +111,6 @@ const Books = () => {
     return (
         <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
             <div>
-                {/* <p className='manrope-semibold py-6 sm:py0 text-3xl sm:text-5xl text-black text-center'>Discover <span className='text-primaryDark'>3,000+</span> books to find your best self.</p> */}
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
                     {nonBestsellerCategories
                         .sort((a, b) => {
@@ -120,14 +119,25 @@ const Books = () => {
                             return nameA.localeCompare(nameB);
                         })
                         .map((category) => (
-                            <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} />
+                            <Category 
+                                key={category._id}
+                                category={category}
+                                isActive={activeCategories.includes(category.name)}
+                                handleCategoryClick={handleCategoryClick}
+                            />
                         ))}
                 </div>
                 { windowWidth >= 768 &&
                     <div id='bestcategories' className='flex justify-center items-center'>
                         <div className='flex flex-wrap gap-2 items-center justify-between max-w-[750px]'>
                             {bestsellerCategories.map((category) => (
-                            <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                                <Category 
+                                    key={category._id}
+                                    category={category}
+                                    isActive={activeCategories.includes(category.name)}
+                                    handleCategoryClick={handleCategoryClick} 
+                                    className="w-full sm:w-1/2"
+                                />
                             ))}
                         </div>
                     </div> 
@@ -135,7 +145,13 @@ const Books = () => {
                 { windowWidth < 768 && 
                     <div id='bestcategories' className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
                             {bestsellerCategories.map((category) => (
-                                <Category key={category._id} category={category} homePageCategories={activeCategories} handleCategoryClick={handleCategoryClick} className="w-full sm:w-1/2" />
+                                <Category 
+                                    key={category._id}
+                                    category={category}
+                                    isActive={activeCategories.includes(category.name)}
+                                    handleCategoryClick={handleCategoryClick} 
+                                    className="w-full sm:w-1/2"
+                                />
                             ))}
                     </div>
                 }

@@ -4,7 +4,7 @@ import Category from '../../components/Category';
 import { Scrollbars } from 'react-custom-scrollbars';
 import LinearProgress from '@mui/material/LinearProgress';
 
-const CategoryStep = ({ handleCategoryClick }) => {
+const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +34,11 @@ const CategoryStep = ({ handleCategoryClick }) => {
                     <div className='flex w-[100%] gap-x-2'>
                         {categories.map((category) => (
                             <div key={category._id} className="flex-shrink-0">
-                                <Category category={category} homePageCategories={[]} handleCategoryClick={handleCategoryClick} setActiveCategory={true} />
+                                <Category 
+                                    category={category}
+                                    isActive={selectedCategories.includes(category.name)}
+                                    handleCategoryClick={handleCategoryClick}
+                                />
                             </div>
                         ))}
                     </div> 

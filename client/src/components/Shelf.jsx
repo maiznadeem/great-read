@@ -13,6 +13,7 @@ import { getRandomBooks } from '../utils/api';
 import CategoryStep from '../utils/StepperContent/CategoryStep';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import PDFModal from './PDFModal';
 
 const Shelf = forwardRef((props, ref) => {
     const {
@@ -24,7 +25,6 @@ const Shelf = forwardRef((props, ref) => {
         selectedCategories,
         setSelectedCategoriesValue,
         updateBooksValue,
-        toggleReadingList,
     } = useReadingList();
 
 
@@ -33,6 +33,15 @@ const Shelf = forwardRef((props, ref) => {
     const [windowSize, setWindowSize] = useState(window.innerWidth);
     const [currentSlide, setCurrentSlide] = useState(0);
     const prevSelectedCategories = useRef(selectedCategories);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         if (ref) {
@@ -186,7 +195,7 @@ const Shelf = forwardRef((props, ref) => {
                     <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">for {period}</p>
                 </div>
                 {selectionChoice == 'choose for me' && (
-                    <CategoryStep handleCategoryClick={handleCategoryClick} />
+                    <CategoryStep selectedCategories={selectedCategories} handleCategoryClick={handleCategoryClick} />
                 )}
                 <div className="w-full flex justify-center items-center bg-footer border-2 border-gray-400 border-dashed rounded-xl min-h-[200px]">
                     
@@ -230,6 +239,7 @@ const Shelf = forwardRef((props, ref) => {
                     <p className='text-sm sm:text-md text-center'>You will be able to download it as a PDF and/or share it on your LinkedIn.</p>
                     <div className='flex gap-4'>
                         <button 
+                            onClick={handleOpenModal}
                             className='w-28 bg-white rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1'
                         >
                             <PictureAsPdfIcon className='text-red-700' />
@@ -241,6 +251,7 @@ const Shelf = forwardRef((props, ref) => {
                             <LinkedInIcon className='text-blue-700' />
                             Share
                         </button>
+                        <PDFModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
                     </div>
                 </div>
             </div>

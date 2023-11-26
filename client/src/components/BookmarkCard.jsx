@@ -50,14 +50,14 @@ const BookmarkCard = ({ note, isShuffling, resetFlip }) => {
                     <div className='flex flex-col gap-6 justify-center items-center'>
                         <img src={note?.book.image} className='h-44 w-28 object-cover rounded-lg shadow-lg' />
                         <div className="flex space-x-4 items-center">
-                            { note?.book.amazon &&  <img
+                            { note?.book?.amazon &&  <img
                                 src={amazonIcon}
                                 alt="Amazon"
                                 className="w-auto h-4 cursor-pointer hover:tooltip"
                                 title="Amazon"
                                 onClick={() => openLinkInNewTab(note?.book.amazon)}
                             />}
-                            { note?.book.perlego && <img
+                            { note?.book?.perlego && <img
                                 src={perlegoIcon}
                                 alt="Perlego"
                                 className="w-auto h-4 cursor-pointer hover:tooltip"
