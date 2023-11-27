@@ -41,7 +41,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                             <p className='text-black'>
                                 Hi <strong>{name}</strong>, your reading length is{' '}
                                 <strong>{period}</strong> and you have selected{' '}
-                                <strong>{goal === 1 ? '1 book' : `${goal} books`}</strong>.
+                                <strong>{goal === 1 ? '1 book' : `${books.length} books`}</strong>.
                             </p>
                             <div className='grid grid-cols-2 gap-4'>
                                 {books.map((book, index) => (
@@ -77,7 +77,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                     <div className='flex justify-center'>
                         <PDFDownloadLink 
                             document={
-                                <PDFFile name={name} period={period} goal={goal} books={books} />
+                                <PDFFile name={name} period={period} goal={goal} books={books} selected={books.length} />
                             }
                             fileName='FORM'>
                             {({loading}) => (

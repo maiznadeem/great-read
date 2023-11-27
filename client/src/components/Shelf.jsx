@@ -238,15 +238,19 @@ const Shelf = forwardRef((props, ref) => {
                 <div className='flex flex-col justify-center items-center gap-3 w-full text-black text-xs'>
                     <p className='text-sm sm:text-md text-center'>You will be able to download it as a PDF and/or share it on your LinkedIn.</p>
                     <div className='flex gap-4'>
-                        <button 
+                        <button
                             onClick={handleOpenModal}
-                            className='w-28 bg-white rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1'
+                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
+                            ${books.length === 0 ? ' cursor-not-allowed opacity-50' : 'opacity-100'}`}
+                            disabled={books.length === 0}
                         >
                             <PictureAsPdfIcon className='text-red-700' />
                             Download
                         </button>
-                        <button 
-                            className='w-28 bg-white rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1'
+                        <button
+                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
+                            ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
+                            disabled={books.length === 0}
                         >
                             <LinkedInIcon className='text-blue-700' />
                             Share

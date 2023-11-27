@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
         color: 'black',
         width: '100%',
     },
+    textBold: {
+        fontWeight: 'bold',
+    },
     imageGrid: {
         display: 'flex',
         flexDirection: 'row',
@@ -65,13 +68,13 @@ const styles = StyleSheet.create({
 
 });
 
-const PDFFile = ({ name, period, goal, books }) => (
+const PDFFile = ({ name, period, goal, books, selected }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.logoView}>
                 <Image src={Logo} alt='Logo' style={styles.logo} />
             </View>
-            <Text style={styles.text}>Hi {name}, your reading length is {period} and you have selected {goal === 1 ? '1 book' : `${goal} books`}.</Text>
+            <Text style={styles.text}>Hi <Text style={styles.textBold}>{name}</Text>, your reading length is <Text style={styles.textBold}>{period}</Text> and you have selected <Text style={styles.textBold}>{goal === 1 ? '1 book' : `${selected} books`}</Text>.</Text>
             <View style={styles.imageGrid}>
                 {books.map((book, index) => (
                     <View key={index} style={styles.imageContainer}>
