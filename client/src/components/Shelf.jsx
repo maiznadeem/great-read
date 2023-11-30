@@ -76,13 +76,6 @@ const Shelf = forwardRef((props, ref) => {
         prevSelectedCategories.current = selectedCategories;
     }, [selectedCategories]);
 
-    useEffect(() => {
-        document.querySelector('meta[property="og:title"]').content = "Great Reads - My Reading List";
-        document.querySelector('meta[property="og:description"]').content = "Check out my reading list on Great Reads!";
-        document.querySelector('meta[property="og:image"]').content = books[0]?.image;
-        document.querySelector('meta[property="og:url"]').content = 'https://great-read-mu.vercel.app';
-    }, [books]);
-
     const handleCategoryClick = (categoryName) => {
         if (selectedCategories.includes(categoryName)) {
             setSelectedCategoriesValue((prevActiveCategories) =>
@@ -184,7 +177,12 @@ const Shelf = forwardRef((props, ref) => {
                 }
             },
         ]
-    }; 
+    };
+
+    const shareUrl = 'https://great-read-mu.vercel.app';
+    const postDescription = 'Your desired text for the post description';
+
+    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(postDescription)}`;
 
     return (
         <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]" 
@@ -254,15 +252,15 @@ const Shelf = forwardRef((props, ref) => {
                             <PictureAsPdfIcon className='text-red-700' />
                             Download
                         </button>
-                        <a
-                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://great-read-mu.vercel.app')}`}
-                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
-                            ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
-                            disabled={books.length === 0}
-                        >
-                            <LinkedInIcon className='text-blue-700' />
-                            Share
-                        </a>
+                            <a
+                                href={linkedInShareUrl}
+                                className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
+                                ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
+                                disabled={books.length === 0}
+                            >
+                                <LinkedInIcon className='text-blue-700' />
+                                Share
+                            </a>
                         <PDFModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
                     </div>
                 </div>
