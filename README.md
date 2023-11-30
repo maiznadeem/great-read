@@ -1,3 +1,7 @@
+<div>
+  <img src="./client/public/Cover.jpg" alt="Cover Image" style="width: '100%';" />
+</div>
+
 # GREAT READ
 
 ### Think Better. Be Better. Do Better.
