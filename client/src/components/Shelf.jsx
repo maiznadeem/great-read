@@ -179,12 +179,14 @@ const Shelf = forwardRef((props, ref) => {
         ]
     };
 
-    function shareOnLinkedIn() {
-        const shareUrl = 'https://great-read-mu.vercel.app';
-        const postDescription = 'Your desired text for the post description';
-        const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(postDescription)}`;
-        window.open(linkedInShareUrl, '_blank');
-    }
+    const shareUrl = 'https://great-read-mu.vercel.app';
+    const top5Books = books.slice(0, Math.min(10, books.length));
+    const plural = books.length > 1 ? `${books.length} books` : `1 book`;
+    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\nHere are the${books.length <= 10 ? ` ${plural}` : ` top 10 books`}:\n\n` + top5Books.map(book => {
+        const formattedCategories = book.categories.map(category => category.trim()).join(', ');
+        return `Title: ${book.title}\nCategory: ${formattedCategories}\nAmazon Link: ${book.amazon}`;
+    }).join('\n\n');
+    const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postDescription)}`;
     return (
         <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]" 
             style={{
@@ -253,15 +255,15 @@ const Shelf = forwardRef((props, ref) => {
                             <PictureAsPdfIcon className='text-red-700' />
                             Download
                         </button>
-                            <button
-                                onClick={shareOnLinkedIn}
+                            <a
+                                href={linkedInShareUrl}
                                 className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
                                 ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
                                 disabled={books.length === 0}
                             >
                                 <LinkedInIcon className='text-blue-700' />
                                 Share
-                            </button>
+                            </a>
                         <PDFModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
                     </div>
                 </div>
