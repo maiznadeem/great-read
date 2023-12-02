@@ -71,6 +71,125 @@ async function uploadBook(req, res) {
     }
 }
 
+// const { execSync } = require('child_process');
+
+// async function updateImageFormatAndURL(book) {
+//     const bucketName = 'great-read-bucket';
+//     const folderName = 'books';
+//     const existingImageUrl = book.image;
+//     const objectName = existingImageUrl.split(`${bucketName}/`)[1];
+//     if (!objectName.toLowerCase().endsWith('.jpg')) {
+//         const uniqueIdentifier = uuidv4();
+//         const newObjectName = `${folderName}/${uniqueIdentifier}.jpg`;
+//         const gsutilCmd = `gsutil cp gs://${bucketName}/${objectName} gs://${bucketName}/${newObjectName}`;
+//         execSync(gsutilCmd);
+//         const deleteCmd = `gsutil rm gs://${bucketName}/${objectName}`;
+//         execSync(deleteCmd);
+//         const newImageUrl = `https://storage.googleapis.com/${bucketName}/${newObjectName}`;
+//         await Book.updateOne({ _id: book._id }, { $set: { image: newImageUrl } });
+//     }
+// }
+
+
+// async function retrieveAndUpdateBooks() {
+//     try {
+//         const books = await Book.find();
+//         let i = 0;
+//         for (const book of books) {
+//             i++;
+//             await updateImageFormatAndURL(book);
+//             console.log(`Updated ${i}: ` + book.title);
+//         }
+//     } catch (error) {
+//         console.error('Error updating books:', error);
+//     }
+// }
+
+// const { execSync } = require('child_process');
+// const fs = require('fs');
+
+// async function convertObjectsToJPG(bucketName, folderName) {
+//     try {
+//         // Get objects modified in the last two days
+//         const today = new Date();
+//         const yesterday = new Date(today);
+//         yesterday.setDate(today.getDate() - 1);
+
+//         const listCmd = `gsutil ls -l -r gs://${bucketName}/${folderName}/** | grep -E "(yesterday|${today.toISOString().split('T')[0]})" | awk '{print $3}'`;
+//         const objects = execSync(listCmd, { encoding: 'utf-8' }).trim().split('\n');
+
+//         // Convert objects to JPG
+//         for (const object of objects) {
+//             const fileName = object.split(`${bucketName}/${folderName}/`)[1];
+
+//             // Download the file locally
+//             const downloadCmd = `gsutil cp ${object} ${fileName}`;
+//             execSync(downloadCmd);
+
+//             // Convert the local file content to JPEG format
+//             const convertCmd = `convert ${fileName} -compress JPEG -quality 90 ${fileName}.jpg`;
+//             execSync(convertCmd);
+
+//             // Upload the converted file back to the bucket
+//             const uploadCmd = `gsutil cp ${fileName}.jpg gs://${bucketName}/${folderName}/${fileName}.jpg`;
+//             execSync(uploadCmd);
+
+//             // Remove local files
+//             fs.unlinkSync(fileName);
+//             fs.unlinkSync(`${fileName}.jpg`);
+//         }
+
+//         console.log('Conversion completed successfully.');
+//     } catch (error) {
+//         console.error('Error converting objects:', error);
+//     }
+// }
+
+
+
+// // // Replace 'your-bucket-name' and 'your-folder-name' with your actual bucket and folder names
+// convertObjectsToJPG('great-read-bucket', 'books');
+
+// const { execSync } = require('child_process');
+// const fs = require('fs');
+
+// async function cleanupJPGFiles(bucketName, folderName) {
+//     try {
+//         // Get objects modified in the last two days
+//         const today = new Date();
+//         const yesterday = new Date(today);
+//         yesterday.setDate(today.getDate() - 1);
+
+//         const listCmd = `gsutil ls -l -r gs://${bucketName}/${folderName}/** | grep -E "(yesterday|${today.toISOString().split('T')[0]})" | awk '{print $3}'`;
+//         const objects = execSync(listCmd, { encoding: 'utf-8' }).trim().split('\n');
+
+//         // Cleanup unnecessary files
+//         for (const object of objects) {
+//             const fileName = object.split(`${bucketName}/${folderName}/`)[1];
+
+//             // Check and fix the file extension
+//             const correctedFileName = fileName.replace(/\.jpg\.jpg(\.jpg)*$/, '.jpg');
+            
+//             // If the filename needs correction, rename the file in the bucket
+//             console.log(correctedFileName)
+//             if (fileName !== correctedFileName) {
+//                 console.log(`Renaming ${fileName} to ${correctedFileName}`);
+//                 execSync(`gsutil mv gs://${bucketName}/${folderName}/${fileName} gs://${bucketName}/${folderName}/${correctedFileName}`);
+//             }
+//         }
+
+//         console.log('Cleanup completed successfully.');
+//     } catch (error) {
+//         console.error('Error cleaning up files:', error);
+//     }
+// }
+
+// // Replace 'your-bucket-name' and 'your-folder-name' with your actual bucket and folder names
+// cleanupJPGFiles('great-read-bucket', 'books');
+
+
+
+
 async function getBook(req, res) {
     const bookId = req.params.id;
     try {
