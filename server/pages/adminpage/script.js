@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const publishingYearInput = document.getElementById('publishingYear');
     const logoutButton = document.getElementById('logoutButton');
     const updateOrDeleteButton = document.getElementById('updateOrDeleteButton');
-    const addOrDeleteQuotes = document.getElementById('addOrDeleteQuotes');
+    const manageCategories = document.getElementById('addOrDeleteQuotes');
     
     const currentYear = new Date().getFullYear();
     publishingYearInput.setAttribute('max', currentYear);
@@ -87,9 +87,22 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = '/admin/update'
     })
 
-    addOrDeleteQuotes.addEventListener('click', function () {
-        window.location.href = '/admin/quotes'
+    manageCategories.addEventListener('click', function () {
+        window.location.href = '/admin/categories'
     })
+
+    const imageInput = form.querySelector('#image');
+    const allowedExtensions = ['jpg', 'jpeg'];
+
+    imageInput.addEventListener('change', function () {
+        const filePath = this.value;
+        const fileExtension = filePath.split('.').pop().toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            handleError('Please upload only JPG/JPEG files.');
+            this.value = '';
+        }
+    });
     
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -105,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         const selectedCategories = form.querySelectorAll('input[name="categories"]:checked');
         if (selectedCategories.length === 0) {
-            handleError('Select at least one category.');
+            handleError('Select atleast one category.');
             return;
         }
     

@@ -14,11 +14,11 @@ const upload = multer({
 
 const adminPagePath = path.join(__dirname, '..', 'pages', 'adminpage');
 const updatePagePath = path.join(__dirname, '..', 'pages', 'updatepage');
-const quotePagePath = path.join(__dirname, '..', 'pages', 'quotespage');
+const categoriesPagePath = path.join(__dirname, '..', 'pages', 'categoriesPage');
 
 adminRoute.use(express.static(adminPagePath));
 adminRoute.use('/update', express.static(updatePagePath));
-adminRoute.use('/quotes', express.static(quotePagePath));
+adminRoute.use('/categories', express.static(categoriesPagePath));
 
 adminRoute.post('/uploadbook', upload.single('image'), adminController.checkDuplicateTitle, adminController.uploadBook);
 adminRoute.post('/uploadbook/confirm', upload.single('image'), adminController.uploadBook);

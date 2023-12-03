@@ -12,50 +12,6 @@
             <button id="logoutButton">Logout</button>
             <button id="addBook">Add Book</button>
         </div>
-        <h1>Manage Quotes</h1>
-        
-        <!-- Left Section: Add Quote -->
-        <div class="container">
-            <div class="left-section">
-                <form id="addQuoteForm">
-                    <div class="form-group">
-                        <label for="author">Author:</label>
-                        <input type="text" name="author" id="author" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="quote">Quote:</label>
-                        <textarea name="quote" id="quote" rows="4" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="image">Image (Max 5MB):</label>
-                        <input type="file" name="image" id="image" accept="image/*" required>
-                    </div>
-
-                    <button id="addQuoteButton">Add Quote</button>
-
-                    <div class="form-group">
-                        <label for="quoteId">Quote ID:</label>
-                        <input type="text" name="quoteId" id="quoteId" required>
-                    </div>
-
-                    <button id="deleteQuoteButton">Delete Quote</button>
-                </form>
-                <p id="responseMessage"></p>
-            </div>
-            <!-- Right Section: Search and Display Quotes -->
-            <div class="right-section">
-                <h2>Search and Display Quotes</h2>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search by quote or author...">
-                    <button id="searchButton">Search</button>
-                </div>
-                <div id="searchResults" class="quote-grid">
-                    <!-- Display search results here -->
-                </div>
-            </div>
-        </div>
         <h1>Manage Categories</h1>
         <div class="container">
             <div class="left-section">
@@ -67,12 +23,7 @@
                     <div class="form-group">
                         <label for="categoryImage">Image (Max 5MB):</label>
                         <input type="file" name="categoryImage" id="categoryImage" accept="image/*" required>
-                    </div>
-            
-                    <div class="form-group checkbox-label">
-                        <input type="checkbox" name="bestseller" id="bestseller" value="true">
-                        <p for="bestseller">Best Seller</p>
-                    </div>                                   
+                    </div>                             
             
                     <button id="addCategoryButton">Add Category</button>
             
