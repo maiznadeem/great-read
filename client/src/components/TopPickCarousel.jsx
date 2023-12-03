@@ -34,8 +34,8 @@ export default function TopPickCarousel(props) {
     const handleSlideClick = (index) => {
         if (slideNum == index) {
             setTimeout(() => {
-                const targetElement = document.getElementById("bestcategories");
-                const offset = targetElement.offsetTop;
+                const targetElement = document.getElementById("booksection");
+                const offset = targetElement.offsetTop - 170;
                 window.scrollTo({ top: offset, behavior: "smooth" });
             }, 50);
             togglePageRefresh();
