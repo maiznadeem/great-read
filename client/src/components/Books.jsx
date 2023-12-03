@@ -64,13 +64,13 @@ const Books = () => {
     }, [pageRefresh])
 
     const bestsellerCategories = [];
-    const nonBestsellerCategories = [];
+    const filteredCategories = [];
 
     categories.forEach((category) => {
         if (category.bestseller) {
             bestsellerCategories.push(category);
         } else {
-            nonBestsellerCategories.push(category);
+            filteredCategories.push(category);
         }
     });
 
@@ -112,7 +112,7 @@ const Books = () => {
         <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
             <div>
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
-                    {nonBestsellerCategories
+                    {filteredCategories
                         .sort((a, b) => {
                             const nameA = a.name.toLowerCase();
                             const nameB = b.name.toLowerCase();
@@ -127,34 +127,6 @@ const Books = () => {
                             />
                         ))}
                 </div>
-                { windowWidth >= 768 &&
-                    <div id='bestcategories' className='flex justify-center items-center'>
-                        <div className='flex flex-wrap gap-2 items-center justify-between max-w-[750px]'>
-                            {bestsellerCategories.map((category) => (
-                                <Category 
-                                    key={category._id}
-                                    category={category}
-                                    isActive={activeCategories.includes(category.name)}
-                                    handleCategoryClick={handleCategoryClick} 
-                                    className="w-full sm:w-1/2"
-                                />
-                            ))}
-                        </div>
-                    </div> 
-                }
-                { windowWidth < 768 && 
-                    <div id='bestcategories' className='grid grid-cols-2 sm:grid-cols-3 gap-2 w-full items-center'>
-                            {bestsellerCategories.map((category) => (
-                                <Category 
-                                    key={category._id}
-                                    category={category}
-                                    isActive={activeCategories.includes(category.name)}
-                                    handleCategoryClick={handleCategoryClick} 
-                                    className="w-full sm:w-1/2"
-                                />
-                            ))}
-                    </div>
-                }
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-[90vh]'>
                         <CircularProgress sx={{ color: '#8D5E20' }} />
