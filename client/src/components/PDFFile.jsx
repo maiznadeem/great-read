@@ -10,7 +10,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         gap: '20px',
         border: '1px solid black',
-        padding: 30,
+        padding: 20,
+    },
+    pageInside: {
+        padding: '20px',
+        border: '2 solid black',
+        gap: 20,
     },
     logoView: {
         width: '100px',
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         gap: '5px',
-        width: '150px',
+        width: '180px',
     },
     links: {
         width: 'auto',
@@ -71,6 +76,7 @@ const styles = StyleSheet.create({
 const PDFFile = ({ name, period, goal, books, selected }) => (
     <Document>
         <Page size="A4" style={styles.page}>
+            <View style={styles.pageInside}>
             <View style={styles.logoView}>
                 <Image src={Logo} alt='Logo' style={styles.logo} />
             </View>
@@ -104,6 +110,7 @@ const PDFFile = ({ name, period, goal, books, selected }) => (
                         </View>
                     </View>
                 ))}
+            </View>
             </View>
         </Page>
     </Document>
