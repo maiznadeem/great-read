@@ -13,6 +13,8 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
 
     const { name, period, goal, books } = useReadingList();
 
+    const fileName = `${name}'s Reading List`;
+
     return (
         <Modal open={isModalOpen} onClose={handleCloseModal}>
             <Box
@@ -45,8 +47,8 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                             </p>
                             <div className='grid grid-cols-2 gap-4'>
                                 {books.map((book, index) => (
-                                    <div key={index} className='flex flex-col gap-2'>
-                                        <div className='w-full h-80 shadow-lg'>
+                                    <div key={index} className='flex flex-col items-center gap-2'>
+                                        <div className='w-32 h-52 sm:w-44 sm:h-72 shadow-lg'>
                                             <img
                                                 src={book.image}
                                                 alt={`Book ${index + 1}`}
@@ -79,7 +81,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                             document={
                                 <PDFFile name={name} period={period} goal={goal} books={books} selected={books.length} />
                             }
-                            fileName='FORM'>
+                            fileName={fileName}>
                             {({loading}) => (
                                 loading ?                               
                                 <Button
