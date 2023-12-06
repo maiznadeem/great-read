@@ -17,7 +17,7 @@ const sendEmail = async (email, subject, payload, template) => {
         const compiledTemplate = handlebars.compile(source);
         const options = () => {
             return {
-                from: process.env.EMAIL_USER,
+                from: "greatreadsbooks@gmail.com",
                 to: email,
                 subject: subject,
                 html: compiledTemplate(payload),

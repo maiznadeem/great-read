@@ -1,33 +1,39 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
 .container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 40px;
+    width: 400px;
+    padding: 20px 30px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .container h1 {
     text-align: center;
-    color: #001780;
+    color: #956829;
 }
 
 .container label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
-    color: #001780;
+    color: #956829;
 }
 
 .container input[type="text"],
 .container input[type="password"] {
-    width: calc(100% - 20px);
     padding: 10px;
-    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -36,9 +42,8 @@ body {
 
 .container button {
     display: block;
-    margin: 20px auto;
     padding: 10px 20px;
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     border: none;
     border-radius: 10px;
@@ -49,7 +54,7 @@ body {
 }
 
 .container button:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 .container .error {
@@ -58,15 +63,21 @@ body {
 
 .forgot-password {
     text-align: center;
-    margin-top: 10px;
 }
 
 .forgot-password a {
     text-decoration: none;
-    color: #001780;
+    color: #956829;
     font-weight: bold;
 }
 
 .forgot-password a:hover {
     text-decoration: underline;
+}
+
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
 }
