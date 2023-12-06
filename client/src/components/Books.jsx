@@ -17,6 +17,7 @@ const Books = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
     const { pageRefresh, togglePageRefresh } = useReadingList();
 
@@ -25,6 +26,7 @@ const Books = () => {
         getCategories()
         .then((data) => {
             setCategories(data);
+            setCategoriesLoading(false);
             setIsLoading(false);
         })
         .catch((error) => {
@@ -125,34 +127,36 @@ const Books = () => {
                             />
                         ))}
                 </div>
-                <div className='w-full sm:max-w-[390px] sm:ml-2'>
-                    <TextField
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Search by title or author..."
-                        onChange={handleSearchChange}
-                        InputProps={{
-                            sx: {
-                                borderRadius: '8px',
-                            },
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            ),
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <button
-                                        onClick={handleSearchClick}
-                                        className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] rounded-md shadow-lg hover:bg-primaryDark"
-                                    >
-                                        Search    
-                                    </button>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </div>
+                { !categoriesLoading &&
+                    <div className='w-full sm:max-w-[390px] sm:ml-2'>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Search by title or author..."
+                            onChange={handleSearchChange}
+                            InputProps={{
+                                sx: {
+                                    borderRadius: '8px',
+                                },
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <button
+                                            onClick={handleSearchClick}
+                                            className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] rounded-md shadow-lg hover:bg-primaryDark"
+                                        >
+                                            Search    
+                                        </button>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
+                }
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-[90vh]'>
                         <CircularProgress sx={{ color: '#8D5E20' }} />
