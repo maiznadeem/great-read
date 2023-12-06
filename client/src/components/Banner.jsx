@@ -102,14 +102,14 @@ const Banner = () => {
                                 Insights & Ideas
                             </p>
                             <p className='manrope-semibold text-lg custlg:text-xl py-4 text-black max-w-[400px]'>
-                                Access notes containing key ideas, insights and concepts from over 3,000 books for a <span className='text-primaryDark'>fraction of the time and money </span> to read all of them.
+                                Access notes containing key ideas, insights and concepts from over 3,000 books for a <span className='text-primaryDark'>fraction of the time and money </span> to read them.
                             </p>
                             <div className='w-full flex justify-center'>
                                 <button
                                     onClick={handleNotesButtonClick}
-                                    className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark"
+                                    className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] rounded-md shadow-lg hover:bg-primaryDark"
                                 >
-                                    I'm in!    
+                                    Save me money and time   
                                 </button>
                             </div>
                         </div>
