@@ -24,7 +24,7 @@ const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
 
 
     return (
-        <Scrollbars style={{ width: '100%', height: '45px' }}>
+        <Scrollbars style={{ width: '100%', height: '50px' }}>
             <div className='flex items-center justify-center h-[45px]'>
                 {isLoading ? (
                     <div className='flex justify-center items-center w-1/3 min-w-[200px]'>

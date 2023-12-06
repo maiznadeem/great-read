@@ -182,10 +182,8 @@ const Shelf = forwardRef((props, ref) => {
     const shareUrl = 'https://great-read-mu.vercel.app';
     const top5Books = books.slice(0, Math.min(10, books.length));
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
-    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\nHere are the${books.length <= 10 ? ` ${plural}` : ` top 10 books`}:\n\n` + top5Books.map(book => {
-        const formattedCategories = book.categories.map(category => category.trim()).join(', ');
-        return `Title: ${book.title}\nCategory: ${formattedCategories}\nAmazon Link: ${book.amazon}`;
-    }).join('\n\n');
+    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\nHere are the${books.length <= 10 ? ` ${plural}` : ` top 10 books`}:\n\n` + 
+        "Find books categorized as Procrastination Killers, Finding Yourself and Mind Tabs."
     const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postDescription)}`;
     return (
         <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]" 
@@ -218,19 +216,19 @@ const Shelf = forwardRef((props, ref) => {
                                 <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">Select your categories and we will stack your shelf.</p>
                             </>
                         ) : (
-                            <Slider {...settings} ref={sliderRef} className='w-[90%] lg:w-[600px] p-4'>
+                            <Slider {...settings} ref={sliderRef} className='w-[90%] lg:w-[600px] p-2'>
                                 {books.map((book) => (
                                     <div key={book._id} className='flex'>
-                                        <div className="flex justify-center h-36 overflow-hidden">
+                                        <div className="flex justify-center h-[160px] overflow-hidden">
                                             <div className='relative mt-[8px] mr-[8px]'>
                                                 <img 
                                                     src={remove}
-                                                    className='h-4 w-4 absolute top-[-8px] right-[-8px] cursor-pointer'
+                                                    className='h-4 w-4 absolute top-[-6px] right-[-6px] cursor-pointer'
                                                     onClick={() => {
                                                         updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
                                                     }}
                                                 />
-                                                <img src={book.image} alt="" className="w-20 rounded-lg h-32 object-cover cursor-pointer" 
+                                                <img src={book.image} alt="" className="w-24 rounded-md shadow-md h-36 object-cover cursor-pointer" 
                                                     onClick={() => {
                                                         updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
                                                     }}
@@ -257,6 +255,7 @@ const Shelf = forwardRef((props, ref) => {
                         </button>
                             <a
                                 href={linkedInShareUrl}
+                                target='_blank'
                                 className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
                                 ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
                                 disabled={books.length === 0}
