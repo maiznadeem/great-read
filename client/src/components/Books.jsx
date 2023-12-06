@@ -7,30 +7,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useReadingList } from '../context/ReadingListContext';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import { Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search'
 
 const Books = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [books, setBooks] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [limit, setLimit] = useState(12);
     const [isLoading, setIsLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
-    const { books: contextBooks, pageRefresh, togglePageRefresh } = useReadingList();
-
-    useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    const { pageRefresh, togglePageRefresh } = useReadingList();
 
     useEffect(() => {
         setIsLoading(true);
@@ -47,7 +35,7 @@ const Books = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        getBooks((currentPage - 1) * limit, limit, activeCategories, contextBooks)
+        getBooks((currentPage - 1) * limit, limit, activeCategories, searchTerm)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);
@@ -58,11 +46,12 @@ const Books = () => {
                 setIsLoading(false);
             });
 
-    }, [currentPage, limit, activeCategories]);
+    }, [currentPage, activeCategories]);
 
     useEffect(() => {
         if(pageRefresh) {
             setActiveCategories([]);
+            setSearchTerm('');
             setCurrentPage(1);
             togglePageRefresh();
         }
@@ -89,13 +78,8 @@ const Books = () => {
     };
     
     const handleBooksPerPageChange = (newLimit) => {
-        const targetElement = document.getElementById("booksection");
-        const offset = targetElement.offsetTop - 170;
-        window.scrollTo({ top: offset, behavior: "smooth" });
-        setTimeout(() => {
-            setLimit(newLimit);
-            setCurrentPage(1);
-        }, 700);
+        setLimit(newLimit);
+        handlePageChange(1);
     };
 
     const handleCategoryClick = (categoryName) => {
@@ -103,15 +87,35 @@ const Books = () => {
             setActiveCategories((prevActiveCategories) =>
                 prevActiveCategories.filter((cat) => cat !== categoryName)
             );
-            setCurrentPage(1);
+            handlePageChange(1);
         } else {
             setActiveCategories((prevActiveCategories) => [
                 ...prevActiveCategories,
                 categoryName,
             ]);
-            setCurrentPage(1);
+            handlePageChange(1);
         }
     };
+
+    const handleSearchChange = (e) => {
+        const newSearchTerm = e.target.value;
+        setSearchTerm(newSearchTerm);
+    };
+
+    const handleSearchClick = () => {
+        setCurrentPage(1);
+        setIsLoading(true);
+        getBooks(0, limit, activeCategories, searchTerm)
+            .then((data) => {
+                setBooks(data.books);
+                setTotalCount(data.totalCount);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                setIsLoading(false);
+            });
+    }
 
     return (
         <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
@@ -132,22 +136,29 @@ const Books = () => {
                             />
                         ))}
                 </div>
-                <div className='w-full sm:w-fit sm:max-w-[400px] sm:ml-2'>
+                <div className='w-full sm:max-w-[390px] sm:ml-2'>
                     <TextField
                         fullWidth
                         variant="outlined"
-                        placeholder="Search..."
+                        placeholder="Search by title or author..."
+                        onChange={handleSearchChange}
                         InputProps={{
+                            sx: {
+                                borderRadius: '8px',
+                            },
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <IconButton edge="start">
-                                        <SearchIcon />
-                                    </IconButton>
+                                    <SearchIcon />
                                 </InputAdornment>
                             ),
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Button variant='contained'>Search</Button>
+                                    <button
+                                        onClick={handleSearchClick}
+                                        className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] rounded-md shadow-lg hover:bg-primaryDark"
+                                    >
+                                        Search    
+                                    </button>
                                 </InputAdornment>
                             ),
                         }}

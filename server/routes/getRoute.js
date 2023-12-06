@@ -7,7 +7,7 @@ const Category = require('../models/Category');
 const Bookmark = require('../models/Bookmark');
 
 getRoute.post('/books', async (req, res) => {
-    const { offset, limit, categories, contextBooks } = req.body;
+    const { offset, limit, categories, searchTerm } = req.body;
     try {
         let offsetNum = parseInt(offset);
         let limitNum = parseInt(limit);
@@ -17,6 +17,15 @@ getRoute.post('/books', async (req, res) => {
             path: 'books',
             model: 'Book'
         }).exec();
+        if (searchTerm && searchTerm !== '') {
+            topPicks.books = topPicks.books.filter((book) =>
+                book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                book.author.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            const searchRegex = new RegExp(searchTerm, 'i');
+            query = query.or([{ title: searchRegex }, { author: searchRegex }]);
+            totalCountQuery = totalCountQuery.or([{ title: searchRegex }, { author: searchRegex }]);
+        }
         if (categories && categories.length > 0) {
             topPicks.books = topPicks.books.filter((book) =>
                 categories.some(category => book.categories.includes(category))
