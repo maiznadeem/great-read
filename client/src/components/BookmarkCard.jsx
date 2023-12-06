@@ -27,7 +27,6 @@ const BookmarkCard = ({ note, isShuffling, resetFlip }) => {
     
     const openLinkInNewTab = (link) => {
         window.open(link, '_blank');
-        e.stopPropagation();
     };
 
     return (
