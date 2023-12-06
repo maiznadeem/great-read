@@ -15,10 +15,7 @@ import Zoom from '@mui/material/Zoom';
 const Book = ({ book, categories }) => {
 
     const { books, goal, updateBooksValue, isReadingListActive } = useReadingList();
-
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
-    const [showCategoryNames, setShowCategoryNames] = useState(false);
-
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     const handleImageLoad = () => {
@@ -27,37 +24,22 @@ const Book = ({ book, categories }) => {
 
     useEffect(() => {
         setIsBookInReadingList(books.some((readingBook) => readingBook._id === book._id));
-        const checkScreenWidth = () => {
-            if (window.innerWidth <= 768) {
-                setShowCategoryNames(false);
-            }
-        };
-        checkScreenWidth();
-        window.addEventListener('resize', checkScreenWidth);
-        return () => {
-            window.removeEventListener('resize', checkScreenWidth);
-        };
     }, [books, book]);
-
-    const toggleCategoryDisplay = () => {
-        if (window.innerWidth <= 768) {
-            setShowCategoryNames(true);
-            setTimeout(() => {
-                setShowCategoryNames(false);
-            }, 5000);
-        }
-    };
 
     const categoryIcons = book.categories.map(category => {
         const matchingCategory = categories.find(item => item.name === category);
         if (matchingCategory && matchingCategory.image) {
             return (
-                <Tooltip key={matchingCategory._id} title={matchingCategory.name} TransitionComponent={Zoom}>
+                <Tooltip 
+                    key={matchingCategory._id}
+                    title={matchingCategory.name}
+                    TransitionComponent={Zoom}
+                    enterTouchDelay={0}
+                >
                     <img
                         src={matchingCategory.image}
                         alt={matchingCategory.name}
                         className="w-auto h-6 cursor-pointer hover:tooltip"
-                        onClick={toggleCategoryDisplay}
                     />
                 </Tooltip>
             );
@@ -140,15 +122,7 @@ const Book = ({ book, categories }) => {
             </div>
             <div className='flex mt-4 justify-between'>
                 <div className="flex space-x-4">
-                    {showCategoryNames ? (
-                        <div className='flex flex-col'>
-                            {book.categories.map( (item, index) => (
-                                <span key={index} className="text-gray-600 text-[10px] manrope-regular">{item}</span>
-                            ))}
-                        </div>
-                    ) : (
-                        categoryIcons
-                    )}
+                    {categoryIcons}
                 </div>
                 <div className="flex space-x-2 items-center">
                     { book.amazon &&  <img
