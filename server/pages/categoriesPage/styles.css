@@ -20,7 +20,7 @@ body {
 
 .dashboard h1 {
     text-align: center;
-    color: #001780;
+    color: #956829;
 }
 
 .container {
@@ -38,7 +38,7 @@ body {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #001780;
+    color: #956829;
 }
 
 .form-group input[type="text"],
@@ -69,7 +69,7 @@ body {
     display: block;
     margin: 20px 0;
     padding: 10px 20px;
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     border: none;
     border-radius: 10px;
@@ -80,13 +80,13 @@ body {
 }
 
 .left-section button:hover, .right-section button:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 /* Search and Display Section */
 .right-section h2 {
     text-align: center;
-    color: #001780;
+    color: #956829;
 }
 
 .search-bar {
@@ -105,7 +105,7 @@ body {
 
 #searchButton {
     padding: 10px 20px;
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     border: none;
     border-radius: 10px;
@@ -115,7 +115,7 @@ body {
 }
 
 #searchButton:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 #categorySearchInput {
@@ -129,7 +129,7 @@ body {
 
 #categorySearchButton {
     padding: 10px 20px;
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     border: none;
     border-radius: 10px;
@@ -139,7 +139,7 @@ body {
 }
 
 #categorySearchButton:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 .book-grid {
@@ -155,7 +155,7 @@ body {
 }
 
 #logoutButton {
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -168,12 +168,12 @@ body {
 }
 
 #logoutButton:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 
 #addBook {
-    background-color: #001780;
+    background-color: #956829;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -192,7 +192,7 @@ body {
 }
 
 #addBook:hover {
-    background-color: #000f50;
+    background-color: #8D5E20;
 }
 
 .success {
