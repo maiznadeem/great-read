@@ -109,7 +109,7 @@ function shuffleArray(array) {
 
 getRoute.get('/categories', async (req, res) => {
     try {
-        const categories = await Category.find();
+        const categories = await Category.find({ bestseller: false });
         res.json(categories);
     } catch (error) {
         console.error('Error fetching categories:', error);

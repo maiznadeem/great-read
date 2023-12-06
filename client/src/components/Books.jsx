@@ -57,17 +57,6 @@ const Books = () => {
         }
     }, [pageRefresh])
 
-    const bestsellerCategories = [];
-    const filteredCategories = [];
-
-    categories.forEach((category) => {
-        if (category.bestseller) {
-            bestsellerCategories.push(category);
-        } else {
-            filteredCategories.push(category);
-        }
-    });
-
     const handlePageChange = (newPage) => {
         const targetElement = document.getElementById("booksection");
         const offset = targetElement.offsetTop - 170;
@@ -121,7 +110,7 @@ const Books = () => {
         <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
             <div>
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
-                    {filteredCategories
+                    {categories
                         .sort((a, b) => {
                             const nameA = a.name.toLowerCase();
                             const nameB = b.name.toLowerCase();
