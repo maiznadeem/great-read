@@ -5,6 +5,11 @@ import DefaultPagination from './DefaultPagination';
 import { getBooks, getCategories } from '../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useReadingList } from '../context/ReadingListContext';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import { Button } from '@mui/material';
 
 const Books = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -127,6 +132,27 @@ const Books = () => {
                             />
                         ))}
                 </div>
+                <div className='w-full sm:w-fit sm:max-w-[400px] sm:ml-2'>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="Search..."
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <IconButton edge="start">
+                                        <SearchIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Button variant='contained'>Search</Button>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </div>
                 {isLoading ? (
                     <div className='text-center text-black flex items-center justify-center h-[90vh]'>
                         <CircularProgress sx={{ color: '#8D5E20' }} />
@@ -135,7 +161,7 @@ const Books = () => {
                     <div className='manrope-semibold text-center text-gray-700 h-[90vh] flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
-                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-32 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
+                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-24 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
                                 <Book key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}
