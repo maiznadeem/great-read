@@ -44,7 +44,7 @@ body {
 .form-group input[type="number"],
 .form-group input[type="url"],
 .form-group textarea {
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -113,7 +113,9 @@ body {
 
 .buttons {
     display: flex;
-    gap: 5px;
+    gap: 20px;
+    width: 800px;
+    margin: 0 auto;
 }
 
 #logoutButton {
@@ -173,5 +175,5 @@ input[type="file"] {
     border-radius: 5px;
     font-size: 16px;
     outline: none;
-    width: calc(100% - 20px);
+    width: calc(100% - 22px);
 }

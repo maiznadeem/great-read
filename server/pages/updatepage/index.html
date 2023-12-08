@@ -12,7 +12,7 @@
     <div class="dashboard">
         <div class="buttons">
             <button id="logoutButton">Logout</button>
-            <button id="addButton">Add Book</button>
+            <button id="addButton">Upload Books</button>
         </div>
 
         <h1>Change Top Picks</h1>
@@ -94,11 +94,17 @@
                     <div class="form-group">
                         <label for="bookId">Book ID:</label>
                         <input type="text" name="bookId" id="bookId">
-                    </div>                    
-                    <button id="getInfoButton">Get Book Info</button>
-                    <button id="updateButton">Update</button>
-                    <button id="deleteButton">Delete</button>
-                    <button id="changeButton">Change ID</button>
+                    </div>
+                    <div class="fourButtons">
+                        <div>
+                            <button id="getInfoButton">Get Book Info</button>
+                            <button id="updateButton">Update</button>
+                        </div>
+                        <div>
+                            <button id="changeButton">Change ID</button>
+                            <button id="deleteButton">Delete</button>
+                        </div>
+                    </div>
                 </form>
                 <p id="responseMessage"></p>
             </div>

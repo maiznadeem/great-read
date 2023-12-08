@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data.forEach((category) => {
                         const categoryItem = document.createElement('div');
                         categoryItem.classList.add('category-item');
-                        categoryItem.innerHTML = `<p><strong>ID: ${category._id}</strong><br><strong>${category.name}</strong></p>`;
+                        categoryItem.innerHTML = `<p><strong>ID:</strong> ${category._id}<br><strong>Name:</strong> ${category.name}<br><strong>Best Seller:</strong> ${category.bestseller}</p>`;
                         categorySearchResults.appendChild(categoryItem);
                     });
                 } else {
