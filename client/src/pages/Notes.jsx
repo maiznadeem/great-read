@@ -50,12 +50,6 @@ const Notes = () => {
                     </p>
                     <DownloadNotes />
                 </div>
-                {/* <button
-                    className={`w-full text-md sm:text-xl flex justify-center items-center max-w-[300px] manrope-semibold bg-primary text-white py-2 px-12 rounded-xl shadow-lg hover:bg-primaryDark transition-all ${isShuffling ? 'pointer-events-none' : ''}`}
-                    onClick={shuffleQuotes}
-                >
-                    Shuffle
-                </button> */}
                 <NotesSlider currentSlide={currentSlide} setCurrentSlide={handleCurrentSlideChange} isShuffling={isShuffling} />
                 <div className='w-full flex flex-wrap justify-center gap-12 p-12 pt-4 min-h-[600px]'>
                     {shuffledNotes.length > 0 ? (

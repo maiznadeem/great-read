@@ -48,7 +48,7 @@ const Books = () => {
                 setIsLoading(false);
             });
 
-    }, [currentPage, activeCategories]);
+    }, [currentPage, activeCategories, limit]);
 
     useEffect(() => {
         if(pageRefresh) {
@@ -70,7 +70,6 @@ const Books = () => {
     
     const handleBooksPerPageChange = (newLimit) => {
         setLimit(newLimit);
-        handlePageChange(1);
     };
 
     const handleCategoryClick = (categoryName) => {
