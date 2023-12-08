@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const jsonResponse = await response.json();
 
             if (response.status === 200) {
-                resetMessage.innerHTML = jsonResponse.message; // Display success message
+                resetMessage.innerHTML = jsonResponse.message;
             } else {
-                resetMessage.innerHTML = 'An error occurred. Please try again.'; // Display error message
+                resetMessage.innerHTML = `An error occurred: ${jsonResponse.message}`;
             }
         } catch (error) {
             console.error(error);

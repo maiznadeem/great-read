@@ -37,7 +37,7 @@ const resetPasswordController = async (req, res, next) => {
         return res.json(resetPasswordService);
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({ error: "An error occurred" });
+        return res.status(500).json({ error: "The Link has expired. Please request a new one." });
     }
 };
 
