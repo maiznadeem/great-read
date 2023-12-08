@@ -259,9 +259,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     books.forEach((book) => {
                         const bookDiv = document.createElement("div");
                         bookDiv.classList.add("book");
-                        bookDiv.innerHTML = `<p>ID: ${book._id}</p>
-                                             <p>Title: ${book.title}</p>
-                                             <p>Author: ${book.author}</p>`;
+                        bookDiv.innerHTML = `<p><strong>ID:</strong> ${book._id}</p>
+                                             <p><strong>Title:</strong> ${book.title}</p>
+                                             <p><strong>Author:</strong> ${book.author}</p>`;
                         searchResults.appendChild(bookDiv);
                     });
                 } else {
