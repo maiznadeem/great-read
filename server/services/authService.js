@@ -48,7 +48,7 @@ const requestPasswordReset = async (email, protocol, hostname, port) => {
         createdAt: Date.now(),
     }).save();
     // const baseUrl = `${protocol}://${hostname}`;
-    const link = `https://great-read-398408.uc.r.appspot.com/reset/passwordReset?token=${resetToken}&id=${user._id}`;
+    const link = `https://admin.great-read.com/reset/passwordReset?token=${resetToken}&id=${user._id}`;
 
 
     sendEmail(
