@@ -48,7 +48,22 @@ const Books = () => {
                 setIsLoading(false);
             });
 
-    }, [currentPage, activeCategories, limit]);
+    }, [currentPage, activeCategories]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+        setIsLoading(true);
+        getBooks(0, limit, activeCategories, searchTerm)
+            .then((data) => {
+                setBooks(data.books);
+                setTotalCount(data.totalCount);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                setIsLoading(false);
+            });
+    }, [limit]);
 
     useEffect(() => {
         if(pageRefresh) {

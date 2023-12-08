@@ -17,7 +17,7 @@ const DownloadNotes = () => {
 
     return (
         <div className='bg-footer w-full flex flex-col justify-center items-center p-8 gap-4 rounded-xl shadow-lg'>
-            <p className='manrope-regular text-black text-xl text-center'>Access the notes in bundles:</p>
+            <p className='manrope-regular text-black text-xl text-center'>Access 5-8 key word-by-word extracted insights, ideas or concepts from any book:</p>
             <div className='flex gap-2 sm:gap-4 flex-col sm:flex-row'>
                 <button 
                     onClick={() => handleModalOpen(100)}
