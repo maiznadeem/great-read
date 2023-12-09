@@ -182,8 +182,8 @@ const Shelf = forwardRef((props, ref) => {
     const shareUrl = 'https://great-read-mu.vercel.app';
     const top5Books = books.slice(0, Math.min(10, books.length));
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
-    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\n` + 
-        "Find books categorized as Procrastination Killers, Finding Yourself and Mind Tabs."
+    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n` + 
+        "Find books categorised as Procrastination Killers, Finding Yourself and Mind Tabs."
     const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postDescription)}`;
     return (
         <div className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]" 
