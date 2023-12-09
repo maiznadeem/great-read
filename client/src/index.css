@@ -4,15 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-    font-family: 'MTD UT Sugar Cane';
-    src: url('/SugarCane/MTD\ UT\ Sugar\ Cane.ttf') format('truetype');
-}
-
-.sugarcane {
-    font-family: 'MTD UT Sugar Cane', sans-serif;
-}
-
 .manrope-semibold {
     font-family: 'Manrope', sans-serif;
     font-weight: 600;

@@ -1,0 +1,10 @@
+const points = [
+    `The state of your physical body and the accompanying sensations (what is called interoception) are key to your brain's predictions and thus key to every thought, perception, and emotion you have.`,
+    `We all have an inner chatterbox—a constant self-talker, self-evaluator, or commentator of whatever is going on in our lives. It is this “monkey mind” that is constantly worrying about what other people think of us. (Well, they are probably not thinking about you because they are thinking about what you think of them. That is how the self-referential monkey mind plays.)`,
+    `That is the power of your subconscious, which is key to your ability to create, innovate, and imagine. Understanding the interplay between conscious and subconscious thinking and knowing how best to manage and leverage that interplay is becoming a very valuable human skill in the digital age.`,
+    `If we truly trust the person we are interacting with, we often mirror his or her body language and can sync up physiologically, releasing oxytocin, a neuropeptide that plays a role in social bonding and is often called the trust or cuddle hormone.`,
+    `A great starting point for mindset change is to consider Carol Dweck's landmark growth mindset theory.30 Dweck is a Stanford psychology professor and a researcher of human motivation. Her work delineates what it means to have a fixed versus a growth mindset. I love her work. It is so powerful yet so simple.`,
+    `According to her theory, you have a fixed mindset if you believe that intelligence is innate and fixed, that the level of intelligence you are born with is your destiny and can't get any higher. According to Dweck, a fixed mindset limits your motivation and, thus, your ability to learn. If you have a fixed mindset you might say, "I have reached my potential, so why should I try?" If you adopt a growth mindset, however, you believe your intelligence is not fixed at birth and that you have the capacity to learn and get smarter. According to Dweck, a growth mindset motivates you to learn and persevere even when you struggle or fail.`,
+]
+
+export default points;
