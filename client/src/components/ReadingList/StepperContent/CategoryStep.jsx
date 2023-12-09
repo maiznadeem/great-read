@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getCategories } from '../api';
-import Category from '../../components/Category';
+import { getCategories } from '../../../utils/api';
+import Category from '../../../components/Category/Category';
 import { Scrollbars } from 'react-custom-scrollbars';
 import LinearProgress from '@mui/material/LinearProgress';
 

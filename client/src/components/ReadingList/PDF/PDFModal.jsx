@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useReadingList } from '../context/ReadingListContext';
-import Logo from '../assets/logos/Logo.svg';
-import amazonIcon from '../assets/links/amazon.png';
-import perlegoIcon from '../assets/links/perlego.png';
+import { useReadingList } from '../../../context/ReadingListContext';
+import Logo from '../../../assets/logos/Logo.svg';
+import amazonIcon from '../../../assets/links/amazon.png';
+import perlegoIcon from '../../../assets/links/perlego.png';
 import PDFFile from './PDFFile';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 

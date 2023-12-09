@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-import waves from '../assets/backgrounds/waves.png';
-import linear from '../assets/backgrounds/linear.png';
+import waves from '../../assets/backgrounds/waves.png';
+import linear from '../../assets/backgrounds/linear.png';
 
-import enabled from '../assets/buttons/enabled.svg';
-import disabled from '../assets/buttons/disabled.svg';
+import enabled from '../../assets/buttons/enabled.svg';
+import disabled from '../../assets/buttons/disabled.svg';
 
-import { useReadingList } from '../context/ReadingListContext';
+import { useReadingList } from '../../context/ReadingListContext';
 
-import Step1 from '../utils/StepperContent/Step1';
-import Step2 from '../utils/StepperContent/Step2';
-import Step3 from '../utils/StepperContent/Step3';
-import Step4 from '../utils/StepperContent/Step4';
+import Step1 from './StepperContent/Step1';
+import Step2 from './StepperContent/Step2';
+import Step3 from './StepperContent/Step3';
+import Step4 from './StepperContent/Step4';
 
 const ReadingListForm = () => {
 

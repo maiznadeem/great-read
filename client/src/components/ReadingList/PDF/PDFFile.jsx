@@ -1,8 +1,8 @@
 import React from 'react';
 import { Page, Text, Image, View, Document, StyleSheet, Link } from '@react-pdf/renderer';
-import Logo from '../assets/logos/Logo.png';
-import amazonIcon from '../assets/links/amazon.png';
-import perlegoIcon from '../assets/links/perlego.png';
+import Logo from '../../../assets/logos/Logo.png';
+import amazonIcon from '../../../assets/links/amazon.png';
+import perlegoIcon from '../../../assets/links/perlego.png';
 
 const styles = StyleSheet.create({
     page: {

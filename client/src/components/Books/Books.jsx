@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Category from './Category';
+import Category from '../Category/Category';
 import Book from './Book';
 import DefaultPagination from './DefaultPagination';
-import { getBooks, getCategories } from '../utils/api';
+import { getBooks, getCategories } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useReadingList } from '../context/ReadingListContext';
+import { useReadingList } from '../../context/ReadingListContext';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'

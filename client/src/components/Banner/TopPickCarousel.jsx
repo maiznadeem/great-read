@@ -1,7 +1,7 @@
 import Carousel from "react-spring-3d-carousel";
 import { useState, useEffect } from "react";
 import { config } from "react-spring";
-import { useReadingList } from "../context/ReadingListContext";
+import { useReadingList } from "../../context/ReadingListContext";
 
 let slideNum = 0;
 

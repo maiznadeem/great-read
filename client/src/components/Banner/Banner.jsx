@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getTopPicks } from '../utils/api';
+import { getTopPicks } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import TopPickCarousel from './TopPickCarousel';
 import TopPickCard from './TopPickCard';
-import { useReadingList } from '../context/ReadingListContext';
+import { useReadingList } from '../../context/ReadingListContext';
 
 const Banner = () => {
     const [topPicks, setTopPicks] = useState(null);

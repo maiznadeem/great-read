@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
-import amazonIcon from '../assets/links/amazon.png';
-import perlegoIcon from '../assets/links/perlego.png';
-import invertedLeft from '../assets/links/inverted-comma-left.svg'
-import invertedrRight from '../assets/links/inverted-comma-right.svg'
-import add from "../assets/buttons/Add.svg";
-import remove from "../assets/buttons/Remove.svg";
-import tick from "../assets/buttons/tick.png";
-import { useReadingList } from '../context/ReadingListContext';
+import amazonIcon from '../../assets/links/amazon.png';
+import perlegoIcon from '../../assets/links/perlego.png';
+import invertedLeft from '../../assets/links/inverted-comma-left.svg'
+import invertedrRight from '../../assets/links/inverted-comma-right.svg'
+import add from "../../assets/buttons/Add.svg";
+import remove from "../../assets/buttons/Remove.svg";
+import tick from "../../assets/buttons/tick.png";
+import { useReadingList } from '../../context/ReadingListContext';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 

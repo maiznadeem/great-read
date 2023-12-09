@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SelectProduct from '../components/SelectProduct';
-import Preview from '../components/Preview';
+import SelectProduct from '../components/Product/SelectProduct';
+import Preview from '../components/Product/Preview';
 
 const Notes = () => {
 

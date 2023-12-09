@@ -30,6 +30,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
             <p className='manrope-regular text-black text-xl text-center max-w-[500px]'>Access <span className='text-primary'>5-8 key word-by-word extracted</span> insights, ideas or concepts from any book.</p>
             <div className='w-full flex gap-2 sm:gap-4 flex-col sm:flex-row manrope-semibold text-md sm:text-lg max-w-[200px] sm:max-w-none'>
                 <ToggleButton
+                    value={1}
                     selected={selectedButton === 1}
                     onClick={() => handleButtonClick(1)}
                     style={{
@@ -39,6 +40,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                     Any 10 books from <br /> 1 category <br /> £29
                 </ToggleButton>
                 <ToggleButton
+                    value={2}
                     selected={selectedButton === 2}
                     onClick={() => handleButtonClick(2)}
                     style={{
@@ -48,6 +50,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                     Any 10 books from <br /> 1-3 categories <br /> £49
                 </ToggleButton>
                 <ToggleButton
+                    value={3}
                     selected={selectedButton === 3}
                     onClick={() => handleButtonClick(3)}
                     style={{

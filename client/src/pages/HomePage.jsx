@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import Banner from '../components/Banner';
-import Books from '../components/Books';
-import ReadingList from '../components/ReadingList';
+import Banner from '../components/Banner/Banner';
+import Books from '../components/Books/Books';
+import ReadingList from '../components/ReadingList/ReadingList';
 import { useReadingList } from '../context/ReadingListContext';
 import { Button } from '@mui/material';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import ReadingInfoModal from '../components/ReadingInfoModal';
+import ReadingListModal from '../components/ReadingList/ReadingListModal';
 
 const HomePage = () => {
 
@@ -54,7 +54,7 @@ const HomePage = () => {
                     >
                         <AutoStoriesIcon />
                     </Button>
-                    <ReadingInfoModal open={modalOpen} handleClose={handleClose} />
+                    <ReadingListModal open={modalOpen} handleClose={handleClose} />
                 </>
             )}
         </section>

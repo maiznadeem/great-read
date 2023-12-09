@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import enabled from "../assets/buttons/enabled.svg";
 import disabled from "../assets/buttons/disabled.svg";
-import bookmarksUtil from '../utils/BookmarksUtil';
+import bookmarksUtil from '../../utils/BookmarksUtil';
 
 const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
 

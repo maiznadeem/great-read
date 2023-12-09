@@ -3,17 +3,17 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CircularProgress from '@mui/material/CircularProgress';
-import waves from '../assets/backgrounds/waves.png';
-import linear from '../assets/backgrounds/linear.png';
-import enabled from "../assets/buttons/enabled.svg";
-import disabled from "../assets/buttons/disabled.svg";
-import remove from "../assets/buttons/Remove.svg";
-import { useReadingList } from '../context/ReadingListContext';
-import { getRandomBooks } from '../utils/api';
-import CategoryStep from '../utils/StepperContent/CategoryStep';
+import waves from '../../assets/backgrounds/waves.png';
+import linear from '../../assets/backgrounds/linear.png';
+import enabled from "../../assets/buttons/enabled.svg";
+import disabled from "../../assets/buttons/disabled.svg";
+import remove from "../../assets/buttons/Remove.svg";
+import { useReadingList } from '../../context/ReadingListContext';
+import { getRandomBooks } from '../../utils/api';
+import CategoryStep from './StepperContent/CategoryStep';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import PDFModal from './PDFModal';
+import PDFModal from './PDF/PDFModal';
 
 const Shelf = forwardRef((props, ref) => {
     const {
@@ -182,7 +182,7 @@ const Shelf = forwardRef((props, ref) => {
     const shareUrl = 'https://great-read-mu.vercel.app';
     const top5Books = books.slice(0, Math.min(10, books.length));
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
-    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\nHere are the${books.length <= 10 ? ` ${plural}` : ` top 10 books`}:\n\n` + 
+    const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n\n` + 
         "Find books categorized as Procrastination Killers, Finding Yourself and Mind Tabs."
     const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postDescription)}`;
     return (

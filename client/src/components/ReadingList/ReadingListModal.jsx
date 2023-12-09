@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Modal } from '@mui/material';
 import Shelf from './Shelf';
 
-const ReadingInfoModal = ({ open, handleClose }) => {
+const ReadingListModal = ({ open, handleClose }) => {
     const shelfRef = useRef();
 
     return (
@@ -29,4 +29,4 @@ const ReadingInfoModal = ({ open, handleClose }) => {
     );
 };
 
-export default ReadingInfoModal;
+export default ReadingListModal;
