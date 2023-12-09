@@ -1,8 +1,8 @@
-import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
-import React from 'react'
-import Logo from "../../assets/logos/Logo.png"
-import HyperLearning from "../../assets/Preview/HyperLearning.jpg"
-import points from './PreviewUtil'
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import React from 'react';
+import Logo from "../../assets/logos/Logo.png";
+import HyperLearning from "../../assets/Preview/HyperLearning.jpg";
+import { previewPoints } from './PreviewAndExamples';
 import amazonIcon from '../../assets/links/amazon.png';
 import perlegoIcon from '../../assets/links/perlego.png';
 
@@ -51,7 +51,7 @@ const Preview = ({ previewOptions, setPreviewOptions }) => {
                                     <div>
                                         <div className='manrope-semibold text-[8px] text-white bg-primary text-center'>HIGHLIGHTS</div>
                                         <ul className='list-disc text-[6.5px] py-1'>
-                                            { points.map((point, index) => (
+                                            { previewPoints.map((point, index) => (
                                                 <li key={index} className='my-1'>{point}</li>
                                             ))}
                                         </ul>
