@@ -91,7 +91,7 @@ const Book = ({ book, categories }) => {
                     }
                 </div>
                 <div className='flex justify-center items-center w-[70%]'>
-                    <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
+                    <img className='absolute -top-4 left-32 xl:left-36' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
                     { isReadingListActive && 
                         <>
