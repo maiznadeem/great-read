@@ -84,7 +84,12 @@ const Books = () => {
     };
     
     const handleBooksPerPageChange = (newLimit) => {
-        setLimit(newLimit);
+        const targetElement = document.getElementById("booksection");
+        const offset = targetElement.offsetTop - 170;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+        setTimeout(() => {
+            setLimit(newLimit);
+        }, 700);
     };
 
     const handleCategoryClick = (categoryName) => {

@@ -12,4 +12,4 @@ The internet's largest destination for non-fiction books that will inspire you.
 
 - Development URL: https://great-read-mu.vercel.app/
 
-- Backend URL: https://great-read-398408.uc.r.appspot.com/authpage/
+- Backend URL: https://admin.great-read.com/
