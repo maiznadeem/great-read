@@ -156,17 +156,20 @@ const Books = () => {
                             InputProps={{
                                 sx: {
                                     borderRadius: '8px',
+                                    fontSize: 13,
                                 },
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <SearchIcon />
+                                        <SearchIcon sx={{
+                                            fontSize: 22,
+                                        }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <button
                                             onClick={handleSearchClick}
-                                            className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] rounded-md shadow-lg hover:bg-primaryDark"
+                                            className="manrope-semibold bg-primary text-white py-[5px] px-4 text-[12px] rounded-md shadow-lg hover:bg-primaryDark"
                                         >
                                             Search    
                                         </button>
