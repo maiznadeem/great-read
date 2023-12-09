@@ -27,29 +27,30 @@ const Book = ({ book, categories }) => {
     }, [books, book]);
 
     const categoryIcons = book.categories.map(category => {
+
+        const [showtooltip, setshowtooltip] = useState(false)
         const matchingCategory = categories.find(item => item.name === category);
+
         if (matchingCategory && matchingCategory.image) {
             return (
                 <Tooltip 
                     key={matchingCategory._id}
                     title={matchingCategory.name}
+                    open={showtooltip}
                     TransitionComponent={Zoom}
-                    enterTouchDelay={0}
+                    onOpen={() => setshowtooltip(true)}
+                    onClose={() => setshowtooltip(false)}
                 >
                     <img
                         src={matchingCategory.image}
-                        alt={matchingCategory.name}
-                        className="w-auto h-6 cursor-pointer hover:tooltip"
+                        onClick={() => setshowtooltip(!showtooltip)}
+                        className="w-auto h-6 cursor-pointer"
                     />
                 </Tooltip>
             );
         }
         return null;
     });
-
-    const openLinkInNewTab = (link) => {
-        window.open(link, '_blank');
-    };
 
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
@@ -130,14 +131,14 @@ const Book = ({ book, categories }) => {
                         alt="Amazon"
                         className="w-auto h-4 cursor-pointer hover:tooltip"
                         title="Amazon"
-                        onClick={() => openLinkInNewTab(book.amazon)}
+                        onClick={() => {window.open(book.amazon, '_blank')}}
                     />}
                     { book.perlego && <img
                         src={perlegoIcon}
                         alt="Perlego"
                         className="w-auto h-4 cursor-pointer hover:tooltip"
                         title="Perlego"
-                        onClick={() => openLinkInNewTab(book.perlego)}
+                        onClick={() => {window.open(book.perlego, '_blank')}}
                     />}
                 </div>
             </div>
