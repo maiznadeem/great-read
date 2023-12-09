@@ -51,17 +51,4 @@ export async function getRandomBooks(categories, goal, books) {
     }
 }
 
-export async function getRandomNotes(currentSlide) {
-    try {
-        const response = await api.get('/get/randomnotes', {
-            params: {
-                currentSlide: currentSlide
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error(`Failed to fetch random notes: ${error.message}`);
-    }
-}
-
 export default api;

@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 
 import { ReadingListProvider } from './context/ReadingListContext';
+import { NotesProvider } from './context/NotesContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import Notes from './pages/Notes';
@@ -50,15 +51,23 @@ function App() {
         <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
                     <ReadingListProvider>
-                        <BrowserRouter>
+                        <NotesProvider>
+                            <BrowserRouter>
                             <Routes>
-                            <Route element={<Layout />}>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/notes" element={<Notes />} />
-                            </Route>
-                            <Route path="*" component={<div>404 NOT FOUND</div>} />
+                                <Route
+                                    path="/"
+                                    element={<Layout />}
+                                >
+                                    <Route index element={<HomePage />} />
+                                    <Route path="notes" element={<Notes />} />
+                                </Route>
+                                <Route
+                                    path="*"
+                                    element={<div className='text-black text-center'>404 NOT FOUND</div>}
+                                />
                             </Routes>
-                        </BrowserRouter>
+                            </BrowserRouter>
+                        </NotesProvider>
                     </ReadingListProvider>
             </QueryClientProvider>
         </ThemeProvider>

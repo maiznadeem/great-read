@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SelectProduct from '../components/Product/SelectProduct';
 import Preview from '../components/Product/Preview';
+import { useNotes } from "../context/NotesContext";
 
 const Notes = () => {
 
-    const [selectedButton, setSelectedButton] = useState(null);
+    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions } = useNotes();
 
     const handleButtonClick = (value) => {
         setSelectedButton(value === selectedButton ? null : value);
@@ -17,7 +18,7 @@ const Notes = () => {
                     <SelectProduct selectedButton={selectedButton} handleButtonClick={handleButtonClick} />
                 </div>
                 { !selectedButton &&
-                    <Preview />
+                    <Preview previewOptions={previewOptions} setPreviewOptions={setPreviewOptions} />
                 }
             </div>
         </section>
