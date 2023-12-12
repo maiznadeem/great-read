@@ -22,9 +22,9 @@ const Notes = () => {
                 { !selectedButton &&
                     <>
                         <Preview previewOptions={previewOptions} setPreviewOptions={setPreviewOptions} />
-                        <div className='text-black w-full'>
-                            <h1 className='text-left text-primary manrope-semibold text-3xl pt-2 sm:pt-4'>Examples</h1>
-                            <div className='flex flex-col justify-center gap-16 ml-6 sm:ml-6 mt-20 sm:mt-20 mr-2'>
+                        <div className='text-black w-full max-w-[1280px]'>
+                            <h1 className='text-left text-primary manrope-semibold text-3xl py-4 sm:py-8'>Examples</h1>
+                            <div className='flex flex-col justify-center items-center gap-6'>
                                 {exampleBooks.map((book, index) => (
                                     <ExampleNote key={index} book={book} />
                                 ))}

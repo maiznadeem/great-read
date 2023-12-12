@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from '@mui/material/Skeleton';
-import { Tooltip } from '@mui/material';
-import Zoom from '@mui/material/Zoom';
 
 import amazonIcon from '../../assets/links/amazon.png';
 import perlegoIcon from '../../assets/links/perlego.png';
-import invertedLeft from '../../assets/links/inverted-comma-left.svg';
-import invertedrRight from '../../assets/links/inverted-comma-right.svg';
+
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const ExampleNote = ({ book }) => {
 
@@ -16,30 +14,10 @@ const ExampleNote = ({ book }) => {
         setIsImageLoaded(true);
     };
 
-    const categoryIcons = book.categories.map((category, index) => {
-        const [showtooltip, setshowtooltip] = useState(false)
-        return (
-            <Tooltip 
-                key={index}
-                title={category.name}
-                open={showtooltip}
-                TransitionComponent={Zoom}
-                onOpen={() => setshowtooltip(true)}
-                onClose={() => setshowtooltip(false)}
-            >
-                <img
-                    src={category.image}
-                    onClick={() => setshowtooltip(!showtooltip)}
-                    className="w-auto h-6 cursor-pointer"
-                />
-            </Tooltip>
-        );
-    });
-
     return (
-        <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
-            <div className='flex flex-row gap-4'>
-                <div className={`w-40 h-60 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden`}
+        <div className="rounded-lg w-full flex flex-row max-w-[1080px]">
+            <div className='w-full flex flex-col sm:flex-row justify-center items-center'>
+                <div className="w-36 h-56 sm:w-44 sm:h-64  rounded-lg shadow-2xl overflow-hidden flex-shrink-0 z-10"
                 >
                     { !isImageLoaded && 
                         <Skeleton 
@@ -57,33 +35,53 @@ const ExampleNote = ({ book }) => {
                         className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out`}
                     />
                 </div>
-                <div className='flex justify-center items-center w-[70%]'>
-                    <img className='absolute -top-4 left-32' src={invertedLeft} alt='Inverted-Left' />
-                    <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
-                    <p className="manrope-regular text-gray-600 text-sm">{book.quote}</p>
+                <div className='h-[80%] z-10 w-full flex flex-col sm:flex-row flex-1 border-2 border-gray-400 border-dashed sm:border-l-0 rounded-tl-xl rounded-tr-xl rounded-br-xl rounded-bl-xl sm:rounded-bl-none sm:rounded-tl-none'>
+                    <div className='sm:w-1/2 flex flex-row bg-footer relative rounded-tl-xl rounded-tr-xl rounded-br-xl rounded-bl-xl sm:rounded-bl-none sm:rounded-tl-none'>
+                        <div className='flex flex-col justify-center items-center z-10 px-6 py-10'>
+                            <div className='flex justify-center items-center'>
+                                <p className="manrope-regular text-gray-600 text-sm">"{book.quote}"</p>
+                            </div>
+                            <div className='absolute bottom-2 flex justify-center'>
+                                <div className="flex space-x-2 items-center">
+                                    { book.amazon &&  <img
+                                        src={amazonIcon}
+                                        alt="Amazon"
+                                        className="w-auto h-4 cursor-pointer hover:tooltip"
+                                        title="Amazon"
+                                        onClick={() => {window.open(book.amazon, '_blank')}}
+                                    />}
+                                    { book.perlego && <img
+                                        src={perlegoIcon}
+                                        alt="Perlego"
+                                        className="w-auto h-4 cursor-pointer hover:tooltip"
+                                        title="Perlego"
+                                        onClick={() => {window.open(book.perlego, '_blank')}}
+                                    />}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='w-full flex flex-col justify-center items-start p-6'>
+                        <h2 className='manrope-semibold'>Highlights</h2>
+                        <Scrollbars style={{ width: '100%', height: '200px' }}>
+                                <ul className='list-disc list-inside mr-4' >
+                                    {
+                                        book.notes.map((note, index) => (
+                                            <li 
+                                                key={index}
+                                                className='text-xs'
+                                            >
+                                                {note}
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                        </Scrollbars>
+                    </div>
                 </div>
             </div>
-            <div className='flex mt-4 justify-between'>
-                <div className="flex space-x-4">
-                    {categoryIcons}
-                </div>
-                <div className="flex space-x-2 items-center">
-                    { book.amazon &&  <img
-                        src={amazonIcon}
-                        alt="Amazon"
-                        className="w-auto h-4 cursor-pointer hover:tooltip"
-                        title="Amazon"
-                        onClick={() => {window.open(book.amazon, '_blank')}}
-                    />}
-                    { book.perlego && <img
-                        src={perlegoIcon}
-                        alt="Perlego"
-                        className="w-auto h-4 cursor-pointer hover:tooltip"
-                        title="Perlego"
-                        onClick={() => {window.open(book.perlego, '_blank')}}
-                    />}
-                </div>
-            </div>
+            
+            
         </div>
     );
 }

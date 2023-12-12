@@ -55,7 +55,7 @@ const Book = ({ book, categories }) => {
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
             <div className='flex flex-row gap-4'>
-                <div className={`w-40 h-60 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden ${isReadingListActive ? 'cursor-pointer' : '' } ${isBookInReadingList && isReadingListActive ? 'bg-black' : ''}`}
+                <div className={`w-32 h-52 sm:w-40 sm:h-64 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden flex-shrink-0 ${isReadingListActive ? 'cursor-pointer' : '' } ${isBookInReadingList && isReadingListActive ? 'bg-black' : ''}`}
                     onClick={() => {
                         if (isReadingListActive) {   
                             if (isBookInReadingList) {
@@ -73,7 +73,7 @@ const Book = ({ book, categories }) => {
                             variant="rectangular"
                             animation="wave"
                             width={160}
-                            height={240}
+                            height={280}
                             sx={{ bgcolor: '#f0f0f0' }}
                         />
                     }
@@ -90,8 +90,8 @@ const Book = ({ book, categories }) => {
                         </div>
                     }
                 </div>
-                <div className='flex justify-center items-center w-[70%]'>
-                    <img className='absolute -top-4 left-32 xl:left-36' src={invertedLeft} alt='Inverted-Left' />
+                <div className='flex justify-center items-center w-[100%]'>
+                    <img className='absolute -top-4 left-32 sm:left-36' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
                     { isReadingListActive && 
                         <>
@@ -118,7 +118,7 @@ const Book = ({ book, categories }) => {
                         )}
                         </>
                     }
-                    <p className="manrope-regular text-gray-600 text-sm">{book.quote}</p>
+                    <p className="manrope-regular text-gray-600 text-xs sm:text-sm">{book.quote}</p>
                 </div>
             </div>
             <div className='flex mt-4 justify-between'>
