@@ -4,7 +4,6 @@ import NotesBook from './NotesBook';
 import DefaultPagination from '../Category/DefaultPagination';
 import { getBooks, getCategories } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useReadingList } from '../../context/ReadingListContext';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'
@@ -19,7 +18,6 @@ const NotesBooks = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
-    const { pageRefresh, togglePageRefresh } = useReadingList();
 
     useEffect(() => {
         setIsLoading(true);
@@ -64,15 +62,6 @@ const NotesBooks = () => {
                 setIsLoading(false);
             });
     }, [limit]);
-
-    useEffect(() => {
-        if(pageRefresh) {
-            setActiveCategories([]);
-            setSearchTerm('');
-            setCurrentPage(1);
-            togglePageRefresh();
-        }
-    }, [pageRefresh])
 
     const handlePageChange = (newPage) => {
         const targetElement = document.getElementById("booksection");

@@ -8,15 +8,23 @@ import invertedrRight from '../../assets/links/inverted-comma-right.svg'
 import add from "../../assets/buttons/Add.svg";
 import remove from "../../assets/buttons/Remove.svg";
 import tick from "../../assets/buttons/tick.png";
-import { useReadingList } from '../../context/ReadingListContext';
+import { useNotes } from '../../context/NotesContext';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 
 const NotesBook = ({ book, categories }) => {
 
-    const { books, goal, updateBooksValue, isReadingListActive } = useReadingList();
+    const { books, selectedButton, setBooks } = useNotes();
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+    let total = 10;
+
+    if(selectedButton == 2) {
+    }
+    if(selectedButton == 3){
+        total = 30;
+    }
 
     const handleImageLoad = () => {
         setIsImageLoaded(true);
@@ -55,16 +63,14 @@ const NotesBook = ({ book, categories }) => {
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
             <div className='flex flex-row gap-4'>
-                <div className={`w-32 h-52 sm:w-40 sm:h-64 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden flex-shrink-0 ${isReadingListActive ? 'cursor-pointer' : '' } ${isBookInReadingList && isReadingListActive ? 'bg-black' : ''}`}
+                <div className={`w-32 h-52 sm:w-40 sm:h-64 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden flex-shrink-0 cursor-pointer ${isBookInReadingList ? 'bg-black' : ''}`}
                     onClick={() => {
-                        if (isReadingListActive) {   
-                            if (isBookInReadingList) {
-                                updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                                setIsBookInReadingList(false);
-                            } else if (books.length < goal) {
-                                updateBooksValue([...books, book]);
-                                setIsBookInReadingList(true);
-                            }
+                        if (isBookInReadingList) {
+                            setBooks(books.filter((readingBook) => readingBook._id !== book._id));
+                            setIsBookInReadingList(false);
+                        } else if (books.length < total) {
+                            setBooks([...books, book]);
+                            setIsBookInReadingList(true);
                         }
                     }}
                 >
@@ -81,43 +87,39 @@ const NotesBook = ({ book, categories }) => {
                         src={book.image}
                         alt={book.title}
                         onLoad={handleImageLoad}
-                        className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList && isReadingListActive ? 'opacity-30' : 'opacity-100'}`}
+                        className={`object-cover w-full h-full transition-opacity duration-300 ease-in-out ${isBookInReadingList ? 'opacity-30' : 'opacity-100'}`}
                     />
-                    { isReadingListActive && isBookInReadingList &&
+                    { isBookInReadingList &&
                         <div className='absolute inset-0 flex flex-col justify-center items-center gap-2'>
                             <img src={tick} alt="Tick Icon" className="transition-opacity duration-300 ease-in-out" />
-                            <p className='manrope-semibold text-white text-center transition-opacity duration-300 ease-in-out'>On Shelf</p>
+                            <p className='manrope-semibold text-white text-center transition-opacity duration-300 ease-in-out'>Added</p>
                         </div>
                     }
                 </div>
                 <div className='flex justify-center items-center w-[100%]'>
                     <img className='absolute -top-4 left-32 sm:left-36' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
-                    { isReadingListActive && 
-                        <>
-                        {isBookInReadingList ? (
+                    {isBookInReadingList ? (
+                        <img 
+                            src={remove}
+                            className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
+                            onClick={() => {
+                                setBooks(books.filter((readingBook) => readingBook._id !== book._id));
+                                setIsBookInReadingList(false);
+                            }}
+                        />
+                    ) : (
+                        books.length < total && (
                             <img 
-                                src={remove}
+                                src={add}
                                 className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                                 onClick={() => {
-                                    updateBooksValue(books.filter((readingBook) => readingBook._id !== book._id));
-                                    setIsBookInReadingList(false);
+                                    setBooks([...books, book]);
+                                    setIsBookInReadingList(true);
                                 }}
                             />
-                        ) : (
-                            books.length < goal && (
-                                <img 
-                                    src={add}
-                                    className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
-                                    onClick={() => {
-                                        updateBooksValue([...books, book]);
-                                        setIsBookInReadingList(true);
-                                    }}
-                                />
-                            )
-                        )}
-                        </>
-                    }
+                        )
+                    )}
                     <p className="manrope-regular text-gray-600 text-xs sm:text-sm">{book.quote}</p>
                 </div>
             </div>
@@ -129,14 +131,14 @@ const NotesBook = ({ book, categories }) => {
                     { book.amazon &&  <img
                         src={amazonIcon}
                         alt="Amazon"
-                        className="w-auto h-4 cursor-pointer hover:tooltip"
+                        className="w-auto h-4 cursor-pointer"
                         title="Amazon"
                         onClick={() => {window.open(book.amazon, '_blank')}}
                     />}
                     { book.perlego && <img
                         src={perlegoIcon}
                         alt="Perlego"
-                        className="w-auto h-4 cursor-pointer hover:tooltip"
+                        className="w-auto h-4 cursor-pointer"
                         title="Perlego"
                         onClick={() => {window.open(book.perlego, '_blank')}}
                     />}

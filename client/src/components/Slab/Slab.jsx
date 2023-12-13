@@ -17,7 +17,7 @@ const Slab = () => {
     }
 
     return (
-        <div className='text-black my-20 flex flex-col sm:flex-row gap-10'>
+        <div className='text-black my-20 flex flex-col sm:flex-row justify-center items-center gap-10'>
             <div className='w-72 h-96 bg-footer rounded-2xl shadow-xl flex justify-center items-center'>
                 <p>Select books from <button>below</button></p>
             </div>
