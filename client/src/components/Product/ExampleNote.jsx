@@ -23,8 +23,8 @@ const ExampleNote = ({ book }) => {
                         <Skeleton 
                             variant="rectangular"
                             animation="wave"
-                            width={160}
-                            height={240}
+                            width={200}
+                            height={300}
                             sx={{ bgcolor: '#f0f0f0' }}
                         />
                     }
@@ -61,10 +61,10 @@ const ExampleNote = ({ book }) => {
                             </div>
                         </div>
                     </div>
-                    <div className='w-full flex flex-col justify-center items-start p-6'>
+                    <div className='w-full flex flex-col justify-center items-start p-4 pr-2'>
                         <h2 className='manrope-semibold'>Highlights</h2>
                         <Scrollbars style={{ width: '100%', height: '200px' }}>
-                                <ul className='list-disc list-inside mr-4' >
+                                <ul className='list-disc list-inside mr-2' >
                                     {
                                         book.notes.map((note, index) => (
                                             <li 

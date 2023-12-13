@@ -4,6 +4,8 @@ import Preview from '../components/Product/Preview';
 import { useNotes } from "../context/NotesContext";
 import { exampleBooks } from '../components/Product/PreviewAndExamples';
 import ExampleNote from '../components/Product/ExampleNote';
+import Slab from '../components/Slab/Slab';
+import NotesBooks from '../components/Slab/NotesBooks';
 
 const Notes = () => {
 
@@ -14,12 +16,12 @@ const Notes = () => {
     };
 
     return (
-        <section className='my-6 sm:my-14 mx-4 sm:mx-8 min-h-[100vh]'>
+        <section className='my-6 sm:my-20 mx-4 sm:mx-8 min-h-[100vh]'>
             <div className='flex flex-col items-center justify-center w-full'>
                 <div className='w-full max-w-[700px]'>
                     <SelectProduct selectedButton={selectedButton} handleButtonClick={handleButtonClick} />
                 </div>
-                { !selectedButton &&
+                { !selectedButton ?
                     <>
                         <Preview previewOptions={previewOptions} setPreviewOptions={setPreviewOptions} />
                         <div className='text-black w-full max-w-[1280px]'>
@@ -31,7 +33,13 @@ const Notes = () => {
                             </div>
                         </div>
                     </>
+                    : 
+                    <div className='w-full overflow-hidden'>
+                        <Slab />
+                        <NotesBooks />
+                    </div>
                 }
+
             </div>
         </section>
     );
