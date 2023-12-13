@@ -14,6 +14,7 @@ export function NotesProvider({ children }) {
         links: true,
         label: true,
     })
+    const [books, setBooks] = useState([]);
 
     return (
         <NotesContext.Provider value={{
@@ -21,6 +22,8 @@ export function NotesProvider({ children }) {
             setSelectedButton,
             previewOptions,
             setPreviewOptions,
+            books,
+            setBooks,
         }}>
             {children}
         </NotesContext.Provider>

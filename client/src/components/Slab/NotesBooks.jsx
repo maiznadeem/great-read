@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Category from '../Category/Category';
-import Book from './Book';
+import NotesBook from './NotesBook';
 import DefaultPagination from '../Category/DefaultPagination';
 import { getBooks, getCategories } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -9,7 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'
 
-const Books = () => {
+const NotesBooks = () => {
     const [books, setBooks] = useState([]);
     const [categories, setCategories] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -128,7 +128,7 @@ const Books = () => {
     }
 
     return (
-        <section className='mx-4 mt-10 sm:my-20 sm:mx-8'>
+        <section className='mx-4 sm:mx-8'>
             <div>
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
                     {categories
@@ -189,7 +189,7 @@ const Books = () => {
                     <>
                         <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-24 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
-                                <Book key={index} book={book} categories={categories} currentPage={currentPage} />
+                                <NotesBook key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}
                         </div>
                         <div className='mt-8 sm:mt-24 flex flex-col items-center justify-center overflow-hidden'>
@@ -224,4 +224,4 @@ const Books = () => {
     );
 };
 
-export default Books;
+export default NotesBooks;
