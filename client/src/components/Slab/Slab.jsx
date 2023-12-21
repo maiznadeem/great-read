@@ -9,11 +9,11 @@ const Slab = () => {
     let categories = 1
 
     if(selectedButton == 2) {
-        categories = 2
+        categories = 3
     }
     if(selectedButton == 3){
         total = 30;
-        categories = 50;
+        categories = Infinity;
     }
 
     return (
@@ -22,7 +22,7 @@ const Slab = () => {
                 <p>Select books from <button>below</button></p>
             </div>
             <div>
-                <p>Hi, you have {total - books.length} {total - books.length == 1 ? 'book' : 'books'} left to choose from {categories} { categories == 1 ? 'category' : 'categories'}</p>
+                <p>Hi, you have {total - books.length} {total - books.length == 1 ? 'book' : 'books'} left to choose from {categories == Infinity ? 'any' : `${categories}`} { categories == 1 || categories == Infinity ? 'category' : 'categories'}</p>
                 <button>Purchase</button>
             </div>
         </div>

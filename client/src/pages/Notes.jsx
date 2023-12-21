@@ -9,9 +9,10 @@ import NotesBooks from '../components/Slab/NotesBooks';
 
 const Notes = () => {
 
-    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions } = useNotes();
+    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions, setBooks } = useNotes();
 
     const handleButtonClick = (value) => {
+        setBooks([]);
         setSelectedButton(value === selectedButton ? null : value);
     };
 
