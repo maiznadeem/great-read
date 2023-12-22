@@ -86,13 +86,13 @@ const NotesBooks = () => {
             setActiveCategories((prevActiveCategories) =>
                 prevActiveCategories.filter((cat) => cat !== categoryName)
             );
-            handlePageChange(1);
+            setCurrentPage(1);
         } else {
             setActiveCategories((prevActiveCategories) => [
                 ...prevActiveCategories,
                 categoryName,
             ]);
-            handlePageChange(1);
+            setCurrentPage(1);
         }
     };
 

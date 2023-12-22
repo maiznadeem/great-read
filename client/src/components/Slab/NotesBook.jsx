@@ -17,6 +17,7 @@ const NotesBook = ({ book, categories }) => {
     const { books, selectedButton, setBooks } = useNotes();
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [showtooltip, setshowtooltip] = useState(false)
 
     let total = 10;
 
@@ -47,9 +48,7 @@ const NotesBook = ({ book, categories }) => {
 
     const categoryIcons = book.categories.map(category => {
 
-        const [showtooltip, setshowtooltip] = useState(false)
         const matchingCategory = categories.find(item => item.name === category);
-
         if (matchingCategory && matchingCategory.image) {
             return (
                 <Tooltip 
