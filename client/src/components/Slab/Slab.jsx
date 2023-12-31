@@ -3,7 +3,7 @@ import { useNotes } from '../../context/NotesContext'
 
 const Slab = () => {
 
-    const { selectedButton, books } = useNotes();
+    const { selectedButton, notesBooks } = useNotes();
 
     let total = 10;
     let categories = 1
@@ -22,7 +22,7 @@ const Slab = () => {
                 <p>Select books from <button>below</button></p>
             </div>
             <div>
-                <p>Hi, you have {total - books.length} {total - books.length == 1 ? 'book' : 'books'} left to choose from {categories == Infinity ? 'any' : `${categories}`} { categories == 1 || categories == Infinity ? 'category' : 'categories'}</p>
+                <p>Hi, you have {total - notesBooks.length} {total - notesBooks.length == 1 ? 'book' : 'books'} left to choose from {categories == Infinity ? 'any' : `${categories}`} { categories == 1 || categories == Infinity ? 'category' : 'categories'}</p>
                 <button>Purchase</button>
             </div>
         </div>

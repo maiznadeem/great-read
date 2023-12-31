@@ -14,7 +14,21 @@ export function NotesProvider({ children }) {
         links: true,
         label: true,
     })
-    const [books, setBooks] = useState([]);
+    const [notesCategories, setNotesCategories] = useState([]);
+    const [notesBooks, setNotesBooks] = useState([]);
+
+    function addBook(newBook) {
+        let maxUniqueCategoryLimit = 1;
+        if (selectedButton === 2)
+            maxUniqueCategoryLimit = 3;
+        else if ( selectedButton == 3 )
+            maxUniqueCategoryLimit = Infinity
+
+        const updatedBooks = [];
+        updatedBooks.push(newBook);
+        setNotesBooks(updatedBooks)
+    }
+    
 
     return (
         <NotesContext.Provider value={{
@@ -22,8 +36,11 @@ export function NotesProvider({ children }) {
             setSelectedButton,
             previewOptions,
             setPreviewOptions,
-            books,
-            setBooks,
+            notesCategories,
+            setNotesCategories,
+            notesBooks,
+            setNotesBooks,
+            addBook,
         }}>
             {children}
         </NotesContext.Provider>
