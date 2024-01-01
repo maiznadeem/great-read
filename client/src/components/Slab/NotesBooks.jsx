@@ -7,6 +7,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+import { useNotes } from '../../context/NotesContext';
 
 const NotesBooks = () => {
     const [books, setBooks] = useState([]);
@@ -18,6 +22,18 @@ const NotesBooks = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
+
+    const { selectedButton, setNotesCategories } = useNotes();
+    const [showLimitAlert, setShowLimitAlert] = useState(false);
+
+    let total = 10;
+    let maxCatLimit = 1;
+    if(selectedButton == 2) {
+        maxCatLimit = 3;
+    } else if(selectedButton == 3) {
+        total = 30;
+        maxCatLimit = Infinity;
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -34,6 +50,7 @@ const NotesBooks = () => {
     }, [])
 
     useEffect(() => {
+        setNotesCategories(activeCategories);
         setIsLoading(true);
         getBooks((currentPage - 1) * limit, limit, activeCategories, searchTerm)
             .then((data) => {
@@ -82,18 +99,24 @@ const NotesBooks = () => {
     };
 
     const handleCategoryClick = (categoryName) => {
-        if (activeCategories.includes(categoryName)) {
+        if (activeCategories.includes(categoryName) && activeCategories.length < maxCatLimit) {
             setActiveCategories((prevActiveCategories) =>
                 prevActiveCategories.filter((cat) => cat !== categoryName)
             );
-            handlePageChange(1);
-        } else {
+            setCurrentPage(1);
+        } else if (!activeCategories.includes(categoryName) && activeCategories.length < maxCatLimit) {
             setActiveCategories((prevActiveCategories) => [
                 ...prevActiveCategories,
                 categoryName,
             ]);
-            handlePageChange(1);
+            setCurrentPage(1);
+        } else {
+            setShowLimitAlert(true);
         }
+    };
+
+    const handleCloseLimitAlert = () => {
+        setShowLimitAlert(false);
     };
 
     const handleSearchChange = (e) => {
@@ -209,6 +232,11 @@ const NotesBooks = () => {
                     </select>
                 </div>
             </div>
+            <Snackbar open={showLimitAlert} autoHideDuration={6000} onClose={handleCloseLimitAlert}>
+                <Alert onClose={handleCloseLimitAlert} severity="warning">
+                    Category limit reached! Please deselect one, or choose a different plan.
+                </Alert>
+            </Snackbar>
         </section>
     );
 };

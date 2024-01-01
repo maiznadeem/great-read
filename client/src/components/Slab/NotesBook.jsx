@@ -14,16 +14,17 @@ import Zoom from '@mui/material/Zoom';
 
 const NotesBook = ({ book, categories }) => {
 
-    const { books, selectedButton, setBooks } = useNotes();
+    const { notesBooks, setNotesBooks, selectedButton, addBook } = useNotes();
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     let total = 10;
-
+    let maxCatLimit = 1;
     if(selectedButton == 2) {
-    }
-    if(selectedButton == 3){
+        maxCatLimit = 3;
+    } else if(selectedButton == 3) {
         total = 30;
+        maxCatLimit = Infinity;
     }
 
     const handleImageLoad = () => {
@@ -31,25 +32,14 @@ const NotesBook = ({ book, categories }) => {
     };
 
     useEffect(() => {
-        setIsBookInReadingList(books.some((readingBook) => readingBook._id === book._id));
-    }, [books, book]);
-
-
-    const checkCategoryInBooks = () => {
-        if (isBookInReadingList) {
-            setBooks(books.filter((readingBook) => readingBook._id !== book._id));
-            setIsBookInReadingList(false);
-        } else if (books.length < total) {
-            setBooks([...books, book]);
-            setIsBookInReadingList(true);
-        }
-    }
+        setIsBookInReadingList(notesBooks.some((readingBook) => readingBook._id === book._id));
+    }, [notesBooks, book]);
 
     const categoryIcons = book.categories.map(category => {
 
-        const [showtooltip, setshowtooltip] = useState(false)
-        const matchingCategory = categories.find(item => item.name === category);
+        const [showtooltip, setshowtooltip] = useState(false);
 
+        const matchingCategory = categories.find(item => item.name === category);
         if (matchingCategory && matchingCategory.image) {
             return (
                 <Tooltip 
@@ -75,7 +65,14 @@ const NotesBook = ({ book, categories }) => {
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">
             <div className='flex flex-row gap-4'>
                 <div className={`w-32 h-52 sm:w-40 sm:h-64 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden flex-shrink-0 cursor-pointer ${isBookInReadingList ? 'bg-black' : ''}`}
-                    onClick={checkCategoryInBooks}
+                    onClick={() => {
+                        if (notesBooks.some((readingBook) => readingBook._id === book._id)) {
+                            setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
+                        }
+                        else if(notesBooks.length < total) {
+                            addBook(book);
+                        }
+                    }}
                 >
                     { !isImageLoaded && 
                         <Skeleton 
@@ -107,18 +104,16 @@ const NotesBook = ({ book, categories }) => {
                             src={remove}
                             className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                             onClick={() => {
-                                setBooks(books.filter((readingBook) => readingBook._id !== book._id));
-                                setIsBookInReadingList(false);
+                                setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
                             }}
                         />
                     ) : (
-                        books.length < total && (
+                        notesBooks.length < total && (
                             <img 
                                 src={add}
                                 className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                                 onClick={() => {
-                                    setBooks([...books, book]);
-                                    setIsBookInReadingList(true);
+                                    addBook(book);
                                 }}
                             />
                         )
