@@ -18,15 +18,9 @@ export function NotesProvider({ children }) {
     const [notesBooks, setNotesBooks] = useState([]);
 
     function addBook(newBook) {
-        let maxUniqueCategoryLimit = 1;
-        if (selectedButton === 2)
-            maxUniqueCategoryLimit = 3;
-        else if ( selectedButton == 3 )
-            maxUniqueCategoryLimit = Infinity
-
         const updatedBooks = [];
         updatedBooks.push(newBook);
-        setNotesBooks(updatedBooks)
+        setNotesBooks(updatedBooks);
     }
     
 

@@ -6,15 +6,33 @@ import { exampleBooks } from '../components/Product/PreviewAndExamples';
 import ExampleNote from '../components/Product/ExampleNote';
 import Slab from '../components/Slab/Slab';
 import NotesBooks from '../components/Slab/NotesBooks';
+import CategoriesModal from '../components/Product/CategoriesModal';
 
 const Notes = () => {
 
-    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions, setNotesBooks } = useNotes();
+    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions, setNotesBooks, setNotesCategories } = useNotes();
+
+    const [openModal, setOpenModal] = useState(false);
 
     const handleButtonClick = (value) => {
         setNotesBooks([]);
         setSelectedButton(value === selectedButton ? null : value);
+        setNotesCategories([]);
+        if (value != selectedButton) {
+            setOpenModal(true);
+        }
     };
+
+    const handleModalClose = () => {
+        setNotesBooks([]);
+        setSelectedButton(null);
+        setNotesCategories([]);
+        setOpenModal(false);
+    };
+
+    const handleCategoryConfirm = () => {
+        setOpenModal(false);
+    }
 
     return (
         <section className='my-6 sm:my-20 mx-4 sm:mx-8 min-h-[100vh]'>
@@ -22,6 +40,7 @@ const Notes = () => {
                 <div className='w-full max-w-[700px]'>
                     <SelectProduct selectedButton={selectedButton} handleButtonClick={handleButtonClick} />
                 </div>
+                <CategoriesModal openModal={openModal} handleModalClose={handleModalClose} handleCategoryConfirm={handleCategoryConfirm} />
                 { !selectedButton ?
                     <>
                         <Preview previewOptions={previewOptions} setPreviewOptions={setPreviewOptions} />
