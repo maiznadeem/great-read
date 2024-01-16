@@ -4,8 +4,6 @@ import Skeleton from '@mui/material/Skeleton';
 import amazonIcon from '../../assets/links/amazon.png';
 import perlegoIcon from '../../assets/links/perlego.png';
 
-import { Scrollbars } from 'react-custom-scrollbars';
-
 const ExampleNote = ({ book }) => {
 
     const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -63,20 +61,15 @@ const ExampleNote = ({ book }) => {
                     </div>
                     <div className='w-full flex flex-col justify-center items-start p-4 pr-2'>
                         <h2 className='manrope-semibold'>Highlights</h2>
-                        <Scrollbars style={{ width: '100%', height: '200px' }}>
+                        <div style={{ width: '100%', height: '200px' }} className='overflow-y-auto'>
                                 <ul className='list-disc list-inside mr-2' >
-                                    {
-                                        book.notes.map((note, index) => (
-                                            <li 
-                                                key={index}
-                                                className='text-xs'
-                                            >
-                                                {note}
-                                            </li>
-                                        ))
-                                    }
+                                    { book.notes.map((note, index) => (
+                                        <li key={index} className='text-xs'>
+                                            {note}
+                                        </li>
+                                    ))}
                                 </ul>
-                        </Scrollbars>
+                        </div>
                     </div>
                 </div>
             </div>
