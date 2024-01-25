@@ -21,7 +21,7 @@ const ReadingListModal = ({ open, handleClose }) => {
                     maxHeight: '90vh',
                     overflowY: 'auto',
                 }}
-                className='rounded-xl'
+                className='rounded-xl scrollbar-thin scrollbar-webkit'
             >
                 <Shelf ref={shelfRef} />
             </div>

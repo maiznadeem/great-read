@@ -144,48 +144,4 @@ getRoute.post('/getRandomBooks', async (req, res) => {
     }
 });
 
-async function addSampleBookmarks() {
-    try {
-        const books = await Book.find({}).exec();
-        if (books.length === 0) {
-            throw new Error('No books found in the database.');
-        }
-
-        let bookmarks = [];
-        for (let bookmarkNo = 1; bookmarkNo <= 100; bookmarkNo++) {
-            for (let i = 0; i < 30; i++) {
-                const randomBookIndex = Math.floor(Math.random() * books.length);
-                const randomBook = books[randomBookIndex];
-                bookmarks.push({
-                    bookmarkNo: bookmarkNo,
-                    book: randomBook._id,
-                    note: `This is a sample note quote ${i} for bookmark ${bookmarkNo}`
-                });
-            }
-        }
-        await Bookmark.insertMany(bookmarks);
-        console.log('Sample bookmarks data added successfully.');
-    } catch (error) {
-        console.error('Error adding sample bookmarks:', error);
-    }
-}
-
-// addSampleBookmarks();
-
-getRoute.get('/randomnotes', async (req, res) => {
-    const { currentSlide } = req.query;
-    try {
-        const notes = await Bookmark.find({ bookmarkNo: currentSlide }).populate('book').exec();
-        if (!notes || notes.length === 0) {
-            return res.status(404).json({ error: 'No notes found for the provided currentSlide' });
-        }
-        const shuffledNotes = shuffleArray(notes);
-        const slice = shuffledNotes.slice(0, 12);
-        res.json(slice);
-    } catch (error) {
-        console.error('Error fetching random notes:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
 module.exports = { getRoute };

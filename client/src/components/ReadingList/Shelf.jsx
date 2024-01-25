@@ -179,7 +179,7 @@ const Shelf = forwardRef((props, ref) => {
         ]
     };
 
-    const shareUrl = 'https://great-read-mu.vercel.app';
+    const shareUrl = 'https://great-read.com';
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
     const postDescription = `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n` + 
         "Find books categorised as Procrastination Killers, Finding Yourself and Mind Tabs."
