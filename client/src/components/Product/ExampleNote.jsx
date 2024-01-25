@@ -61,7 +61,7 @@ const ExampleNote = ({ book }) => {
                     </div>
                     <div className='w-full flex flex-col justify-center items-start p-4 pr-2'>
                         <h2 className='manrope-semibold'>Highlights</h2>
-                        <div style={{ width: '100%', height: '200px' }} className='overflow-y-auto'>
+                        <div style={{ width: '100%', height: '200px' }} className='overflow-y-auto scrollbar-webkit scrollbar-thin'>
                                 <ul className='list-disc list-inside mr-2' >
                                     { book.notes.map((note, index) => (
                                         <li key={index} className='text-xs'>

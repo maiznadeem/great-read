@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const NotesContext = createContext();
 
@@ -18,11 +18,8 @@ export function NotesProvider({ children }) {
     const [notesBooks, setNotesBooks] = useState([]);
 
     function addBook(newBook) {
-        const updatedBooks = [];
-        updatedBooks.push(newBook);
-        setNotesBooks(updatedBooks);
+        setNotesBooks([...notesBooks, newBook]);
     }
-    
 
     return (
         <NotesContext.Provider value={{

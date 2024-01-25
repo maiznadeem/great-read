@@ -7,8 +7,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search'
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 
 import { useNotes } from '../../context/NotesContext';
 
@@ -23,17 +21,7 @@ const NotesBooks = () => {
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
 
-    const { selectedButton, setNotesCategories } = useNotes();
-    const [showLimitAlert, setShowLimitAlert] = useState(false);
-
-    let total = 10;
-    let maxCatLimit = 1;
-    if(selectedButton == 2) {
-        maxCatLimit = 3;
-    } else if(selectedButton == 3) {
-        total = 30;
-        maxCatLimit = Infinity;
-    }
+    const { notesCategories } = useNotes();
 
     useEffect(() => {
         setIsLoading(true);
@@ -50,9 +38,8 @@ const NotesBooks = () => {
     }, [])
 
     useEffect(() => {
-        setNotesCategories(activeCategories);
         setIsLoading(true);
-        getBooks((currentPage - 1) * limit, limit, activeCategories, searchTerm)
+        getBooks((currentPage - 1) * limit, limit, activeCategories.length ? activeCategories : notesCategories, searchTerm)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);
@@ -63,12 +50,12 @@ const NotesBooks = () => {
                 setIsLoading(false);
             });
 
-    }, [currentPage, activeCategories]);
+    }, [currentPage, activeCategories, notesCategories]);
 
     useEffect(() => {
         setCurrentPage(1);
         setIsLoading(true);
-        getBooks(0, limit, activeCategories, searchTerm)
+        getBooks(0, limit, activeCategories.length ? activeCategories : notesCategories, searchTerm)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);
@@ -81,7 +68,7 @@ const NotesBooks = () => {
     }, [limit]);
 
     const handlePageChange = (newPage) => {
-        const targetElement = document.getElementById("booksection");
+        const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
         setTimeout(() => {
@@ -90,7 +77,7 @@ const NotesBooks = () => {
     };
     
     const handleBooksPerPageChange = (newLimit) => {
-        const targetElement = document.getElementById("booksection");
+        const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
         setTimeout(() => {
@@ -99,24 +86,18 @@ const NotesBooks = () => {
     };
 
     const handleCategoryClick = (categoryName) => {
-        if (activeCategories.includes(categoryName) && activeCategories.length < maxCatLimit) {
+        if (activeCategories.includes(categoryName)) {
             setActiveCategories((prevActiveCategories) =>
                 prevActiveCategories.filter((cat) => cat !== categoryName)
             );
             setCurrentPage(1);
-        } else if (!activeCategories.includes(categoryName) && activeCategories.length < maxCatLimit) {
+        } else {
             setActiveCategories((prevActiveCategories) => [
                 ...prevActiveCategories,
                 categoryName,
             ]);
             setCurrentPage(1);
-        } else {
-            setShowLimitAlert(true);
         }
-    };
-
-    const handleCloseLimitAlert = () => {
-        setShowLimitAlert(false);
     };
 
     const handleSearchChange = (e) => {
@@ -127,7 +108,7 @@ const NotesBooks = () => {
     const handleSearchClick = () => {
         setCurrentPage(1);
         setIsLoading(true);
-        getBooks(0, limit, activeCategories, searchTerm)
+        getBooks(0, limit, activeCategories.length ? activeCategories : notesCategories, searchTerm)
             .then((data) => {
                 setBooks(data.books);
                 setTotalCount(data.totalCount);
@@ -144,6 +125,12 @@ const NotesBooks = () => {
             <div>
                 <div className='flex flex-wrap justify-center mb-6 sm:mb-14 gap-2'>
                     {categories
+                        .filter(category => {
+                            if (notesCategories.length)
+                                return notesCategories.includes(category.name)
+                            else
+                                return true;
+                        })
                         .sort((a, b) => {
                             const nameA = a.name.toLowerCase();
                             const nameB = b.name.toLowerCase();
@@ -199,7 +186,7 @@ const NotesBooks = () => {
                     <div className='manrope-semibold text-center text-gray-700 h-[90vh] flex items-center justify-center'>No results. Try including more categories :)</div>
                 ) : (
                     <>
-                        <div id='booksection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-24 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
+                        <div id='notessection' className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl2:grid-cols-4 mt-20 sm:mt-24 ml-4 sm:ml-8 gap-x-12 gap-y-20'>
                             {books.map((book, index) => (
                                 <NotesBook key={index} book={book} categories={categories} currentPage={currentPage} />
                             ))}
@@ -232,11 +219,6 @@ const NotesBooks = () => {
                     </select>
                 </div>
             </div>
-            <Snackbar open={showLimitAlert} autoHideDuration={6000} onClose={handleCloseLimitAlert}>
-                <Alert onClose={handleCloseLimitAlert} severity="warning">
-                    Category limit reached! Please deselect one, or choose a different plan.
-                </Alert>
-            </Snackbar>
         </section>
     );
 };
