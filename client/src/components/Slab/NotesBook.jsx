@@ -19,14 +19,10 @@ const NotesBook = ({ book, categories }) => {
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     let total = 10;
-    let maxCatLimit = 1;
-    if(selectedButton == 2) {
-        maxCatLimit = 3;
-    } else if(selectedButton == 3) {
+    if (selectedButton == 3) {
         total = 30;
-        maxCatLimit = Infinity;
     }
-
+    
     const handleImageLoad = () => {
         setIsImageLoaded(true);
     };
@@ -35,24 +31,23 @@ const NotesBook = ({ book, categories }) => {
         setIsBookInReadingList(notesBooks.some((readingBook) => readingBook._id === book._id));
     }, [notesBooks, book]);
 
-    const categoryIcons = book.categories.map(category => {
+    const [showTooltips, setShowTooltips] = useState(Array(book.categories.length).fill(false));
 
-        const [showtooltip, setshowtooltip] = useState(false);
-
+    const categoryIcons = book.categories.map((category, index) => {
         const matchingCategory = categories.find(item => item.name === category);
         if (matchingCategory && matchingCategory.image) {
             return (
-                <Tooltip 
+                <Tooltip
                     key={matchingCategory._id}
                     title={matchingCategory.name}
-                    open={showtooltip}
+                    open={showTooltips[index]}
                     TransitionComponent={Zoom}
-                    onOpen={() => setshowtooltip(true)}
-                    onClose={() => setshowtooltip(false)}
+                    onOpen={() => setShowTooltips(prevState => [...prevState.slice(0, index), true, ...prevState.slice(index + 1)])}
+                    onClose={() => setShowTooltips(prevState => [...prevState.slice(0, index), false, ...prevState.slice(index + 1)])}
                 >
                     <img
                         src={matchingCategory.image}
-                        onClick={() => setshowtooltip(!showtooltip)}
+                        onClick={() => setShowTooltips(prevState => [...prevState.slice(0, index), !prevState[index], ...prevState.slice(index + 1)])}
                         className="w-auto h-6 cursor-pointer"
                     />
                 </Tooltip>
@@ -60,6 +55,7 @@ const NotesBook = ({ book, categories }) => {
         }
         return null;
     });
+
 
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">

@@ -93,9 +93,9 @@ const CategoriesModal = ({
         else if (selectedButton === 3) setMaxUniqueCategoryLimit(Infinity);
         else setMaxUniqueCategoryLimit(1);
         if (notesCategories.length < maxUniqueCategoryLimit) {
-            setStatusText(`Select at least ${maxUniqueCategoryLimit} categories.`);
+            setStatusText(`Select at least ${maxUniqueCategoryLimit} ${maxUniqueCategoryLimit == 1 ? 'category.' : 'categories.' }`);
         } else {
-            setStatusText("Limit reached. Select a different option to add more categories.");
+            setStatusText("Limit reached. Choose a different plan to add more categories.");
         }
     }, [selectedButton, notesCategories, maxUniqueCategoryLimit]);
 

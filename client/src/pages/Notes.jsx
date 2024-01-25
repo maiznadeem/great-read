@@ -18,7 +18,7 @@ const Notes = () => {
         setNotesBooks([]);
         setSelectedButton(value === selectedButton ? null : value);
         setNotesCategories([]);
-        if (value != selectedButton) {
+        if (value != selectedButton && value != 3) {
             setOpenModal(true);
         }
     };
