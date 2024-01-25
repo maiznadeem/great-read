@@ -14,7 +14,7 @@ import Zoom from '@mui/material/Zoom';
 
 const Book = ({ book, categories }) => {
 
-    const { books, goal, updateBooksValue, isReadingListActive } = useReadingList();
+    const { books, goal, updateBooksValue, isReadingListActive, contextTopPicks } = useReadingList();
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
@@ -93,7 +93,7 @@ const Book = ({ book, categories }) => {
                 <div className='flex justify-center items-center w-[100%]'>
                     <img className='absolute -top-4 left-32 sm:left-36' src={invertedLeft} alt='Inverted-Left' />
                     <img className='absolute bottom-14 -right-4' src={invertedrRight} alt='Inverted-Right' />
-                    { isReadingListActive && 
+                    { isReadingListActive ? 
                         <>
                         {isBookInReadingList ? (
                             <img 
@@ -117,6 +117,13 @@ const Book = ({ book, categories }) => {
                             )
                         )}
                         </>
+                        : (
+                            contextTopPicks.books.find(contextTopPick => contextTopPick._id == book._id) && (
+                                <div className='manrope-semibold text-center text-xs w-32 bg-[#FFA500] px-4 py-2 rounded-lg shadow-lg absolute top-[-15px] right-[-15px] cursor-pointer'>
+                                    <p>Featured</p>
+                                </div>
+                            )
+                        )
                     }
                     <p className="manrope-regular text-gray-600 text-xs sm:text-sm">{book.quote}</p>
                 </div>

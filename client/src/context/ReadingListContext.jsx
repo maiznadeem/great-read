@@ -18,6 +18,7 @@ export function ReadingListProvider({ children }) {
     const [books, setBooks] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [pageRefresh, setPageRefresh] = useState(false);
+    const [contextTopPicks, setContextTopPicks] = useState(null);
 
     useEffect(() => {
         sessionStorage.setItem('isReadingListActive', JSON.stringify(isReadingListActive));
@@ -87,6 +88,8 @@ export function ReadingListProvider({ children }) {
             setBooksValue,
             updateBooksValue,
             setSelectedCategoriesValue,
+            contextTopPicks, 
+            setContextTopPicks,
             toggleReadingInfo,
             togglePageRefresh,
         }}>

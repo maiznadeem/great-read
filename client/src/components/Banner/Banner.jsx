@@ -10,7 +10,7 @@ const Banner = () => {
     const [topPicks, setTopPicks] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const history = useNavigate();
-    const { isReadingListActive, toggleReadingList } = useReadingList();
+    const { isReadingListActive, toggleReadingList, setContextTopPicks } = useReadingList();
     
     const getMonthName = (monthNumber) => {
         const months = [
@@ -24,6 +24,7 @@ const Banner = () => {
             try {
                 const topPicksData = await getTopPicks();
                 setTopPicks(topPicksData);
+                setContextTopPicks(topPicksData);
                 setIsLoading(false);
             } catch (error) {
                 console.error(error);

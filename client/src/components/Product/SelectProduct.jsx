@@ -37,7 +37,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                         backgroundColor: selectedButton == null ? '#FFA500' : ''
                     }}
                 >
-                    Any 10 books from <br /> 1 category <br /> £29
+                    Any 10 books from <br /> 1 category <br /> £29/$38/€36
                 </ToggleButton>
                 <ToggleButton
                     value={2}

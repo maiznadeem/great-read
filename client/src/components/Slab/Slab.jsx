@@ -57,7 +57,7 @@ const Slab = () => {
                         ? "category"
                         : "categories"}
                 </p>
-                <button className="manrope-semibold bg-primary text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg hover:bg-primaryDark">Purchase</button>
+                <button className="manrope-semibold bg-[#FFA500] text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg">Purchase</button>
             </div>
         </div>
     );
