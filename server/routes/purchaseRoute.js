@@ -3,6 +3,6 @@ const purchaseController = require('../controllers/purchaseController');
 
 const purchaseRoute = express.Router();
 
-purchaseRoute.post('/purchase', purchaseController.getWordDocument);
+purchaseRoute.post('/', purchaseController.getWordDocument);
 
 module.exports = { purchaseRoute };

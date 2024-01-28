@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from '@mui/material';
+import { purchaseBooksAPI } from "../../utils/api";
 import { useNotes } from "../../context/NotesContext";
 
 const Slab = () => {
-    const { selectedButton, notesBooks, setNotesBooks } = useNotes();
+    const { previewOptions, selectedButton, notesBooks, setNotesBooks } = useNotes();
+    const [loading, setLoading] = useState(false);
 
     let total = 10;
     let categories = 1;
@@ -20,6 +23,18 @@ const Slab = () => {
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
     };
+
+    const handlePurchase = () => {
+        setLoading(true);
+        purchaseBooksAPI(previewOptions, notesBooks)
+            .then((data) => {
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                setLoading(false);
+            });
+    }
 
     return (
         <div className="text-black my-20 flex flex-col sm:flex-row justify-center items-center gap-10">
@@ -57,7 +72,22 @@ const Slab = () => {
                         ? "category"
                         : "categories"}
                 </p>
-                <button className="manrope-semibold bg-[#FFA500] text-white py-[6px] px-6 text-[14px] w-36 rounded-md shadow-lg">Purchase</button>
+                <Button className="w-36" variant="contained"
+                    sx={{
+                        backgroundColor: "#FFA500",
+                        "&:hover": {
+                            backgroundColor: "#FFA500",
+                        },
+                        "&:disabled": {
+                            backgroundColor: "#CCCCCC",
+                        },
+                    }}
+                    disableElevation
+                    disabled={notesBooks.length < total || loading}
+                    onClick={handlePurchase}
+                >
+                    Purchase
+                </Button>
             </div>
         </div>
     );

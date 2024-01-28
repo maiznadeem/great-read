@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://admin.great-read.com"
-    // baseURL: "http://localhost:8080"
+    // baseURL: "https://admin.great-read.com"
+    baseURL: "http://localhost:8080"
 });
 
 export async function getBooks(offset, limit, categories, searchTerm) {
@@ -43,6 +43,18 @@ export async function getRandomBooks(categories, goal, books) {
         const response = await api.post('/get/getRandomBooks', {
             categories: categories,
             goal: goal,
+            books: books,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch random books: ${error.message}`);
+    }
+}
+
+export async function purchaseBooksAPI(previewOptions, books) {
+    try {
+        const response = await api.post('/purchase', {
+            previewOptions: previewOptions,
             books: books,
         });
         return response.data;

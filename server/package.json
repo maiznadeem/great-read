@@ -17,6 +17,7 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "docx": "^8.5.0",
+    "docx-pdf": "^0.0.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
@@ -24,9 +25,12 @@
     "express-validator": "^7.0.1",
     "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",
+    "libreoffice-convert": "^1.5.1",
+    "mammoth": "^1.6.0",
     "mongoose": "^7.5.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.5",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pdfkit": "^0.14.0"
   }
 }
