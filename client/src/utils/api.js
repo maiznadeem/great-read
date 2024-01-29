@@ -59,7 +59,7 @@ export async function purchaseBooksAPI(previewOptions, books) {
         });
         return response.data;
     } catch (error) {
-        throw new Error(`Failed to fetch random books: ${error.message}`);
+        throw new Error(`Failed to fetch signed URLs: ${error.message}`);
     }
 }
 
