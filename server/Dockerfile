@@ -4,6 +4,9 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install LibreOffice
+RUN apt-get update && apt-get install -y libreoffice
+
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 

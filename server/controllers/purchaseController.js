@@ -365,7 +365,9 @@ const getWordDocument = async (req, res) => {
             fs.writeFileSync(`./assets/${filename}.docx`, buffer);
         });
 
-        exec(`soffice --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
+        const environment = process.env.NODE_SERVER_ENV || "PROD";
+
+        exec(`${environment == "PROD" ? "libreoffice" : "soffice"} --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error converting file: ${error}`);
                 return;

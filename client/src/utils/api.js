@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: "https://admin.great-read.com"
-    baseURL: "http://localhost:8080"
+    baseURL: "https://admin.great-read.com"
+    // baseURL: "http://localhost:8080"
 });
 
 export async function getBooks(offset, limit, categories, searchTerm) {
