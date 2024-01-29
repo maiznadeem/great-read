@@ -11,6 +11,7 @@ const { loginRoute } = require('./routes/loginRoute');
 const { resetRoute } = require('./routes/resetRoute');
 const { logoutRoute } = require('./routes/logoutRoute');
 const { getRoute } = require('./routes/getRoute');
+const { purchaseRoute } = require('./routes/purchaseRoute');
 
 const app = express();
 app.use(bodyParser.json());
@@ -43,6 +44,7 @@ app.use('/login', loginRoute);
 app.use('/reset', resetRoute)
 app.use('/logout', logoutRoute);
 app.use('/get', getRoute);
+app.use('/purchase', purchaseRoute);
 
 app.use('/admin', isAuthenticated);
 app.use('/admin', adminRoute);

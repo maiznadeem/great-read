@@ -16,6 +16,10 @@ export function NotesProvider({ children }) {
     })
     const [notesCategories, setNotesCategories] = useState([]);
     const [notesBooks, setNotesBooks] = useState([]);
+    const [urls, setUrls] = useState({
+        address: [],
+        timeCreated: null,
+    });
 
     function addBook(newBook) {
         setNotesBooks([...notesBooks, newBook]);
@@ -31,6 +35,8 @@ export function NotesProvider({ children }) {
             setNotesCategories,
             notesBooks,
             setNotesBooks,
+            urls,
+            setUrls,
             addBook,
         }}>
             {children}

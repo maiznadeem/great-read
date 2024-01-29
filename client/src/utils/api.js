@@ -51,4 +51,16 @@ export async function getRandomBooks(categories, goal, books) {
     }
 }
 
+export async function purchaseBooksAPI(previewOptions, books) {
+    try {
+        const response = await api.post('/purchase', {
+            previewOptions: previewOptions,
+            books: books,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch signed URLs: ${error.message}`);
+    }
+}
+
 export default api;
