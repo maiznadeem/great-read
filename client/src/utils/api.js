@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://great-read-backend-eccytorgrq-uc.a.run.app"
+    baseURL: "https://great-read-image-eccytorgrq-uc.a.run.app"
     // baseURL: "https://admin.great-read.com"
     // baseURL: "http://localhost:8080"
 });
