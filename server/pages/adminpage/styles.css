@@ -100,6 +100,29 @@ body {
     width: 100%;
 }
 
+#addNotesButton {
+    margin: 5px auto;
+    padding: 10px 20px;
+    background-color: #956829;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+#notesList button {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #956829;
+}
+
 #submitButton:hover {
     background-color: #8D5E20;
 }

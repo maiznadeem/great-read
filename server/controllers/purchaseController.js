@@ -1,17 +1,23 @@
 const fs = require("fs");
 const path = require('path');
 const axios = require("axios");
-const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType } = require("docx");
+const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, TableCellProperties, CharacterSet, ShadingType, HeightRule } = require("docx");
 const { Storage } = require('@google-cloud/storage');
+const { google } = require("googleapis");
 const { exec } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-
-const { validationResult } = require('express-validator');
+const Book = require("../models/Book");
 
 const storage = new Storage({
     keyFilename: path.join(__dirname, 'service-account.json'),
 });
 
+const auth = new google.auth.GoogleAuth({
+    keyFilename: path.join(__dirname, 'service-account.json'),
+    scopes: ['https://www.googleapis.com/auth/drive'],
+});
+
+const drive = google.drive({ version: 'v3', auth });
 
 
 const getWordDocument = async (req, res) => {
@@ -19,18 +25,14 @@ const getWordDocument = async (req, res) => {
     try {
 
         const previewOptions = req.body.previewOptions;
-        const books = req.body.books;
+        const bookIds = req.body.books.map(book => book._id);
+        const books = await Book.find({ _id: { $in: bookIds } }).populate('notes');
+
 
         const logo = fs.readFileSync('./assets/Logo.png');
         const amazon = fs.readFileSync('./assets/amazon.png');
         const perlego = fs.readFileSync('./assets/perlego.png');
         const font = fs.readFileSync("./assets/Manrope/static/Manrope-SemiBold.ttf");
-
-        const bulletPoints = [
-            'Sample bullet point 1',
-            'Sample bullet point 2',
-            'Sample bullet point 3',
-        ];
 
         const createTable = async (book) => { 
 
@@ -133,8 +135,12 @@ const getWordDocument = async (req, res) => {
                         children: [
                             new TableCell({
                                 rowSpan: 4,
-                                children: [
-                                    ...bulletPoints.map(point => new Paragraph({
+                                width: {
+                                    size: 70,
+                                    type: WidthType.PERCENTAGE,
+                                },
+                                children:
+                                    (book.notes?.content ? book.notes.content.map(point => new Paragraph({
                                         children: [
                                             new TextRun({
                                                 font: "Manrope",
@@ -145,8 +151,7 @@ const getWordDocument = async (req, res) => {
                                         bullet: {
                                             level: 0,
                                         },
-                                    })),
-                                ],
+                                    })) : []),
                             }),
                         ],
                     }),
@@ -341,7 +346,7 @@ const getWordDocument = async (req, res) => {
                         previewOptions.notes && 
                         new TextRun({
                             font: "Manrope",
-                            text: "Add Your thoughts here.",
+                            text: "",
                             size: 22,
                         }),
                         new PageBreak(),
@@ -365,22 +370,72 @@ const getWordDocument = async (req, res) => {
             fs.writeFileSync(`./assets/${filename}.docx`, buffer);
         });
 
-        const environment = process.env.NODE_SERVER_ENV || "PROD";
+        const docxFilePath = `./assets/${filename}.docx`;
 
-        exec(`${environment == "PROD" ? "libreoffice" : "soffice"} --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error converting file: ${error}`);
-                return;
+        async function convertDocxToPdf(docxFilePath) {
+            try {
+                // Step 1: Upload DOCX file to Google Drive
+                const uploadedFile = await drive.files.create({
+                    requestBody: {
+                        name: path.basename(docxFilePath),
+                        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    },
+                    media: {
+                        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                        body: fs.createReadStream(docxFilePath),
+                    },
+                });
+
+                // Step 2: Convert uploaded DOCX file to Google Docs format (GDOC)
+                const convertedFile = await drive.files.copy({
+                    fileId: uploadedFile.data.id,
+                    requestBody: {
+                        mimeType: 'application/vnd.google-apps.document',
+                    },
+                });
+
+                // Step 3: Export the converted Google Docs file to PDF format
+                const pdfFile = await drive.files.export({
+                    fileId: convertedFile.data.id,
+                    mimeType: 'application/pdf',
+                }, { responseType: 'stream' });
+
+                // Step 4: Save the converted PDF file locally
+                const pdfFilePath = `./assets/${path.basename(docxFilePath, '.docx')}.pdf`;
+                const writeStream = fs.createWriteStream(pdfFilePath);
+                pdfFile.data.pipe(writeStream);
+
+                return pdfFilePath;
+            } catch (error) {
+                console.error('Error converting file:', error);
+                throw error;
             }
-            uploadDocs(filename)
-                .then((urls) => {
-                    res.json({ urls: urls });
-                })
-                .catch((err) => {
-                    console.error('Error uploading files:', error);
-                    res.status(500).send('Error uploading files');
-                })
-        });
+        }
+
+        convertDocxToPdf(docxFilePath)
+            .then((pdfFilePath) => {
+                console.log('PDF file created:', pdfFilePath);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        // const environment = process.env.NODE_SERVER_ENV || "PROD";
+
+        // exec(`${environment == "PROD" ? "libreoffice" : "soffice"} --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
+        //     if (error) {
+        //         console.error(`Error converting file: ${error}`);
+        //         return;
+        //     }
+        //     uploadDocs(filename)
+        //         .then((urls) => {
+        //             res.json({ urls: urls });
+        //         })
+        //         .catch((err) => {
+        //             console.error('Error uploading files:', err);
+        //             res.status(500).send('Error uploading files');
+        //         })
+        // });
 
     } catch (error) {
         console.error('Error retrieving file:', error);

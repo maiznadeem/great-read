@@ -92,7 +92,7 @@ body {
     border: 1px solid #ccc;
     padding: 10px;
     background-color: #f9f9f9;
-    margin-bottom: 20px; /* Add spacing between results */
+    margin-bottom: 20px;
 }
 
 .left-section button, .right-section button {
@@ -112,7 +112,6 @@ body {
     background-color: #8D5E20;
 }
 
-/* Search and Display Section */
 .right-section h2 {
     text-align: center;
     color: #956829;
@@ -183,6 +182,33 @@ body {
     background-color: #8D5E20;
 }
 
+#addNotesButton {
+    display: inline-block;
+    margin: 5px auto;
+    padding: 10px 20px;
+    background-color: #956829;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    width: auto;
+}
+
+#notesList button {
+    display: inline-block;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #956829;
+    width: auto;
+    font-size: 14px;
+}
 
 #addButton {
     background-color: #956829;

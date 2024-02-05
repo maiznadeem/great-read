@@ -8,9 +8,9 @@ const storage = new Storage({
 });
 
 const Book = require('../models/Book');
-const Quote = require('../models/Quote')
 const TopPicks = require('../models/TopPicks');
 const Category = require('../models/Category');
+const Note = require('../models/Note');
 
 const checkDuplicateTitle = async (req, res, next) => {
     try {
@@ -62,6 +62,11 @@ async function uploadBook(req, res) {
             image: publicUrl,
         });
         
+        const newNote = new Note({
+            content: req.body.notesArray,
+        });
+        await newNote.save();
+        newBook.notes = newNote._id;
         await newBook.save();
 
         res.status(200).json({ message: 'Book uploaded successfully' });
@@ -74,7 +79,7 @@ async function uploadBook(req, res) {
 async function getBook(req, res) {
     const bookId = req.params.id;
     try {
-        const book = await Book.findById(bookId);
+        const book = await Book.findById(bookId).populate('notes');
         if (book) {
             res.json(book);
         } else {
@@ -118,6 +123,21 @@ async function updateBook(req, res) {
             imageUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
         }
         const categories = JSON.parse(req.body.categories);
+        let notesArray = [];
+        if (req.body.notesArray) {
+            notesArray = req.body.notesArray;
+        }
+        const existingNote = await Note.findById(existingBook.notes);
+        let noteId = null;
+        if (existingNote) {
+            existingNote.content = notesArray;
+            await existingNote.save();
+            noteId = existingNote._id;
+        } else {
+            const newNote = new Note({ content: notesArray });
+            await newNote.save();
+            noteId = newNote._id;
+        }
         const updatedBook = {
             title: req.body.updateTitle,
             author: req.body.updateAuthor,
@@ -127,6 +147,7 @@ async function updateBook(req, res) {
             perlego: req.body.perlego,
             quote: req.body.quote,
             image: imageUrl,
+            notes: noteId,
         };
         await Book.findByIdAndUpdate(bookId, updatedBook);
 
@@ -182,89 +203,6 @@ async function searchBook(req, res) {
         res.json(books);
     } catch (error) {
         console.error('Error searching books:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
-
-async function uploadQuote(req, res) {
-    try {
-        const { author, quote } = req.body;
-        const imageFile = req.file;
-
-        if (!imageFile) {
-            return res.status(400).json({ error: 'No image file uploaded.' });
-        }
-
-        const uniqueIdentifier = uuidv4();
-
-        const bucketName = 'great-read-bucket';
-        const folderName = 'quotes';
-        const objectName = `${folderName}/${uniqueIdentifier}-${imageFile.originalname}`;
-
-        const bucket = storage.bucket(bucketName);
-        const file = bucket.file(objectName);
-
-        await file.save(req.file.buffer, {
-            contentType: req.file.mimetype,
-        });
-
-        const imageUrl = `https://storage.googleapis.com/${bucketName}/${objectName}`;
-
-        const newQuote = new Quote({
-            author,
-            quote,
-            image: imageUrl,
-        });
-
-        await newQuote.save();
-
-        res.status(200).json({ message: 'Quote added successfully' });
-    } catch (error) {
-        console.error('Error adding quote:', error);
-        res.status(500).json({ error: 'Could not add the quote.' });
-    }
-}
-
-async function searchQuote(req, res) {
-    try {
-        const searchTerm = req.query.term;
-        let quotes;
-        if (!searchTerm || searchTerm.trim() === "") {
-            quotes = await Quote.find({}, { image: 0 });
-        } else {
-            quotes = await Quote.find({
-                $or: [
-                    { author: { $regex: searchTerm, $options: 'i' } },
-                    { quote: { $regex: searchTerm, $options: 'i' } },
-                ],
-            }, { image: 0 });
-        }
-        res.json(quotes);
-    } catch (error) {
-        console.error('Error searching quotes:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
-
-async function deleteQuote(req, res) {
-    try {
-        const quoteId = req.body.quoteId;
-        const existingQuote = await Quote.findById(quoteId);
-        if (!existingQuote) {
-            return res.status(404).json({ message: 'Quote not found' });
-        }
-        const imageUrl = existingQuote.image;
-        if (imageUrl) {
-            const bucketName = 'great-read-bucket';
-            const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
-            const bucket = storage.bucket(bucketName);
-            const file = bucket.file(objectName);
-            await file.delete();
-        }
-        await existingQuote.deleteOne();
-        res.status(200).json({ message: 'Quote deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting quote:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }
@@ -377,9 +315,6 @@ module.exports = {
     updateBook,
     deleteBook,
     searchBook,
-    uploadQuote,
-    searchQuote,
-    deleteQuote,
     addCategory,
     searchCategory,
     deleteCategory,

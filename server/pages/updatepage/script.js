@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const updateBookForm = document.getElementById("updateBookForm");
+    const addNotesButton = document.getElementById("addNotesButton");
     const addButton = document.getElementById("addButton");
     const logoutButton = document.getElementById("logoutButton");
     const getInfoButton = document.getElementById("getInfoButton");
@@ -22,6 +22,37 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.style.backgroundColor = 'lightgray';
     changeButton.style.backgroundColor = 'lightgray';
 
+    let notesArray = [];
+
+    function displayNotes() {
+        const notesList = document.querySelector('#notesList');
+        notesList.innerHTML = "";
+        notesArray.forEach(note => {
+            const listItem = document.createElement('li');
+            listItem.textContent = note;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', () => {
+                const index = notesArray.indexOf(note);
+                if (index !== -1) {
+                    notesArray.splice(index, 1);
+                    displayNotes();
+                }
+            });
+            listItem.appendChild(removeButton);
+            notesList.appendChild(listItem);
+        });
+    }
+
+    addNotesButton.addEventListener('click', () => {
+        const notes = document.querySelector('#notes').value.trim();
+        if (notes !== "" && !notesArray.includes(notes)) {
+            notesArray.push(notes);
+            displayNotes();
+            document.querySelector('#notes').value = "";
+        }
+    });
+
     function resetBookFields() {
         document.getElementById("bookId").value = '';
         document.getElementById("updateTitle").value = '';
@@ -30,6 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("amazon").value = '';
         document.getElementById("perlego").value = '';
         document.getElementById("quote").value = '';
+        document.getElementById("notes").value = '';
+        notesArray = [];
+        displayNotes();
         const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
         categoryCheckboxes.forEach((checkbox) => {
             checkbox.checked = false;
@@ -73,6 +107,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         });
+        notesArray = book.notes && book.notes.content ? book.notes.content : [];
+        displayNotes();
     }
 
     getInfoButton.addEventListener("click", function (e) {
@@ -276,39 +312,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const categoryGrid = document.getElementById('categoryCheckboxes');
     
     fetch('/get/categories')
-    .then((response) => response.json())
-    .then((categories) => {
-        categories.forEach((category) => {
-            const categoryItem = document.createElement('div');
-            categoryItem.classList.add('category-item');
+        .then((response) => response.json())
+        .then((categories) => {
+            categories.forEach((category) => {
+                const categoryItem = document.createElement('div');
+                categoryItem.classList.add('category-item');
 
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.name = 'categories';
-            checkbox.value = category.name;
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'categories';
+                checkbox.value = category.name;
 
-            const label = document.createElement('label');
-            label.textContent = category.name;
+                const label = document.createElement('label');
+                label.textContent = category.name;
 
-            categoryItem.appendChild(checkbox);
-            categoryItem.appendChild(label);
+                categoryItem.appendChild(checkbox);
+                categoryItem.appendChild(label);
 
-            categoryItem.addEventListener('click', () => {
-                if (checkbox.checked) {
-                    checkbox.checked = false;
-                    categoryItem.classList.remove('selected');
-                } else {
-                    checkbox.checked = true;
-                    categoryItem.classList.add('selected');
-                }
+                categoryItem.addEventListener('click', () => {
+                    if (checkbox.checked) {
+                        checkbox.checked = false;
+                        categoryItem.classList.remove('selected');
+                    } else {
+                        checkbox.checked = true;
+                        categoryItem.classList.add('selected');
+                    }
+                });
+
+                categoryGrid.appendChild(categoryItem);
             });
-
-            categoryGrid.appendChild(categoryItem);
+        })
+        .catch((error) => {
+            console.error('Error fetching categories:', error);
         });
-    })
-    .catch((error) => {
-        console.error('Error fetching categories:', error);
-    });
 
     updateButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -348,6 +384,9 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("perlego", perlego);
         formData.append("quote", quote);
         formData.append("categories", JSON.stringify(selectedCategories));
+        notesArray.forEach(note => {
+            formData.append('notesArray[]', note);
+        });
         const imageInput = document.getElementById("image");
         if (imageInput.files.length > 0) {
             formData.append("image", imageInput.files[0]);
