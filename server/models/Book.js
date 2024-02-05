@@ -14,7 +14,7 @@ const bookSchema = new mongoose.Schema({
         required: true,
     },
     categories: {
-        type: [String],
+        type: [ String ],
     },
     amazon: {
         type: String,
@@ -24,11 +24,14 @@ const bookSchema = new mongoose.Schema({
     },
     quote: {
         type: String,
-        required: true,
     },
     image: {
         type: String,
         required: true,
+    },
+    notes: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Note',
     },
 });
 

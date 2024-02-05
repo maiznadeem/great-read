@@ -252,16 +252,14 @@ const Shelf = forwardRef((props, ref) => {
                             <PictureAsPdfIcon className='text-red-700' />
                             Download
                         </button>
-                            <a
-                                href={linkedInShareUrl}
-                                target='_blank'
-                                className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
-                                ${books.length === 0 ? 'cursor-not-allowed opacity-50' : 'opacity-100'}`}
-                                disabled={books.length === 0}
-                            >
-                                <LinkedInIcon className='text-blue-700' />
-                                Share
-                            </a>
+                        <a
+                            href={linkedInShareUrl}
+                            target='_blank'
+                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white opacity-100`}
+                        >
+                            <LinkedInIcon className='text-blue-700' />
+                            Share
+                        </a>
                         <PDFModal isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
                     </div>
                 </div>

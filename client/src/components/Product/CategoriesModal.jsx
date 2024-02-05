@@ -22,7 +22,7 @@ const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
     }, []);
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-start justify-center max-h-[500px] overflow-y-auto">
             {isLoading ? (
                 <div className="flex justify-center items-center w-1/3 min-w-[200px]">
                     <LinearProgress

@@ -27,10 +27,6 @@ adminRoute.post('/updatebook', upload.single('image'), adminController.updateBoo
 adminRoute.get('/searchbook', adminController.searchBook);
 adminRoute.delete('/deletebook/:id', adminController.deleteBook);
 
-adminRoute.post('/uploadquote', upload.single('image'), adminController.uploadQuote);
-adminRoute.get('/searchquote', adminController.searchQuote);
-adminRoute.post('/deletequote', adminController.deleteQuote);
-
 adminRoute.post('/addcategory', upload.single('categoryImage'), adminController.addCategory);
 adminRoute.get('/searchcategory', adminController.searchCategory);
 adminRoute.post('/deletecategory', adminController.deleteCategory);

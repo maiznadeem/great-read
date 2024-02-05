@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('bookForm');
     const submitButton = document.getElementById('submitButton');
+    const addNotesButton = document.getElementById('addNotesButton');
     const responseMessage = document.getElementById('responseMessage');
     const publishingYearInput = document.getElementById('publishingYear');
     const logoutButton = document.getElementById('logoutButton');
@@ -103,6 +104,37 @@ document.addEventListener('DOMContentLoaded', function () {
             this.value = '';
         }
     });
+
+    let notesArray = [];
+    
+    function displayNotes() {
+        const notesList = document.querySelector('#notesList');
+        notesList.innerHTML = "";
+        notesArray.forEach(note => {
+            const listItem = document.createElement('li');
+            listItem.textContent = note;
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', () => {
+                const index = notesArray.indexOf(note);
+                if (index !== -1) {
+                    notesArray.splice(index, 1);
+                    displayNotes();
+                }
+            });
+            listItem.appendChild(removeButton);
+            notesList.appendChild(listItem);
+        });
+    }
+
+    addNotesButton.addEventListener('click', () => {
+        const notes = document.querySelector('#notes').value.trim();
+        if (notes !== "" && !notesArray.includes(notes)) {
+            notesArray.push(notes);
+            displayNotes();
+            document.querySelector('#notes').value = "";
+        }
+    });
     
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -132,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
     
-        if (isEmptyOrWhitespace(quote) || containsSpecialCharacters(quote)) {
+        if (containsSpecialCharacters(quote)) {
             handleError('Please provide a valid quote (without newline characters).');
             return;
         }
@@ -143,12 +175,15 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
     
-        if (!(isURL(amazon) || isURL(perlego))) {
-            handleError('Please provide valid Amazon / Perlego link.');
+        if (!isURL(amazon)) {
+            handleError('Please provide valid Amazon link.');
             return;
         }
     
         const formData = new FormData(form);
+        notesArray.forEach(note => {
+            formData.append('notesArray[]', note);
+        });
     
         try {
             const response = await axios.post('/admin/uploadbook', formData);
@@ -157,6 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 responseMessage.innerText = 'Upload successful!';
                 responseMessage.style.color = 'green';
                 form.reset();
+                notesArray = [];
+                displayNotes();
                 const categoryItems = categoryGrid.querySelectorAll('.category-item');
                 categoryItems.forEach(item => {
                     item.classList.remove('selected');

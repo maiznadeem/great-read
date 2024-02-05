@@ -1,17 +1,15 @@
 const fs = require("fs");
 const path = require('path');
 const axios = require("axios");
-const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType } = require("docx");
+const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType, HeightRule } = require("docx");
 const { Storage } = require('@google-cloud/storage');
 const { exec } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-
-const { validationResult } = require('express-validator');
+const Book = require("../models/Book");
 
 const storage = new Storage({
     keyFilename: path.join(__dirname, 'service-account.json'),
 });
-
 
 
 const getWordDocument = async (req, res) => {
@@ -19,18 +17,14 @@ const getWordDocument = async (req, res) => {
     try {
 
         const previewOptions = req.body.previewOptions;
-        const books = req.body.books;
+        const bookIds = req.body.books.map(book => book._id);
+        const books = await Book.find({ _id: { $in: bookIds } }).populate('notes');
+
 
         const logo = fs.readFileSync('./assets/Logo.png');
         const amazon = fs.readFileSync('./assets/amazon.png');
         const perlego = fs.readFileSync('./assets/perlego.png');
         const font = fs.readFileSync("./assets/Manrope/static/Manrope-SemiBold.ttf");
-
-        const bulletPoints = [
-            'Sample bullet point 1',
-            'Sample bullet point 2',
-            'Sample bullet point 3',
-        ];
 
         const createTable = async (book) => { 
 
@@ -133,8 +127,12 @@ const getWordDocument = async (req, res) => {
                         children: [
                             new TableCell({
                                 rowSpan: 4,
-                                children: [
-                                    ...bulletPoints.map(point => new Paragraph({
+                                width: {
+                                    size: 70,
+                                    type: WidthType.PERCENTAGE,
+                                },
+                                children:
+                                    (book.notes?.content ? book.notes.content.map(point => new Paragraph({
                                         children: [
                                             new TextRun({
                                                 font: "Manrope",
@@ -145,8 +143,7 @@ const getWordDocument = async (req, res) => {
                                         bullet: {
                                             level: 0,
                                         },
-                                    })),
-                                ],
+                                    })) : []),
                             }),
                         ],
                     }),
@@ -341,7 +338,7 @@ const getWordDocument = async (req, res) => {
                         previewOptions.notes && 
                         new TextRun({
                             font: "Manrope",
-                            text: "Add Your thoughts here.",
+                            text: "",
                             size: 22,
                         }),
                         new PageBreak(),
@@ -370,6 +367,7 @@ const getWordDocument = async (req, res) => {
         exec(`${environment == "PROD" ? "libreoffice" : "soffice"} --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error converting file: ${error}`);
+                res.status(500).send('Error retrieving file');
                 return;
             }
             uploadDocs(filename)
@@ -377,7 +375,7 @@ const getWordDocument = async (req, res) => {
                     res.json({ urls: urls });
                 })
                 .catch((err) => {
-                    console.error('Error uploading files:', error);
+                    console.error('Error uploading files:', err);
                     res.status(500).send('Error uploading files');
                 })
         });

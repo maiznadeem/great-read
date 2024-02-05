@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { purchaseBooksAPI } from "../../utils/api";
 import { useNotes } from "../../context/NotesContext";
 import pdf from "../../assets/links/PDF.png";
@@ -187,6 +187,7 @@ const Slab = () => {
                     disableElevation
                     disabled={(notesBooks.length < total && urls.address.length == 0) || loading}
                     onClick={handlePurchase}
+                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                 >
                     {urls.address.length > 0 ? "Purchase more" : "Purchase"} 
                 </Button>
