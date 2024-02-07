@@ -1,4 +1,4 @@
-FROM bcgovimages/alpine-node-libreoffice:latest
+FROM node:lts-alpine
 
 WORKDIR /app
 

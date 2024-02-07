@@ -8,8 +8,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import ExpirationDialog from "./ExpirationDialog"
 
 const Slab = () => {
-    const { previewOptions, selectedButton, notesBooks, setNotesBooks, urls, setUrls } = useNotes();
-    const [loading, setLoading] = useState(false);
+    const { previewOptions, selectedButton, notesBooks, setNotesBooks, urls, setUrls, urlsLoading, setUrlsLoading } = useNotes();
     const [open, setOpen] = useState(false);
     const [expireOpen, setExpireOpen] = useState(false);
 
@@ -51,7 +50,7 @@ const Slab = () => {
             setOpen(true);
             return;
         }
-        setLoading(true);
+        setUrlsLoading(true);
         purchaseBooksAPI(previewOptions, notesBooks)
             .then((response) => {
                 const urls = response?.urls;
@@ -59,11 +58,11 @@ const Slab = () => {
                     address: urls,
                     timeCreated: Date.now(),
                 });
-                setLoading(false);
+                setUrlsLoading(false);
             })
             .catch((error) => {
                 console.error('Error handling file download:', error);
-                setLoading(false);
+                setUrlsLoading(false);
             });
     }
 
@@ -90,8 +89,8 @@ const Slab = () => {
     };
 
     return (
-        <div className="text-black my-20 flex flex-col sm:flex-row justify-center items-center gap-10">
-            <div className="w-96 bg-footer rounded-2xl shadow-xl flex justify-center items-center">
+        <div className="text-black my-20 flex flex-col custmd:flex-row justify-center items-center gap-10">
+            <div className="w-full sm:w-96 bg-footer rounded-2xl shadow-xl flex justify-center items-center">
                 {notesBooks.length ? (
                     <div className="grid grid-cols-2 gap-4 overflow-y-auto h-[500px] px-4 my-8 scrollbar-thin scrollbar-webkit">
                         {notesBooks.map((book) => (
@@ -101,7 +100,8 @@ const Slab = () => {
                                     alt="Book"
                                     className="w-full h-full object-cover cursor-pointer"
                                     onClick={() => {
-                                        setNotesBooks(prevBooks => prevBooks.filter(filterbook => filterbook._id !== book._id));
+                                        if (urls.address.length == 0 && !urlsLoading)
+                                            setNotesBooks(prevBooks => prevBooks.filter(filterbook => filterbook._id !== book._id));
                                     }}                                    
                                 />
                             </div>
@@ -115,7 +115,7 @@ const Slab = () => {
                     </div>
                 )}
             </div>
-            <div className="flex flex-col gap-2 justify-center items-center sm:items-start">
+            <div className="flex flex-col gap-2 justify-center items-center sm:items-start text-center sm:text-left">
                 <p>
                     {
                         urls.address.length > 0 ? "Please download the notes in your desired format by clicking the button below."
@@ -135,7 +135,7 @@ const Slab = () => {
                 
                 { urls.address.length > 0 && 
                 
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                         <Button className="w-48" variant="contained"
                             sx={{
                                 color: "#000000",
@@ -185,9 +185,9 @@ const Slab = () => {
                         },
                     }}
                     disableElevation
-                    disabled={(notesBooks.length < total && urls.address.length == 0) || loading}
+                    disabled={(notesBooks.length < total && urls.address.length == 0) || urlsLoading}
                     onClick={handlePurchase}
-                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+                    startIcon={urlsLoading ? <CircularProgress size={20} color="inherit" /> : null}
                 >
                     {urls.address.length > 0 ? "Purchase more" : "Purchase"} 
                 </Button>

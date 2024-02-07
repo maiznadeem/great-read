@@ -26,15 +26,15 @@ const NotesBooks = () => {
     useEffect(() => {
         setIsLoading(true);
         getCategories()
-        .then((data) => {
-            setCategories(data);
-            setCategoriesLoading(false);
-            setIsLoading(false);
-        })
-        .catch((error) => {
-            console.error(error.message);
-            setIsLoading(false);
-        });
+            .then((data) => {
+                setCategories(data);
+                setCategoriesLoading(false);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error(error.message);
+                setIsLoading(false);
+            });
     }, [])
 
     useEffect(() => {

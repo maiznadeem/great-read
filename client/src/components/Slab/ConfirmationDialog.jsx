@@ -12,7 +12,7 @@ function ConfirmationDialog({ open, handleClose, handleClear }) {
             <DialogTitle>Confirmation</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Are you sure you want to clear your previous purchase?
+                    Make sure previous documents were downlaoded. Are you sure you want to clear your previous purchase?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

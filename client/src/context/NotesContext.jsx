@@ -20,6 +20,7 @@ export function NotesProvider({ children }) {
         address: [],
         timeCreated: null,
     });
+    const [urlsLoading, setUrlsLoading] = useState(false);
 
     function addBook(newBook) {
         setNotesBooks([...notesBooks, newBook]);
@@ -37,6 +38,8 @@ export function NotesProvider({ children }) {
             setNotesBooks,
             urls,
             setUrls,
+            urlsLoading,
+            setUrlsLoading,
             addBook,
         }}>
             {children}
