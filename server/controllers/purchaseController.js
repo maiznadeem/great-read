@@ -1,15 +1,16 @@
 const fs = require("fs");
 const path = require('path');
 const axios = require("axios");
-const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType, HeightRule } = require("docx");
+const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType } = require("docx");
 const { Storage } = require('@google-cloud/storage');
-const { exec } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
 const Book = require("../models/Book");
 
 const storage = new Storage({
     keyFilename: path.join(__dirname, 'service-account.json'),
 });
+
+const { convert } = require("./convertToPDF");
 
 
 const getWordDocument = async (req, res) => {
@@ -362,23 +363,23 @@ const getWordDocument = async (req, res) => {
             fs.writeFileSync(`./assets/${filename}.docx`, buffer);
         });
 
-        const environment = process.env.NODE_SERVER_ENV || "PROD";
 
-        exec(`${environment == "PROD" ? "libreoffice" : "soffice"} --headless --convert-to pdf ./assets/${filename}.docx --outdir ./assets/`, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error converting file: ${error}`);
-                res.status(500).send('Error retrieving file');
-                return;
-            }
-            uploadDocs(filename)
-                .then((urls) => {
-                    res.json({ urls: urls });
-                })
-                .catch((err) => {
-                    console.error('Error uploading files:', err);
-                    res.status(500).send('Error uploading files');
-                })
-        });
+        convert(filename)
+            .then(() => {
+                uploadDocs(filename)
+                    .then((urls) => {
+                        res.json({ urls: urls });
+                    })
+                    .catch((err) => {
+                        console.error('Error uploading files:', err);
+                        res.status(500).send('Error uploading files');
+                    })
+            })
+            .catch((err) => {
+                console.error('Error converting to PDF:', err);
+                res.status(500).send('Error uploading files');
+            })
+        
 
     } catch (error) {
         console.error('Error retrieving file:', error);
@@ -392,9 +393,8 @@ async function uploadDocs(filename) {
     try {
         const bucketName = 'great-read-purchase';
         const folderName = 'purchase';
-        const uniqueIdentifier = uuidv4();
-        const objectNameDocx = `${folderName}/${uniqueIdentifier}/Document.docx`;
-        const objectNamePdf = `${folderName}/${uniqueIdentifier}/Document.pdf`;
+        const objectNameDocx = `${folderName}/${filename}/${filename}.docx`;
+        const objectNamePdf = `${folderName}/${filename}/${filename}.pdf`;
 
         const bucket = storage.bucket(bucketName);
 

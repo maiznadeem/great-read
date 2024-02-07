@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 
 const JWTSecret = process.env.JWT_SECRET;
 const bcryptSalt = process.env.BCRYPT_SALT;
-const clientURL = process.env.CLIENT_URL;
 
 const data = {
     email: "maiznadeem616@gmail.com",
