@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import SelectProduct from '../components/Product/SelectProduct';
 import Preview from '../components/Product/Preview';
 import { useNotes } from "../context/NotesContext";
@@ -7,10 +8,15 @@ import ExampleNote from '../components/Product/ExampleNote';
 import Slab from '../components/Slab/Slab';
 import NotesBooks from '../components/Slab/NotesBooks';
 import CategoriesModal from '../components/Product/CategoriesModal';
+import { getPaymentDetails } from '../utils/api';
 
 const Notes = () => {
 
-    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions, setNotesBooks, setNotesCategories } = useNotes();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const sessionId = queryParams.get('id');
+
+    const { selectedButton, setSelectedButton, previewOptions, setPreviewOptions, setNotesBooks, setNotesCategories, setUrls } = useNotes();
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -34,6 +40,29 @@ const Notes = () => {
         setOpenModal(false);
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (sessionId) {
+                    const data = await getPaymentDetails(sessionId);
+                    if (!data.fetchedBefore) {
+                        setSelectedButton(data.selectedButton);
+                        setPreviewOptions(data.previewOptions);
+                        setNotesBooks(data.books)
+                        setNotesCategories(data.categories);
+                    }
+                    setUrls({
+                        address: data.urls,
+                        timeCreated: data.createdAt,
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching payment details:', error);
+            }
+        };
+        fetchData();
+    }, [sessionId]);
+
     return (
         <section className='my-6 sm:my-20 mx-4 sm:mx-8 min-h-[100vh]'>
             <div className='flex flex-col items-center justify-center w-full'>
@@ -41,7 +70,8 @@ const Notes = () => {
                     <SelectProduct selectedButton={selectedButton} handleButtonClick={handleButtonClick} />
                 </div>
                 <CategoriesModal openModal={openModal} handleModalClose={handleModalClose} handleCategoryConfirm={handleCategoryConfirm} />
-                { !selectedButton ?
+                { 
+                    !selectedButton ?
                     <>
                         <Preview previewOptions={previewOptions} setPreviewOptions={setPreviewOptions} />
                         <div className='text-black w-full max-w-[1280px]'>

@@ -4,7 +4,7 @@ const Book = require('../models/Book');
 const TopPicks = require('../models/TopPicks');
 const Quote = require('../models/Quote');
 const Category = require('../models/Category');
-const Bookmark = require('../models/Bookmark');
+const Payment = require('../models/Payment');
 
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories, searchTerm } = req.body;
@@ -141,6 +141,36 @@ getRoute.post('/getRandomBooks', async (req, res) => {
     } catch (error) {
         console.error('Error fetching random books by categories:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+getRoute.post('/getPayment', async (req, res) => {
+    const { sessionId } = req.body;
+
+    try {
+        const payment = await Payment.findById(sessionId).populate({
+            path: 'books',
+            select: '-notes',
+        });
+        
+        if (!payment.fetchedBefore) {
+            payment.fetchedBefore = true;
+            await payment.save();
+        }
+
+        if (!payment) {
+            return res.status(404).json({ error: 'Payment not found' });
+        }
+
+        if (!payment.success) {
+            payment.urls = [];
+            return res.json(payment);
+        }
+
+        return res.json(payment);
+    } catch (error) {
+        console.error('Error retrieving payment:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 

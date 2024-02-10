@@ -14,7 +14,7 @@ import Zoom from '@mui/material/Zoom';
 
 const NotesBook = ({ book, categories }) => {
 
-    const { notesBooks, setNotesBooks, selectedButton, addBook } = useNotes();
+    const { notesBooks, setNotesBooks, selectedButton, addBook, urls, urlsLoading } = useNotes();
     const [isBookInReadingList, setIsBookInReadingList] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
@@ -62,11 +62,13 @@ const NotesBook = ({ book, categories }) => {
             <div className='flex flex-row gap-4'>
                 <div className={`w-32 h-52 sm:w-40 sm:h-64 relative rounded-lg shadow-xl -mt-16 -ml-10 overflow-hidden flex-shrink-0 cursor-pointer ${isBookInReadingList ? 'bg-black' : ''}`}
                     onClick={() => {
-                        if (notesBooks.some((readingBook) => readingBook._id === book._id)) {
-                            setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
-                        }
-                        else if(notesBooks.length < total) {
-                            addBook(book);
+                        if (urls.address.length == 0 && !urlsLoading) {
+                            if (notesBooks.some((readingBook) => readingBook._id === book._id)) {
+                                setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
+                            }
+                            else if(notesBooks.length < total) {
+                                addBook(book);
+                            }
                         }
                     }}
                 >
@@ -100,7 +102,8 @@ const NotesBook = ({ book, categories }) => {
                             src={remove}
                             className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                             onClick={() => {
-                                setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
+                                if (urls.address.length == 0 && !urlsLoading)
+                                    setNotesBooks(notesBooks.filter((readingBook) => readingBook._id !== book._id));
                             }}
                         />
                     ) : (
@@ -109,7 +112,8 @@ const NotesBook = ({ book, categories }) => {
                                 src={add}
                                 className='h-8 w-8 absolute top-[-15px] right-[-15px] cursor-pointer'
                                 onClick={() => {
-                                    addBook(book);
+                                    if (urls.address.length == 0 && !urlsLoading)
+                                        addBook(book);
                                 }}
                             />
                         )

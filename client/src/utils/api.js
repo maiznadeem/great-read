@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://great-read-image-eccytorgrq-uc.a.run.app"
+    // baseURL: "https://great-read-image-eccytorgrq-uc.a.run.app"
     // baseURL: "https://admin.great-read.com"
-    // baseURL: "http://localhost:8080"
+    baseURL: "http://localhost:8080"
 });
 
 export async function getBooks(offset, limit, categories, searchTerm) {
@@ -52,15 +52,28 @@ export async function getRandomBooks(categories, goal, books) {
     }
 }
 
-export async function purchaseBooksAPI(previewOptions, books) {
+export async function purchaseBooksAPI(previewOptions, books, selectedButton, notesCategories) {
     try {
         const response = await api.post('/purchase', {
             previewOptions: previewOptions,
             books: books,
+            selectedButton: selectedButton,
+            notesCategories: notesCategories,
         });
         return response.data;
     } catch (error) {
-        throw new Error(`Failed to fetch signed URLs: ${error.message}`);
+        throw new Error(`Failed to fetch signed URLs: ${error}`);
+    }
+}
+
+export async function getPaymentDetails(sessionId) {
+    try {
+        const response = await api.post('/get/getPayment', {
+            sessionId: sessionId,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(`Failed to fetch payment details: ${error}`);
     }
 }
 

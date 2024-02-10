@@ -27,7 +27,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
 
     return (
         <div className='bg-footer w-full flex flex-col justify-center items-center p-8 gap-4 rounded-xl shadow-lg'>
-            <p className='manrope-regular text-black text-xl text-center max-w-[500px]'>Access <span className='text-primary'>5-8 key word-by-word extracted</span> insights, ideas or concepts from any book.</p>
+            <p className='manrope-regular text-black text-xl text-center max-w-[500px]'>Unlock <span className='text-primary'>5 to 8 pivotal insights, ideas, or concepts</span> extracted word by word from any book.</p>
             <div className='w-full flex gap-2 sm:gap-4 flex-col sm:flex-row manrope-semibold text-md sm:text-lg max-w-[200px] sm:max-w-none'>
                 <ToggleButton
                     value={1}
