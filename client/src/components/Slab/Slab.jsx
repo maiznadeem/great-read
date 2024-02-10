@@ -8,7 +8,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 import ExpirationDialog from "./ExpirationDialog"
 
 const Slab = () => {
-    const { previewOptions, selectedButton, notesBooks, setNotesBooks, urls, setUrls, urlsLoading, setUrlsLoading } = useNotes();
+    const { previewOptions, selectedButton, notesBooks, setNotesBooks, urls, setUrls, urlsLoading, setUrlsLoading, notesCategories } = useNotes();
     const [open, setOpen] = useState(false);
     const [expireOpen, setExpireOpen] = useState(false);
 
@@ -51,14 +51,10 @@ const Slab = () => {
             return;
         }
         setUrlsLoading(true);
-        purchaseBooksAPI(previewOptions, notesBooks)
+        purchaseBooksAPI(previewOptions, notesBooks, selectedButton, notesCategories)
             .then((response) => {
-                const urls = response?.urls;
-                setUrls({
-                    address: urls,
-                    timeCreated: Date.now(),
-                });
-                setUrlsLoading(false);
+                const url = response?.url;
+                window.location.href = url;
             })
             .catch((error) => {
                 console.error('Error handling file download:', error);

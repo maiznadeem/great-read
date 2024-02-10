@@ -1,10 +1,12 @@
 const fs = require("fs");
 const path = require('path');
 const axios = require("axios");
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const { Document, Packer, Paragraph, TextRun, ImageRun, Table, TableRow, TableCell, WidthType, AlignmentType, ExternalHyperlink, PageBreak, CharacterSet, ShadingType } = require("docx");
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
 const Book = require("../models/Book");
+const Payment = require("../models/Payment");
 
 const storage = new Storage({
     keyFilename: path.join(__dirname, 'service-account.json'),
@@ -13,12 +15,89 @@ const storage = new Storage({
 const { convert } = require("./convertToPDF");
 
 
-const getWordDocument = async (req, res) => {
+const authorizePurchase = async (req, res) => {
+    const { previewOptions, selectedButton, notesCategories, books } = req.body;
+
+    try {
+        let unitAmount;
+        let name;
+
+        switch (selectedButton) {
+            case 1:
+                name = "Any 10 books from 1 category"
+                unitAmount = 2900;
+                break;
+            case 2:
+                name = "Any 10 books from 1-3 categories"
+                unitAmount = 4900;
+                break;
+            case 3:
+                name = "Any 30 books from any category"
+                unitAmount = 5900;
+                break;
+            default:
+                name = "Any 10 books from 1 category"
+                unitAmount = 2900;
+                break;
+        }
+
+        const payment = new Payment({
+            amount: unitAmount,
+            previewOptions,
+            selectedButton,
+            categories: notesCategories,
+            books,
+        });
+
+        await payment.save();
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            mode: 'payment',
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'gbp',
+                        product_data: {
+                            name: name,
+                        },
+                        unit_amount: unitAmount
+                    },
+                    quantity: 1,
+                }
+            ],
+            success_url: `${process.env.CLIENT_URL}/notes?id=${payment._id}`,
+            cancel_url: `${process.env.CLIENT_URL}/notes?id=${payment._id}`,
+        });
+
+        const urls = await getWordDocument({ previewOps: previewOptions, notesBooks: books });
+
+        payment.stripeId = session.id;
+        payment.url = session.url;
+        payment.urls = urls;
+        
+        await payment.save();
+
+        if (!urls || !urls.length) {
+            res.status(500).json({ error: "There's an error on our side." });
+            return;
+        }
+
+        res.json({ url: session.url });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "There's an error on our side." });
+    }
+}
+
+
+
+const getWordDocument = async ({ previewOps, notesBooks }) => {
 
     try {
 
-        const previewOptions = req.body.previewOptions;
-        const bookIds = req.body.books.map(book => book._id);
+        const previewOptions = previewOps;
+        const bookIds = notesBooks.map(book => book._id);
         const books = await Book.find({ _id: { $in: bookIds } }).populate('notes');
 
 
@@ -364,26 +443,14 @@ const getWordDocument = async (req, res) => {
         });
 
 
-        convert(filename)
-            .then(() => {
-                uploadDocs(filename)
-                    .then((urls) => {
-                        res.json({ urls: urls });
-                    })
-                    .catch((err) => {
-                        console.error('Error uploading files:', err);
-                        res.status(500).send('Error uploading files');
-                    })
-            })
-            .catch((err) => {
-                console.error('Error converting to PDF:', err);
-                res.status(500).send('Error uploading files');
-            })
-        
+        let fileUrls = [];
+        await convert(filename)
+        fileUrls = await uploadDocs(filename);
+        return fileUrls;
 
     } catch (error) {
         console.error('Error retrieving file:', error);
-        res.status(500).send('Error retrieving file');
+        return [];
     }
 
 };
@@ -448,5 +515,5 @@ async function uploadDocs(filename) {
 
 
 module.exports = {
-    getWordDocument,
+    authorizePurchase,
 };

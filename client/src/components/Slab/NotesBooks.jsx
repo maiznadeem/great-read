@@ -24,18 +24,21 @@ const NotesBooks = () => {
     const { notesCategories } = useNotes();
 
     useEffect(() => {
-        setIsLoading(true);
-        getCategories()
-            .then((data) => {
+        const fetchCategories = async () => {
+            setIsLoading(true);
+            try {
+                const data = await getCategories();
                 setCategories(data);
                 setCategoriesLoading(false);
-                setIsLoading(false);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error(error.message);
+            } finally {
                 setIsLoading(false);
-            });
-    }, [])
+            }
+        };
+    
+        fetchCategories();
+    }, []);    
 
     useEffect(() => {
         setIsLoading(true);
