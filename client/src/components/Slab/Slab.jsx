@@ -45,13 +45,13 @@ const Slab = () => {
         window.scrollTo({ top: offset, behavior: "smooth" });
     };
 
-    const handlePurchase = () => {
-        if (!urls || !urls.address || urls?.address?.length === 0) {
+    const handlePurchase = async () => {
+        if (urls && urls.address && urls?.address?.length != 0) {
             setOpen(true);
             return;
         }
         setUrlsLoading(true);
-        purchaseBooksAPI(previewOptions, notesBooks, selectedButton, notesCategories)
+        await purchaseBooksAPI(previewOptions, notesBooks, selectedButton, notesCategories)
             .then((response) => {
                 const url = response?.url;
                 window.location.href = url;
