@@ -46,7 +46,7 @@ const Slab = () => {
     };
 
     const handlePurchase = () => {
-        if (urls.address.length != 0) {
+        if (!urls || !urls.address || urls?.address?.length === 0) {
             setOpen(true);
             return;
         }
@@ -63,10 +63,10 @@ const Slab = () => {
     }
 
     const handleDownload = (num) => {
-        const expirationInterval = 50 * 10 * 1000;
-        const isExpired = Date.now() - urls.timeCreated > expirationInterval;
+        const expirationInterval = 90 * 60 * 1000;
+        const isExpired = Date.now() - urls?.timeCreated > expirationInterval;
 
-        if (urls.address.length > 0 && !isExpired) {
+        if (urls?.address?.length > 0 && !isExpired) {
             const downloadUrl = urls.address;
             const link = document.createElement('a');
             link.href = downloadUrl[num];
@@ -96,7 +96,7 @@ const Slab = () => {
                                     alt="Book"
                                     className="w-full h-full object-cover cursor-pointer"
                                     onClick={() => {
-                                        if (urls.address.length == 0 && !urlsLoading)
+                                        if (urls?.address?.length == 0 && !urlsLoading)
                                             setNotesBooks(prevBooks => prevBooks.filter(filterbook => filterbook._id !== book._id));
                                     }}                                    
                                 />
@@ -114,7 +114,7 @@ const Slab = () => {
             <div className="flex flex-col gap-2 justify-center items-center sm:items-start text-center sm:text-left">
                 <p>
                     {
-                        urls.address.length > 0 ? "Please download the notes in your desired format by clicking the button below."
+                        urls?.address?.length > 0 ? "Please download the notes in your desired format by clicking the button below."
                         :
                         `
                         Hi, you have ${total - notesBooks.length}${" "}
@@ -129,7 +129,7 @@ const Slab = () => {
                     
                 </p>
                 
-                { urls.address.length > 0 && 
+                { urls?.address?.length > 0 && 
                 
                     <div className="flex flex-col sm:flex-row gap-2">
                         <Button className="w-48" variant="contained"
@@ -181,14 +181,14 @@ const Slab = () => {
                         },
                     }}
                     disableElevation
-                    disabled={(notesBooks.length < total && urls.address.length == 0) || urlsLoading}
+                    disabled={(notesBooks.length < total && urls?.address?.length == 0) || urlsLoading}
                     onClick={handlePurchase}
                     startIcon={urlsLoading ? <CircularProgress size={20} color="inherit" /> : null}
                 >
-                    {urls.address.length > 0 ? "Purchase more" : "Purchase"} 
+                    {urls?.address?.length > 0 ? "Purchase more" : "Purchase"} 
                 </Button>
                 {
-                    urls.address.length > 0 && 
+                    urls?.address?.length > 0 && 
                     <p>Warning: Select purchase more if you have downloaded previous documents.</p>
                 }
             </div>
