@@ -45,13 +45,13 @@ const Slab = () => {
         window.scrollTo({ top: offset, behavior: "smooth" });
     };
 
-    const handlePurchase = () => {
-        if (!urls || !urls.address || urls?.address?.length === 0) {
+    const handlePurchase = async () => {
+        if (urls && urls.address && urls?.address?.length != 0) {
             setOpen(true);
             return;
         }
         setUrlsLoading(true);
-        purchaseBooksAPI(previewOptions, notesBooks, selectedButton, notesCategories)
+        await purchaseBooksAPI(previewOptions, notesBooks, selectedButton, notesCategories)
             .then((response) => {
                 const url = response?.url;
                 window.location.href = url;
@@ -66,7 +66,7 @@ const Slab = () => {
         const expirationInterval = 90 * 60 * 1000;
         const isExpired = Date.now() - urls?.timeCreated > expirationInterval;
 
-        if (urls?.address?.length > 0 && !isExpired) {
+        if (urls.address && urls.address.length > 0 && !isExpired) {
             const downloadUrl = urls.address;
             const link = document.createElement('a');
             link.href = downloadUrl[num];
@@ -96,7 +96,7 @@ const Slab = () => {
                                     alt="Book"
                                     className="w-full h-full object-cover cursor-pointer"
                                     onClick={() => {
-                                        if (urls?.address?.length == 0 && !urlsLoading)
+                                        if (urls.address && urls.address.length == 0 && !urlsLoading)
                                             setNotesBooks(prevBooks => prevBooks.filter(filterbook => filterbook._id !== book._id));
                                     }}                                    
                                 />
@@ -114,7 +114,7 @@ const Slab = () => {
             <div className="flex flex-col gap-2 justify-center items-center sm:items-start text-center sm:text-left">
                 <p>
                     {
-                        urls?.address?.length > 0 ? "Please download the notes in your desired format by clicking the button below."
+                        urls.address && urls.address.length > 0 ? "Please download the notes in your desired format by clicking the button below."
                         :
                         `
                         Hi, you have ${total - notesBooks.length}${" "}
@@ -129,7 +129,7 @@ const Slab = () => {
                     
                 </p>
                 
-                { urls?.address?.length > 0 && 
+                { urls.address && urls.address.length > 0 && 
                 
                     <div className="flex flex-col sm:flex-row gap-2">
                         <Button className="w-48" variant="contained"
@@ -181,14 +181,14 @@ const Slab = () => {
                         },
                     }}
                     disableElevation
-                    disabled={(notesBooks.length < total && urls?.address?.length == 0) || urlsLoading}
+                    disabled={(notesBooks.length < total && urls.address && urls.address.length == 0) || urlsLoading}
                     onClick={handlePurchase}
                     startIcon={urlsLoading ? <CircularProgress size={20} color="inherit" /> : null}
                 >
-                    {urls?.address?.length > 0 ? "Purchase more" : "Purchase"} 
+                    {urls.address && urls.address.length > 0 ? "Purchase more" : "Purchase"} 
                 </Button>
                 {
-                    urls?.address?.length > 0 && 
+                    urls.address && urls.address.length > 0 && 
                     <p>Warning: Select purchase more if you have downloaded previous documents.</p>
                 }
             </div>
