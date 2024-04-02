@@ -1,0 +1,5 @@
+dispatch:
+  - url: "great-read.com/*"
+    service: default
+  - url: "www.great-read.com/*"
+    service: default
