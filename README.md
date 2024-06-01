@@ -5,5 +5,5 @@
 ## Important Links
 
 - **Production URL:** [https://www.great-read.com/](https://www.great-read.com/)
-- **Development URL:** [https://great-read-mu.vercel.app/](https://great-read-mu.vercel.app/)
+- **Development URL:** [https://great-read-books.vercel.app/](https://great-read-books.vercel.app/)
 - **Backend URL:** [https://admin.great-read.com/](https://admin.great-read.com/)
