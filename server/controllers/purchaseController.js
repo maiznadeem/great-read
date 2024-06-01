@@ -458,7 +458,7 @@ const getWordDocument = async ({ previewOps, notesBooks }) => {
 
 async function uploadDocs(filename) {
     try {
-        const bucketName = 'great-read-purchase';
+        const bucketName = 'great-read-purchase-maiz-portfolio';
         const folderName = 'purchase';
         const objectNameDocx = `${folderName}/${filename}/${filename}.docx`;
         const objectNamePdf = `${folderName}/${filename}/${filename}.pdf`;
