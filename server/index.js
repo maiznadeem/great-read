@@ -112,7 +112,7 @@ app.post('/webhooks/stripe', async (req, res) => {
 
 
 mongoose
-    .connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(dbURL)
     .then(() => {
         console.log('Connected to MongoDB');
     })
