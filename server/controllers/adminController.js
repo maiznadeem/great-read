@@ -37,7 +37,7 @@ async function uploadBook(req, res) {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
 
-        const bucketName = 'great-read-maiz-portfolio';
+        const bucketName = 'great-read-bucket';
         const folderName = 'books';
         const uniqueIdentifier = uuidv4();
         const objectName = folderName + '/' + uniqueIdentifier + '-' + req.file.originalname;
@@ -104,7 +104,7 @@ async function updateBook(req, res) {
         }
         let imageUrl = existingBook.image;
         if (req.file) {
-            const bucketName = 'great-read-maiz-portfolio';
+            const bucketName = 'great-read-bucket';
             if (imageUrl) {
                 const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
                 const bucket = storage.bucket(bucketName);
@@ -171,7 +171,7 @@ async function deleteBook(req, res) {
         }
         const imageUrl = existingBook.image;
         if (imageUrl) {
-            const bucketName = 'great-read-maiz-portfolio';
+            const bucketName = 'great-read-bucket';
             const objectName = imageUrl.replace(`https://storage.googleapis.com/${bucketName}/`, '');
             const bucket = storage.bucket(bucketName);
             const file = bucket.file(objectName);
@@ -218,7 +218,7 @@ async function addCategory(req, res) {
 
         const uniqueIdentifier = uuidv4();
 
-        const bucketName = 'great-read-maiz-portfolio';
+        const bucketName = 'great-read-bucket';
         const folderName = 'categories';
         const objectName = `${folderName}/${uniqueIdentifier}-${categoryImageFile.originalname}`;
 
@@ -274,7 +274,7 @@ async function deleteCategory(req, res) {
         }
         const categoryImage = existingCategory.image;
         if (categoryImage) {
-            const bucketName = 'great-read-maiz-portfolio';
+            const bucketName = 'great-read-bucket';
             const objectName = categoryImage.replace(`https://storage.googleapis.com/${bucketName}/`, '');
             const bucket = storage.bucket(bucketName);
             const file = bucket.file(objectName);
