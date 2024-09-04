@@ -9,7 +9,7 @@ const Step2 = ({ name, selectedTimePeriod, setSelectedTimePeriod }) => {
                 </p>
                 <div className="flex flex-wrap w-full gap-2 justify-center max-w-[230px]">
                     <div className="flex flex-col items-center w-[48%] gap-2">
-                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 week' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 week' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                             <input
                                 type="radio"
                                 name="timePeriod"
@@ -19,7 +19,7 @@ const Step2 = ({ name, selectedTimePeriod, setSelectedTimePeriod }) => {
                             />
                             <div className="button-radio manrope-regular">1 Week</div>
                         </label>
-                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 month' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 month' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                             <input
                                 type="radio"
                                 name="timePeriod"
@@ -31,7 +31,7 @@ const Step2 = ({ name, selectedTimePeriod, setSelectedTimePeriod }) => {
                         </label>
                     </div>
                     <div className="flex flex-col items-center gap-2 w-[48%]">
-                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '6 months' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '6 months' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                             <input
                                 type="radio"
                                 name="timePeriod"
@@ -41,7 +41,7 @@ const Step2 = ({ name, selectedTimePeriod, setSelectedTimePeriod }) => {
                             />
                             <div className="button-radio manrope-regular">6 Months</div>
                         </label>
-                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 year' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                        <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${selectedTimePeriod === '1 year' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                             <input
                                 type="radio"
                                 name="timePeriod"

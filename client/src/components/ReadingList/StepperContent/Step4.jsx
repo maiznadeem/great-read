@@ -8,7 +8,7 @@ const Step4 = ({ name, goal, select, setSelect }) => {
                     Hi {name}, how would you like to select {`${goal == 1 ? "1 book" : `${goal} books`}`}?
                 </p>
                 <div className="flex w-full flex-col sm:flex-row gap-2 justify-center max-w-[140px] sm:max-w-[280px]">
-                    <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'choose for me' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                    <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'choose for me' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                         <input
                             type="radio"
                             name="select"
@@ -18,7 +18,7 @@ const Step4 = ({ name, goal, select, setSelect }) => {
                         />
                         <div className="button-radio manrope-regular">Choose for me*</div>
                     </label>
-                    <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'i will choose' ? 'bg-[#FFA500] text-white' : 'bg-white text-black'}`}>
+                    <label className={`button-label rounded-md w-full py-2 px-4 text-sm text-center shadow-md cursor-pointer transition-all ease-in-out ${select === 'i will choose' ? 'bg-primary text-white' : 'bg-white text-black'}`}>
                         <input
                             type="radio"
                             name="select"

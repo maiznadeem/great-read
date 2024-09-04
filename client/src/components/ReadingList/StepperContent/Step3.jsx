@@ -14,7 +14,7 @@ const Step3 = ({ name, selectedTimePeriod, goal, setGoal }) => {
                     valueLabelDisplay="auto"
                     onChange={(e, newValue) => setGoal(newValue)}
                     sx={{
-                        color: "#FFA500",
+                        color: "#956829",
                         maxWidth: "500px",
                         width: "80%",
                         '& .MuiSlider-thumb': {

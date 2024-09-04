@@ -119,7 +119,7 @@ const Book = ({ book, categories }) => {
                         </>
                         : (
                             contextTopPicks?.books ? contextTopPicks.books.find(contextTopPick => contextTopPick._id == book._id) && (
-                                <div className='manrope-semibold text-center text-xs w-32 bg-[#FFA500] px-4 py-2 rounded-lg shadow-lg absolute top-[-15px] right-[-15px] cursor-pointer'>
+                                <div className='manrope-semibold text-center text-xs w-32 bg-black px-4 py-2 rounded-lg shadow-lg absolute top-[-15px] right-[-15px] cursor-pointer'>
                                     <p>Featured</p>
                                 </div>
                             ) : <></>

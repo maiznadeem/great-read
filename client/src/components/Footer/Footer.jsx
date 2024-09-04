@@ -13,7 +13,7 @@ const Footer = () => {
                 />
                 <div className='flex flex-col gap-1'>
                     <p className="manrope-regular text-xs text-black"><span className='text-primaryDark manrope-semibold'>Contact Us:</span> greatreadsbooks@gmail.com</p>
-                    <p className="manrope-regular text-xs text-black">Copyright @2023. All rights reserved.</p>
+                    <p className="manrope-regular text-xs text-black">Copyright @2024. All rights reserved.</p>
                 </div>
             </div>
         </footer>

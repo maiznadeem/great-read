@@ -5,21 +5,21 @@ import { styled } from "@mui/material/styles";
 const ToggleButton = styled(MuiToggleButton)({
     width: "100%",
     color: 'white',
-    backgroundColor: '#fac35c',
+    backgroundColor: '#B78D5A',
     fontSize: 16,
     textTransform: 'none',
-    border: "1px solid #FFA500",
+    border: "1px solid #956829",
     borderRadius: 15,
     "&.Mui-selected, &.Mui-selected:hover": {
         color: "white",
-        backgroundColor: '#FFA500',
+        backgroundColor: '#956829',
     },
     "&:not(.Mui-selected):hover": {
         color: 'white',
-        backgroundColor: '#FFA500',
+        backgroundColor: '#956829',
     },
     "&:hover": {
-        backgroundColor: '#FFA500',
+        backgroundColor: '#956829',
     },
 });
 
@@ -34,7 +34,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                     selected={selectedButton === 1}
                     onClick={() => handleButtonClick(1)}
                     style={{
-                        backgroundColor: selectedButton == null ? '#FFA500' : ''
+                        backgroundColor: selectedButton == null ? '#956829' : ''
                     }}
                 >
                     Any 10 books from <br /> 1 category <br /> £29/$38/€36
@@ -44,7 +44,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                     selected={selectedButton === 2}
                     onClick={() => handleButtonClick(2)}
                     style={{
-                        backgroundColor: selectedButton == null ? '#FFA500' : ''
+                        backgroundColor: selectedButton == null ? '#956829' : ''
                     }}
                 >
                     Any 10 books from <br /> 1-3 categories <br /> £49
@@ -54,7 +54,7 @@ const SelectProduct = ({ selectedButton, handleButtonClick }) => {
                     selected={selectedButton === 3}
                     onClick={() => handleButtonClick(3)}
                     style={{
-                        backgroundColor: selectedButton == null ? '#FFA500' : ''
+                        backgroundColor: selectedButton == null ? '#956829' : ''
                     }}
                 >
                     Any 30 books from <br /> any category <br /> £59
