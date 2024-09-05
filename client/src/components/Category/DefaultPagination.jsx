@@ -174,7 +174,7 @@ const DefaultPagination = ({ currentPage, limit, totalResults, onPageChange }) =
     };
 
     return (
-        <div className="border-t border-gray-300 bg-white px-4 py-3 sm:px-6">
+        <div className="border-t border-gray-300 bg-background px-4 py-3 sm:px-6">
             <div className="flex flex-col gap-0 sm:gap-4 items-center justify-between sm:flex-1 sm:items-center sm:justify-between">
                 <div>
                     <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm scale-65 sm:scale-100" aria-label="Pagination">
