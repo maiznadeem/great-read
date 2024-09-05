@@ -209,7 +209,7 @@ const Books = () => {
                     <select
                         id="booksPerPage"
                         name="booksPerPage"
-                        className="manrope-semibold px-2 py-1 border border-gray-300 rounded-md bg-white text-gray-700"
+                        className="manrope-semibold px-2 py-1 border border-gray-300 rounded-md bg-backgroundPrimary text-gray-700"
                         value={limit}
                         onChange={(e) => handleBooksPerPageChange(Number(e.target.value))}
                     >
