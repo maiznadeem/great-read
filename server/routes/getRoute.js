@@ -11,42 +11,31 @@ getRoute.post('/books', async (req, res) => {
     try {
         let offsetNum = parseInt(offset);
         let limitNum = parseInt(limit);
-        let query = Book.find();
+
+        // Start building the query
+        let query = Book.find().sort({ priority: -1 }); // Sort books by priority (highest first)
         let totalCountQuery = Book.countDocuments();
-        let topPicks = await TopPicks.findOne().populate({
-            path: 'books',
-            model: 'Book'
-        }).exec();
+
         if (searchTerm && searchTerm !== '') {
-            topPicks.books = topPicks.books.filter((book) =>
-                book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                book.author.toLowerCase().includes(searchTerm.toLowerCase())
-            );
             const searchRegex = new RegExp(searchTerm, 'i');
             query = query.or([{ title: searchRegex }, { author: searchRegex }]);
             totalCountQuery = totalCountQuery.or([{ title: searchRegex }, { author: searchRegex }]);
         }
+
         if (categories && categories.length > 0) {
-            topPicks.books = topPicks.books.filter((book) =>
-                categories.some(category => book.categories.includes(category))
-            );
             query = query.where('categories').in(categories);
             totalCountQuery = totalCountQuery.where('categories').in(categories);
         }
-        query = query.where('_id').nin(topPicks.books.map(book => book._id));
-        if (0 <= offsetNum && offsetNum < topPicks.books.length) {        
-            limitNum = limitNum - topPicks.books.length;
-        } else {
-            offsetNum = offsetNum - topPicks.books.length;
-        }
-        let books = await query
-            .skip(offsetNum)
-            .limit(limitNum)
-            .exec();
-        if (offset == 0) {
-            books = [ ...topPicks.books, ...books ];
-        }
+
+        // Pagination logic: Adjust offset and limit
+        query = query.skip(offsetNum).limit(limitNum);
+
+        // Execute the query to get books
+        let books = await query.exec();
+
+        // Get the total count of books
         const totalCount = await totalCountQuery.exec();
+
         res.json({
             books,
             totalCount,
@@ -56,6 +45,7 @@ getRoute.post('/books', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 getRoute.get('/toppicks', async (req, res) => {
     try {
