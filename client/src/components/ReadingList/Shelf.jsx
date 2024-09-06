@@ -216,7 +216,7 @@ const Shelf = forwardRef((props, ref) => {
                     </div>
                     {selectionChoice == "choose for me" && (
                         <CategoryStep
-                            isBookLoading={isBookLoading}
+                            isBookLoading={isLoading}
                             selectedCategories={selectedCategories}
                             handleCategoryClick={handleCategoryClick}
                         />

@@ -16,7 +16,9 @@ const NotesBooks = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(12);
+    const [limit, setLimit] = useState(() => {
+        return window.innerWidth <= 768 ? 12 : 72;
+    });
     const [isLoading, setIsLoading] = useState(true);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
@@ -80,6 +82,7 @@ const NotesBooks = () => {
     }, [limit]);
 
     const handlePageChange = (newPage) => {
+        if(isLoading) return;
         const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
@@ -89,6 +92,7 @@ const NotesBooks = () => {
     };
 
     const handleBooksPerPageChange = (newLimit) => {
+        if(isLoading) return;
         const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });

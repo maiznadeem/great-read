@@ -76,6 +76,7 @@ const Books = () => {
     }, [pageRefresh]);
 
     const handlePageChange = (newPage) => {
+        if(isLoading) return;
         const targetElement = document.getElementById("booksection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
@@ -85,6 +86,7 @@ const Books = () => {
     };
 
     const handleBooksPerPageChange = (newLimit) => {
+        if(isLoading) return;
         const targetElement = document.getElementById("booksection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
