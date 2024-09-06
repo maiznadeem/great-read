@@ -19,6 +19,10 @@ const Banner = () => {
         return months[monthNumber - 1];
     };
 
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const currentMonthText = getMonthName(currentMonth);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -128,7 +132,7 @@ const Banner = () => {
                                 />
                             </div>
                             <p className='manrope-semibold text-2xl custlg:text-3xl text-center text-black'>
-                                {getMonthName(topPicks?.date.month)} {topPicks?.date.year}
+                                {currentMonthText} {currentYear}
                             </p>
                         </div>
                         <div className='w-full lg:w-1/3 flex flex-col justify-between items-start bg-[#EFE5D8] rounded-xl shadow-xl relative px-6 lg:px-12 py-6 sm:py-8'>
