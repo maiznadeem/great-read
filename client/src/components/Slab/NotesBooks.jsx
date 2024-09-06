@@ -82,7 +82,7 @@ const NotesBooks = () => {
     }, [limit]);
 
     const handlePageChange = (newPage) => {
-        if(isLoading) return;
+        if (isLoading) return;
         const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
@@ -92,7 +92,7 @@ const NotesBooks = () => {
     };
 
     const handleBooksPerPageChange = (newLimit) => {
-        if(isLoading) return;
+        if (isLoading) return;
         const targetElement = document.getElementById("notessection");
         const offset = targetElement.offsetTop - 170;
         window.scrollTo({ top: offset, behavior: "smooth" });
@@ -122,7 +122,7 @@ const NotesBooks = () => {
     };
 
     const handleSearchClick = () => {
-        if(isLoading) return;
+        if (isLoading) return;
         setCurrentPage(1);
         setIsLoading(true);
         getBooks(
@@ -211,7 +211,21 @@ const NotesBooks = () => {
                     </div>
                 ) : books.length === 0 ? (
                     <div className="manrope-semibold text-center text-gray-700 h-[90vh] flex items-center justify-center">
-                        No results. Try including more categories :)
+                        {(() => {
+                            if (
+                                !searchTerm &&
+                                activeCategories.length < categories.length
+                            ) {
+                                return "No results. Try including more categories 🙂";
+                            } else if (
+                                searchTerm &&
+                                activeCategories.length === categories.length
+                            ) {
+                                return "No results. Maybe trying a different search term might help? 🙂";
+                            } else {
+                                return "No results. Let's try a different search or include more categories 🙂";
+                            }
+                        })()}
                     </div>
                 ) : (
                     <>
