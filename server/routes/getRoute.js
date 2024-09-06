@@ -9,12 +9,12 @@ const Payment = require('../models/Payment');
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories, searchTerm } = req.body;
     try {
-        let offsetNum = parseInt(offset);
-        let limitNum = parseInt(limit);
+        let offsetNum = parseInt(offset) || 0;
+        let limitNum = parseInt(limit) || 96;
 
-        // Start building the query
-        let query = Book.find().sort({ priority: -1 }); // Sort books by priority (highest first)
-        let totalCountQuery = Book.countDocuments();
+        let query = Book.find().sort({ priority: -1, _id: 1 });
+
+        let totalCountQuery = Book.find();
 
         if (searchTerm && searchTerm !== '') {
             const searchRegex = new RegExp(searchTerm, 'i');
@@ -27,14 +27,11 @@ getRoute.post('/books', async (req, res) => {
             totalCountQuery = totalCountQuery.where('categories').in(categories);
         }
 
-        // Pagination logic: Adjust offset and limit
         query = query.skip(offsetNum).limit(limitNum);
 
-        // Execute the query to get books
         let books = await query.exec();
 
-        // Get the total count of books
-        const totalCount = await totalCountQuery.exec();
+        const totalCount = await totalCountQuery.countDocuments().exec();
 
         res.json({
             books,
@@ -45,6 +42,7 @@ getRoute.post('/books', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 
 getRoute.get('/toppicks', async (req, res) => {
