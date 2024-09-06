@@ -15,7 +15,7 @@ const Books = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(12);
+    const [limit, setLimit] = useState(72);
     const [isLoading, setIsLoading] = useState(true);
     const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [activeCategories, setActiveCategories] = useState([]);
