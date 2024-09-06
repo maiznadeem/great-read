@@ -40,6 +40,7 @@ const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
                     {categories.map((category) => (
                         <div key={category._id} className="flex-shrink-0">
                             <Category
+                                isBookLoading={false}
                                 category={category}
                                 isActive={selectedCategories.includes(
                                     category.name

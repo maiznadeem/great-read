@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Category = ({ category, isActive, handleCategoryClick }) => {  
+const Category = ({ isBookLoading, category, isActive, handleCategoryClick }) => {  
 
     const handleClick = () => {
+        if(isBookLoading)
+            return;
         handleCategoryClick(category.name);
     };
 

@@ -114,6 +114,7 @@ const Books = () => {
     };
 
     const handleSearchClick = () => {
+        if(isLoading) return;
         setCurrentPage(1);
         setIsLoading(true);
         getBooks(0, limit, activeCategories, searchTerm)
@@ -140,6 +141,7 @@ const Books = () => {
                         })
                         .map((category) => (
                             <Category
+                                isBookLoading={isLoading}
                                 key={category._id}
                                 category={category}
                                 isActive={activeCategories.includes(

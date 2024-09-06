@@ -3,7 +3,7 @@ import { getCategories } from '../../../utils/api';
 import Category from '../../../components/Category/Category';
 import LinearProgress from '@mui/material/LinearProgress';
 
-const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
+const CategoryStep = ({ isBookLoading, selectedCategories, handleCategoryClick }) => {
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +33,7 @@ const CategoryStep = ({ selectedCategories, handleCategoryClick }) => {
                     {categories.map((category) => (
                         <div key={category._id} className="flex-shrink-0 mb-1">
                             <Category 
+                                isBookLoading={isBookLoading}
                                 category={category}
                                 isActive={selectedCategories.includes(category.name)}
                                 handleCategoryClick={handleCategoryClick}
