@@ -294,13 +294,28 @@ async function updateTopPicks(req, res) {
         if (!existingTopPicks) {
             return res.status(404).json({ message: 'TopPicks document not found.' });
         }
+
         const { month, year, book1Id, book2Id, book3Id } = req.body;
+        
+        const previousBooks = existingTopPicks.books;
+        if (previousBooks.length === 3) {
+            await Promise.all(previousBooks.map(bookId =>
+                Book.findByIdAndUpdate(bookId, { priority: 0 })
+            ));
+        }
+
         existingTopPicks.date.month = month;
         existingTopPicks.date.year = year;
-        existingTopPicks.books[0] = book1Id;
-        existingTopPicks.books[1] = book2Id;
-        existingTopPicks.books[2] = book3Id;
+        existingTopPicks.books = [book1Id, book2Id, book3Id];
+
+        await Promise.all([
+            Book.findByIdAndUpdate(book1Id, { priority: 5 }),
+            Book.findByIdAndUpdate(book2Id, { priority: 5 }),
+            Book.findByIdAndUpdate(book3Id, { priority: 5 })
+        ]);
+
         await existingTopPicks.save();
+
         res.status(200).json({ message: 'TopPicks updated successfully.' });
     } catch (error) {
         console.error('Error updating TopPicks:', error);
