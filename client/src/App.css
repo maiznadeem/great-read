@@ -18,3 +18,14 @@ body {
     overflow-x: hidden;
     position: relative;
 }
+
+/* General transition for the slick-track */
+.slick-track {
+    transition: transform 0.5s ease-in-out; /* Adjust timing and easing as needed */
+}
+
+/* Apply the fixed transform only when the slider is on the first page */
+.first-page .slick-track {
+    transform: translate3d(0, 0, 0) !important;
+}
+

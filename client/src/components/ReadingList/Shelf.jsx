@@ -192,127 +192,125 @@ const Shelf = forwardRef((props, ref) => {
         postDescription
     )}`;
     return (
-        <div className="bg-footer w-full max-w-[680px] rounded-xl">
-            <div
-                className="py-3 px-6 sm:py-0 sm:px-8 rounded-xl"
-                style={{
-                    background: `url(${waves})`,
-                    backgroundPosition: "left top",
-                    backgroundSize: "600px",
-                }}
-            >
-                <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
-                    <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">
-                        {name}'s Reading List
+        <div
+            className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]"
+            style={{
+                background: `url(${waves})`,
+                backgroundPosition: "left top",
+                backgroundSize: "600px",
+            }}
+        >
+            <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
+                <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">
+                    {name}'s Reading List
+                </p>
+                <div>
+                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">
+                        {books.length} out of{" "}
+                        {goal === 1 ? "1 book" : `${goal} books`}
                     </p>
-                    <div>
-                        <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">
-                            {books.length} out of{" "}
-                            {goal === 1 ? "1 book" : `${goal} books`}
+                    <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">
+                        for {period}
+                    </p>
+                </div>
+                {selectionChoice == "choose for me" && (
+                    <CategoryStep
+                        isBookLoading={isLoading}
+                        selectedCategories={selectedCategories}
+                        handleCategoryClick={handleCategoryClick}
+                    />
+                )}
+                <div className="w-full flex justify-center items-center bg-footer border-2 border-gray-400 border-dashed rounded-xl min-h-[200px]">
+                    {isLoading ? (
+                        <CircularProgress sx={{ color: "#8D5E20" }} />
+                    ) : books.length === 0 &&
+                      selectionChoice == "i will choose" ? (
+                        <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">
+                            Select books from below to add to your shelf.
                         </p>
-                        <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">
-                            for {period}
-                        </p>
-                    </div>
-                    {selectionChoice == "choose for me" && (
-                        <CategoryStep
-                            isBookLoading={isLoading}
-                            selectedCategories={selectedCategories}
-                            handleCategoryClick={handleCategoryClick}
-                        />
-                    )}
-                    <div className="w-full flex justify-center items-center bg-footer border-2 border-gray-400 border-dashed rounded-xl min-h-[200px]">
-                        {isLoading ? (
-                            <CircularProgress sx={{ color: "#8D5E20" }} />
-                        ) : books.length === 0 &&
-                          selectionChoice == "i will choose" ? (
+                    ) : books.length === 0 &&
+                      selectionChoice == "choose for me" ? (
+                        <>
                             <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">
-                                Select books from below to add to your shelf.
+                                Select your categories and we will stack your
+                                shelf.
                             </p>
-                        ) : books.length === 0 &&
-                          selectionChoice == "choose for me" ? (
-                            <>
-                                <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">
-                                    Select your categories and we will stack
-                                    your shelf.
-                                </p>
-                            </>
-                        ) : (
-                            <Slider
-                                {...settings}
-                                ref={sliderRef}
-                                className="w-[90%] lg:w-[600px] p-2"
-                            >
-                                {books.map((book) => (
-                                    <div key={book._id} className="flex">
-                                        <div className="flex justify-center h-[160px] overflow-hidden">
-                                            <div className="relative mt-[8px] mr-[8px]">
-                                                <img
-                                                    src={remove}
-                                                    className="h-4 w-4 absolute top-[-6px] right-[-6px] cursor-pointer"
-                                                    onClick={() => {
-                                                        updateBooksValue(
-                                                            books.filter(
-                                                                (readingBook) =>
-                                                                    readingBook._id !==
-                                                                    book._id
-                                                            )
-                                                        );
-                                                    }}
-                                                />
-                                                <img
-                                                    src={book.image}
-                                                    alt=""
-                                                    className="w-24 rounded-md shadow-md h-36 object-cover cursor-pointer"
-                                                    onClick={() => {
-                                                        updateBooksValue(
-                                                            books.filter(
-                                                                (readingBook) =>
-                                                                    readingBook._id !==
-                                                                    book._id
-                                                            )
-                                                        );
-                                                    }}
-                                                />
-                                            </div>
+                        </>
+                    ) : (
+                        <Slider
+                            {...settings}
+                            ref={sliderRef}
+                            className={`w-[90%] lg:w-[600px] p-2 ${currentSlide == 0 ? 'first-page' : ''}`}
+                        >
+                            {books.map((book) => (
+                                <div key={book._id} className="flex">
+                                    <div className="flex justify-center h-[160px] overflow-hidden">
+                                        <div className="relative mt-[8px] mr-[8px]">
+                                            <img
+                                                src={remove}
+                                                className="h-4 w-4 absolute top-[-6px] right-[-6px] cursor-pointer"
+                                                onClick={() => {
+                                                    updateBooksValue(
+                                                        books.filter(
+                                                            (readingBook) =>
+                                                                readingBook._id !==
+                                                                book._id
+                                                        )
+                                                    );
+                                                }}
+                                            />
+                                            <img
+                                                src={book.image}
+                                                alt=""
+                                                className="w-24 rounded-md shadow-md h-36 object-cover cursor-pointer"
+                                                onClick={() => {
+                                                    updateBooksValue(
+                                                        books.filter(
+                                                            (readingBook) =>
+                                                                readingBook._id !==
+                                                                book._id
+                                                        )
+                                                    );
+                                                }}
+                                            />
                                         </div>
                                     </div>
-                                ))}
-                            </Slider>
-                        )}
-                    </div>
-                    <div className="flex flex-col justify-center items-center gap-3 w-full text-black text-xs">
-                        <p className="text-sm sm:text-md text-center">
-                            You will be able to download it as a PDF and/or
-                            share it on your LinkedIn.
-                        </p>
-                        <div className="flex gap-4">
-                            <button
-                                onClick={handleOpenModal}
-                                className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
+                                </div>
+                            ))}
+                        </Slider>
+                    )}
+                </div>
+                <div className="flex flex-col justify-center items-center gap-3 w-full text-black text-xs">
+                    <p className="text-sm sm:text-md text-center">
+                        You will be able to download it as a PDF and/or share it
+                        on your LinkedIn.
+                    </p>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleOpenModal}
+                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white
                             ${
                                 books.length === 0
                                     ? " cursor-not-allowed opacity-50"
                                     : "opacity-100"
                             }`}
-                                disabled={books.length === 0}
-                            >
-                                <PictureAsPdfIcon className="text-red-700" />
-                                Download
-                            </button>
-                            <a
-                                href={linkedInShareUrl}
-                                target="_blank"
-                                className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white opacity-100`}
-                            >
-                                <LinkedInIcon className="text-blue-700" />
-                                Share
-                            </a>
-                            <PDFModal
-                                isModalOpen={isModalOpen}
-                                handleCloseModal={handleCloseModal}
-                            />
-                        </div>
+                            disabled={books.length === 0}
+                        >
+                            <PictureAsPdfIcon className="text-red-700" />
+                            Download
+                        </button>
+                        <a
+                            href={linkedInShareUrl}
+                            target="_blank"
+                            className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white opacity-100`}
+                        >
+                            <LinkedInIcon className="text-blue-700" />
+                            Share
+                        </a>
+                        <PDFModal
+                            isModalOpen={isModalOpen}
+                            handleCloseModal={handleCloseModal}
+                        />
                     </div>
                 </div>
             </div>
