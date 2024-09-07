@@ -123,7 +123,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                                             color: "white",
                                         }}
                                     >
-                                        Loading...
+                                        Fetching...
                                     </Button>
                                 ) : (
                                     <Button
