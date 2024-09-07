@@ -202,7 +202,7 @@ const Books = () => {
                                 return "No results. Try including more categories 🙂";
                             } else if (
                                 searchTerm &&
-                                activeCategories.length === categories.length
+                                ( activeCategories.length === categories.length || activeCategories.length === 0 )
                             ) {
                                 return "No results. Maybe trying a different search term might help? 🙂";
                             } else {
