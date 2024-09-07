@@ -86,7 +86,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                                 loading ?                               
                                 <Button
                                     variant='contained'
-                                    color='customOrange'
+                                    color='#956829'
                                     disableElevation
                                     disabled
                                     sx={{
@@ -99,7 +99,7 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                                 </Button> : 
                                 <Button
                                     variant='contained'
-                                    color='customOrange'
+                                    color='#956829'
                                     disableElevation
                                     sx={{
                                         borderRadius: 2,
