@@ -13,8 +13,10 @@ handlers:
     static_files: dist/\1
     upload: dist/(.+)
     secure: always
+  # Catch-all route for single-page application (SPA) fallback
   - url: /.*
-    script: auto
+    static_files: dist/index.html
+    upload: dist/index.html
     secure: always
 env_variables:
   NODE_ENV: production
