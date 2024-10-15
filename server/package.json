@@ -30,5 +30,8 @@
         "nodemailer": "^6.9.5",
         "nodemon": "^3.0.1",
         "stripe": "^16.8.0"
+    },
+    "resolutions": {
+        "axios": "^1.7.5"
     }
 }
