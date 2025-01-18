@@ -4,6 +4,6 @@ node_modules/
 service-account.json
 app.yaml
 # dispatch.yaml
-# yarn.lock
+yarn.lock
 
-package-lock.json
+# package-lock.json
