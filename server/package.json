@@ -12,7 +12,7 @@
     "license": "ISC",
     "dependencies": {
         "@google-cloud/storage": "^7.0.1",
-        "axios": "^1.7.5",
+        "axios": "^1.8.4",
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.2",
         "cors": "^2.8.5",
@@ -22,7 +22,7 @@
         "express-async-errors": "^3.1.1",
         "express-session": "^1.17.3",
         "express-validator": "^7.0.1",
-        "groupdocs-conversion-cloud": "^24.8.0",
+        "groupdocs-conversion-cloud": "^23.7.0",
         "handlebars": "^4.7.8",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.5.4",
