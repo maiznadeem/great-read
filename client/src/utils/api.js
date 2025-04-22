@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://admin.great-read.com"
+    baseURL: "https://great-read-image-1017210667439.us-central1.run.app",
 });
 
 export async function getBooks(offset, limit, categories, searchTerm) {
@@ -12,7 +12,7 @@ export async function getBooks(offset, limit, categories, searchTerm) {
             categories: categories,
             searchTerm: searchTerm,
         };
-        const response = await api.post('/get/books', requestData);
+        const response = await api.post("/get/books", requestData);
         return response.data;
     } catch (error) {
         throw new Error(`Failed to fetch books: ${error.message}`);
@@ -21,7 +21,7 @@ export async function getBooks(offset, limit, categories, searchTerm) {
 
 export async function getTopPicks() {
     try {
-        const response = await api.get('/get/toppicks');
+        const response = await api.get("/get/toppicks");
         return response.data;
     } catch (error) {
         throw new Error(`Failed to fetch top picks: ${error.message}`);
@@ -30,7 +30,7 @@ export async function getTopPicks() {
 
 export async function getCategories() {
     try {
-        const response = await api.get('/get/categories');
+        const response = await api.get("/get/categories");
         return response.data;
     } catch (error) {
         throw new Error(`Failed to fetch categories: ${error.message}`);
@@ -39,7 +39,7 @@ export async function getCategories() {
 
 export async function getRandomBooks(categories, goal, books) {
     try {
-        const response = await api.post('/get/getRandomBooks', {
+        const response = await api.post("/get/getRandomBooks", {
             categories: categories,
             goal: goal,
             books: books,
@@ -50,9 +50,14 @@ export async function getRandomBooks(categories, goal, books) {
     }
 }
 
-export async function purchaseBooksAPI(previewOptions, books, selectedButton, notesCategories) {
+export async function purchaseBooksAPI(
+    previewOptions,
+    books,
+    selectedButton,
+    notesCategories
+) {
     try {
-        const response = await api.post('/purchase', {
+        const response = await api.post("/purchase", {
             previewOptions: previewOptions,
             books: books,
             selectedButton: selectedButton,
@@ -66,7 +71,7 @@ export async function purchaseBooksAPI(previewOptions, books, selectedButton, no
 
 export async function getPaymentDetails(sessionId) {
     try {
-        const response = await api.post('/get/getPayment', {
+        const response = await api.post("/get/getPayment", {
             sessionId: sessionId,
         });
         return response.data;
