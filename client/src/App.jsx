@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import './App.css';
@@ -10,8 +9,6 @@ import { NotesProvider } from './context/NotesContext';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import Notes from './pages/Notes';
-
-const queryClient = new QueryClient();
 
 function App() {
 
@@ -49,27 +46,25 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <QueryClientProvider client={queryClient}>
-                    <ReadingListProvider>
-                        <NotesProvider>
-                            <BrowserRouter>
-                            <Routes>
-                                <Route
-                                    path="/"
-                                    element={<Layout />}
-                                >
-                                    <Route index element={<HomePage />} />
-                                    <Route path="notes" element={<Notes />} />
-                                </Route>
-                                <Route
-                                    path="*"
-                                    element={<div className='text-black text-center'>404 NOT FOUND</div>}
-                                />
-                            </Routes>
-                            </BrowserRouter>
-                        </NotesProvider>
-                    </ReadingListProvider>
-            </QueryClientProvider>
+            <ReadingListProvider>
+                <NotesProvider>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={<Layout />}
+                            >
+                                <Route index element={<HomePage />} />
+                                <Route path="notes" element={<Notes />} />
+                            </Route>
+                            <Route
+                                path="*"
+                                element={<div className='text-black text-center'>404 NOT FOUND</div>}
+                            />
+                        </Routes>
+                    </BrowserRouter>
+                </NotesProvider>
+            </ReadingListProvider>
         </ThemeProvider>
     );
 }
