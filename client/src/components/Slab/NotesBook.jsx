@@ -41,7 +41,7 @@ const NotesBook = ({ book, categories }) => {
                     key={matchingCategory._id}
                     title={matchingCategory.name}
                     open={showTooltips[index]}
-                    TransitionComponent={Zoom}
+                    slots={{ transition: Zoom }}
                     onOpen={() => setShowTooltips(prevState => [...prevState.slice(0, index), true, ...prevState.slice(index + 1)])}
                     onClose={() => setShowTooltips(prevState => [...prevState.slice(0, index), false, ...prevState.slice(index + 1)])}
                 >

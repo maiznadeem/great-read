@@ -163,30 +163,32 @@ const Books = () => {
                             variant="outlined"
                             placeholder="Search by title or author..."
                             onChange={handleSearchChange}
-                            InputProps={{
-                                sx: {
-                                    borderRadius: "8px",
-                                    fontSize: 13,
+                            slotProps={{
+                                input: {
+                                    sx: {
+                                        borderRadius: "8px",
+                                        fontSize: 13,
+                                    },
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <SearchIcon
+                                                sx={{
+                                                    fontSize: 22,
+                                                }}
+                                            />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <button
+                                                onClick={handleSearchClick}
+                                                className="manrope-semibold bg-primary text-white py-[5px] px-4 text-[12px] rounded-md shadow-lg hover:bg-primaryDark"
+                                            >
+                                                Search
+                                            </button>
+                                        </InputAdornment>
+                                    ),
                                 },
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <SearchIcon
-                                            sx={{
-                                                fontSize: 22,
-                                            }}
-                                        />
-                                    </InputAdornment>
-                                ),
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <button
-                                            onClick={handleSearchClick}
-                                            className="manrope-semibold bg-primary text-white py-[5px] px-4 text-[12px] rounded-md shadow-lg hover:bg-primaryDark"
-                                        >
-                                            Search
-                                        </button>
-                                    </InputAdornment>
-                                ),
                             }}
                         />
                     </div>

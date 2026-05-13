@@ -1,5 +1,7 @@
 import { useRef } from 'react'
-import Slider from 'react-slick';
+import SliderImport from 'react-slick';
+
+const Slider = SliderImport.default ?? SliderImport;
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import enabled from "../assets/buttons/enabled.svg";
 import disabled from "../assets/buttons/disabled.svg";

@@ -127,11 +127,13 @@ const DownloadNotesModal = ({ open, handleClose, pages }) => {
                     sx={{
                         marginBottom: 2,
                     }}
-                    InputProps={{
-                        sx: {
-                            backgroundColor: 'white',
-                            borderRadius: 2,
-                        }
+                    slotProps={{
+                        input: {
+                            sx: {
+                                backgroundColor: 'white',
+                                borderRadius: 2,
+                            },
+                        },
                     }}
                 />
                 <TextField
@@ -146,11 +148,13 @@ const DownloadNotesModal = ({ open, handleClose, pages }) => {
                     sx={{
                         marginBottom: 2,
                     }}
-                    InputProps={{
-                        sx: {
-                            backgroundColor: 'white',
-                            borderRadius: 2,
-                        }
+                    slotProps={{
+                        input: {
+                            sx: {
+                                backgroundColor: 'white',
+                                borderRadius: 2,
+                            },
+                        },
                     }}
                 />
                 <h3 className="text-xl manrope-regular text-black my-4">

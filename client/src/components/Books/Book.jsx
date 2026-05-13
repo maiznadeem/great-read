@@ -24,7 +24,7 @@ const CategoryIcon = ({ category, categories }) => {
         <Tooltip
             title={matchingCategory.name}
             open={showtooltip}
-            TransitionComponent={Zoom}
+            slots={{ transition: Zoom }}
             onOpen={() => setshowtooltip(true)}
             onClose={() => setshowtooltip(false)}
         >
