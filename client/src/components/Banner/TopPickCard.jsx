@@ -1,21 +1,21 @@
 import { Skeleton } from "@mui/material";
 import { useState } from "react";
-import { useSpring, animated } from "react-spring";
+import { motion } from "motion/react";
 
 function TopPickCard({ book }) {
 
     const [show, setShown] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
-    
-    const props3 = useSpring({
-        transform: show ? "scale(1.03)" : "scale(1)",
-        boxShadow: show
-            ? "0 20px 25px rgb(0 0 0 / 25%)"
-            : "0 2px 10px rgb(0 0 0 / 8%)"
-    });
 
     return (
-        <animated.div
+        <motion.div
+            animate={{
+                scale: show ? 1.03 : 1,
+                boxShadow: show
+                    ? "0 20px 25px rgb(0 0 0 / 25%)"
+                    : "0 2px 10px rgb(0 0 0 / 8%)",
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
             style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -23,7 +23,6 @@ function TopPickCard({ book }) {
                 height: '260px',
                 overflow: "hidden",
                 borderRadius: '12px',
-                ...props3,
             }}
             onMouseEnter={() => setShown(true)}
             onMouseLeave={() => setShown(false)}
@@ -34,7 +33,7 @@ function TopPickCard({ book }) {
                 style={{ objectFit: "cover" }}
                 onLoad={() => setIsImageLoaded(true)}
             />
-        </animated.div>
+        </motion.div>
     );
 }
 

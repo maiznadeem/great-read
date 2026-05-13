@@ -1,9 +1,5 @@
-import { useEffect, useState, useRef, forwardRef } from "react";
-import SliderImport from "react-slick";
-
-const Slider = SliderImport.default ?? SliderImport;
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { useEffect, useState, useRef, forwardRef, useMemo } from "react";
+import { motion } from "motion/react";
 import CircularProgress from "@mui/material/CircularProgress";
 import waves from "../../assets/backgrounds/waves.png";
 import enabled from "../../assets/buttons/enabled.svg";
@@ -15,6 +11,16 @@ import CategoryStep from "./StepperContent/CategoryStep";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PDFModal from "./PDF/PDFModal";
+
+const spring = { type: "spring", stiffness: 260, damping: 30 };
+
+function slidesToShowFor(width) {
+    if (width <= 600) return 2;
+    if (width <= 800) return 3;
+    if (width <= 950) return 4;
+    if (width <= 1100) return 5;
+    return 6;
+}
 
 const Shelf = forwardRef(function Shelf(props, ref) {
     const {
@@ -28,36 +34,24 @@ const Shelf = forwardRef(function Shelf(props, ref) {
         updateBooksValue,
     } = useReadingList();
 
-    const sliderRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
-    const [currentSlide, setCurrentSlide] = useState(0);
+    const [page, setPage] = useState(0);
     const prevSelectedCategories = useRef(selectedCategories);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+    const trackRef = useRef(null);
 
     useEffect(() => {
         if (ref) {
-            ref.current = sliderRef.current;
+            ref.current = trackRef.current;
         }
     }, [ref]);
 
     useEffect(() => {
-        const handleResize = () => {
-            setWindowSize(window.innerWidth);
-        };
+        const handleResize = () => setWindowSize(window.innerWidth);
         handleResize();
         window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     useEffect(() => {
@@ -93,98 +87,35 @@ const Shelf = forwardRef(function Shelf(props, ref) {
         }
     };
 
-    const CustomNextArrow = ({ currentSlide }) => {
-        const itemsToShow =
-            settings.responsive.find((item) => windowSize >= item.breakpoint)
-                ?.settings.slidesToShow || 0;
-        const isEnd =
-            currentSlide >= books.length / settings.rows - itemsToShow - 1;
-
-        return (
-            <img
-                src={enabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 right-[-20px] cursor-pointer ${
-                    isEnd ? "opacity-10 pointer-events-none" : ""
-                }`}
-                alt="Next"
-                onClick={() => {
-                    if (!isEnd && sliderRef.current) {
-                        sliderRef.current.slickNext();
-                    }
-                }}
-            />
-        );
-    };
-
-    const CustomPrevArrow = ({ currentSlide }) => {
-        const isStart = currentSlide === 0;
-        return (
-            <img
-                src={disabled}
-                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 left-[-20px] cursor-pointer ${
-                    isStart ? "opacity-10 pointer-events-none" : ""
-                }`}
-                alt="Previous"
-                onClick={() => {
-                    if (!isStart && sliderRef.current) {
-                        sliderRef.current.slickPrev();
-                    }
-                }}
-            />
-        );
-    };
-
-    let slidesToShow = 6;
-
-    if (windowSize <= 1100) slidesToShow = 5;
-    if (windowSize <= 950) slidesToShow = 4;
-    if (windowSize <= 800) slidesToShow = 3;
-    if (windowSize <= 600) slidesToShow = 2;
-
+    const slidesToShow = slidesToShowFor(windowSize);
     const maxRows = 2;
-    const calculatedRows = Math.ceil(books.length / slidesToShow);
+    const rows = Math.max(1, Math.min(maxRows, Math.ceil(books.length / slidesToShow)));
+    const perPage = slidesToShow * rows;
+    const pageCount = Math.max(1, Math.ceil(books.length / perPage));
 
-    const settings = {
-        slidesToShow: 6,
-        slidesToScroll: 6,
-        infinite: false,
-        rows: calculatedRows <= maxRows ? calculatedRows : maxRows,
-        nextArrow: <CustomNextArrow currentSlide={currentSlide} />,
-        prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
-        afterChange: (currentSlide) => {
-            setCurrentSlide(currentSlide);
-        },
-        responsive: [
-            {
-                breakpoint: 1100,
-                settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5,
-                },
-            },
-            {
-                breakpoint: 950,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                },
-            },
-            {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-        ],
+    const pages = useMemo(() => {
+        const out = [];
+        for (let i = 0; i < books.length; i += perPage) {
+            out.push(books.slice(i, i + perPage));
+        }
+        return out;
+    }, [books, perPage]);
+
+    useEffect(() => {
+        if (page > pageCount - 1) setPage(0);
+    }, [page, pageCount]);
+
+    const handleOpenModal = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+
+    const removeBook = (bookId) => {
+        updateBooksValue(
+            books.filter((readingBook) => readingBook._id !== bookId)
+        );
     };
+
+    const isStart = page === 0;
+    const isEnd = page >= pageCount - 1;
 
     const shareUrl = "https://greatread.projects.himaiz.com";
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
@@ -194,6 +125,7 @@ const Shelf = forwardRef(function Shelf(props, ref) {
     const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(
         postDescription
     )}`;
+
     return (
         <div
             className="bg-footer py-3 px-6 sm:py-0 sm:px-8 rounded-xl w-full max-w-[680px]"
@@ -233,54 +165,70 @@ const Shelf = forwardRef(function Shelf(props, ref) {
                         </p>
                     ) : books.length === 0 &&
                       selectionChoice == "choose for me" ? (
-                        <>
-                            <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">
-                                Select your categories and we will stack your
-                                shelf.
-                            </p>
-                        </>
+                        <p className="text-md sm:text-lg text-center manrope-regular text-gray-400">
+                            Select your categories and we will stack your
+                            shelf.
+                        </p>
                     ) : (
-                        <Slider
-                            {...settings}
-                            ref={sliderRef}
-                            className={`w-[90%] lg:w-[600px] p-2 ${currentSlide == 0 ? 'first-page' : ''}`}
-                        >
-                            {books.map((book) => (
-                                <div key={book._id} className="flex">
-                                    <div className="flex justify-center h-[160px] overflow-hidden">
-                                        <div className="relative mt-[8px] mr-[8px]">
-                                            <img
-                                                src={remove}
-                                                className="h-4 w-4 absolute top-[-6px] right-[-6px] cursor-pointer"
-                                                onClick={() => {
-                                                    updateBooksValue(
-                                                        books.filter(
-                                                            (readingBook) =>
-                                                                readingBook._id !==
-                                                                book._id
-                                                        )
-                                                    );
-                                                }}
-                                            />
-                                            <img
-                                                src={book.image}
-                                                alt=""
-                                                className="w-24 rounded-md shadow-md h-36 object-cover cursor-pointer"
-                                                onClick={() => {
-                                                    updateBooksValue(
-                                                        books.filter(
-                                                            (readingBook) =>
-                                                                readingBook._id !==
-                                                                book._id
-                                                        )
-                                                    );
-                                                }}
-                                            />
+                        <div className="relative w-[90%] lg:w-[600px] p-2">
+                            <img
+                                src={disabled}
+                                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 left-[-20px] cursor-pointer z-10 ${
+                                    isStart ? "opacity-10 pointer-events-none" : ""
+                                }`}
+                                alt="Previous"
+                                onClick={() => !isStart && setPage((p) => p - 1)}
+                            />
+                            <img
+                                src={enabled}
+                                className={`h-8 w-8 absolute top-1/2 transform -translate-y-1/2 right-[-20px] cursor-pointer z-10 ${
+                                    isEnd ? "opacity-10 pointer-events-none" : ""
+                                }`}
+                                alt="Next"
+                                onClick={() => !isEnd && setPage((p) => p + 1)}
+                            />
+                            <div className="overflow-hidden">
+                                <motion.div
+                                    ref={trackRef}
+                                    className="flex"
+                                    animate={{ x: `-${page * 100}%` }}
+                                    transition={spring}
+                                >
+                                    {pages.map((pageBooks, pageIndex) => (
+                                        <div
+                                            key={pageIndex}
+                                            className="grid w-full flex-shrink-0"
+                                            style={{
+                                                gridTemplateColumns: `repeat(${slidesToShow}, minmax(0, 1fr))`,
+                                                gridAutoRows: "160px",
+                                                gap: "8px",
+                                            }}
+                                        >
+                                            {pageBooks.map((book) => (
+                                                <div
+                                                    key={book._id}
+                                                    className="flex justify-center h-[160px] overflow-hidden"
+                                                >
+                                                    <div className="relative mt-[8px] mr-[8px]">
+                                                        <img
+                                                            src={remove}
+                                                            className="h-4 w-4 absolute top-[-6px] right-[-6px] cursor-pointer"
+                                                            onClick={() => removeBook(book._id)}
+                                                        />
+                                                        <img
+                                                            src={book.image}
+                                                            alt=""
+                                                            className="w-24 rounded-md shadow-md h-36 object-cover cursor-pointer"
+                                                            onClick={() => removeBook(book._id)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </Slider>
+                                    ))}
+                                </motion.div>
+                            </div>
+                        </div>
                     )}
                 </div>
                 <div className="flex flex-col justify-center items-center gap-3 w-full text-black text-xs">
