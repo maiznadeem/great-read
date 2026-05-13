@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 require('dotenv').config();
@@ -16,9 +15,8 @@ const { purchaseRoute } = require('./routes/purchaseRoute');
 
 
 const app = express();
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const port = process.env.PORT || 8080;
