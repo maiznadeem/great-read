@@ -1,4 +1,5 @@
 .env
+.cloudrun-env.yaml
 # .gcloudignore
 node_modules/
 service-account.json
