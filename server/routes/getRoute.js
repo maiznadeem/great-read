@@ -140,22 +140,24 @@ getRoute.post('/getPayment', async (req, res) => {
             path: 'books',
             select: '-notes',
         });
-        
-        if (!payment.fetchedBefore) {
-            payment.fetchedBefore = true;
-            await payment.save();
-        }
 
         if (!payment) {
             return res.status(404).json({ error: 'Payment not found' });
         }
 
-        if (!payment.success) {
-            payment.urls = [];
-            return res.json(payment);
+        const wasFetchedBefore = payment.fetchedBefore;
+        if (!wasFetchedBefore) {
+            payment.fetchedBefore = true;
+            await payment.save();
         }
 
-        return res.json(payment);
+        const result = payment.toObject();
+        result.fetchedBefore = wasFetchedBefore;
+        if (!result.success) {
+            result.urls = [];
+        }
+
+        return res.json(result);
     } catch (error) {
         console.error('Error retrieving payment:', error);
         return res.status(500).json({ error: 'Internal server error' });
