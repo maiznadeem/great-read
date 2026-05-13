@@ -5,6 +5,7 @@ const TopPicks = require('../models/TopPicks');
 const Quote = require('../models/Quote');
 const Category = require('../models/Category');
 const Payment = require('../models/Payment');
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 getRoute.post('/books', async (req, res) => {
     const { offset, limit, categories, searchTerm } = req.body;
@@ -145,8 +146,19 @@ getRoute.post('/getPayment', async (req, res) => {
             return res.status(404).json({ error: 'Payment not found' });
         }
 
+        if (!payment.success && payment.stripeId) {
+            try {
+                const session = await stripe.checkout.sessions.retrieve(payment.stripeId);
+                if (session.payment_status === 'paid') {
+                    payment.success = true;
+                }
+            } catch (err) {
+                console.error('Error verifying Stripe session:', err.message);
+            }
+        }
+
         const wasFetchedBefore = payment.fetchedBefore;
-        if (!wasFetchedBefore) {
+        if (!wasFetchedBefore || payment.isModified('success')) {
             payment.fetchedBefore = true;
             await payment.save();
         }
