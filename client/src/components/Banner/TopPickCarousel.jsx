@@ -54,7 +54,6 @@ export default function TopPickCarousel(props) {
                     <div
                         key={card.key ?? index}
                         onClick={() => handleSlideClick(index)}
-                        style={{ cursor: "pointer" }}
                     >
                         {card.content}
                     </div>
