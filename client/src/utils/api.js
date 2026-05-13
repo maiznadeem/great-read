@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://great-read-image-1017210667439.us-central1.run.app",
+    baseURL: import.meta.env.VITE_API_BASE_URL || "https://admin.greatread.projects.himaiz.com",
 });
 
 export async function getBooks(offset, limit, categories, searchTerm) {

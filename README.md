@@ -4,6 +4,6 @@
 
 ## Important Links
 
-- **Production URL:** [https://www.great-read.com/](https://www.great-read.com/)
+- **Production URL:** [https://greatread.projects.himaiz.com/](https://greatread.projects.himaiz.com/)
 - **Development URL:** [https://great-read-dev.vercel.app/](https://great-read-dev.vercel.app/)
-- **Backend URL:** [https://admin.great-read.com/](https://admin.great-read.com/)
+- **Backend URL:** [https://admin.greatread.projects.himaiz.com/](https://admin.greatread.projects.himaiz.com/)

@@ -183,7 +183,7 @@ const Shelf = forwardRef((props, ref) => {
         ],
     };
 
-    const shareUrl = "https://great-read.com";
+    const shareUrl = "https://greatread.projects.himaiz.com";
     const plural = books.length > 1 ? `${books.length} books` : `1 book`;
     const postDescription =
         `I made a reading goal of ${plural} for ${period} on Great Read!\nCreate yours at: ${shareUrl}\n` +

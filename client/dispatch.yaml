@@ -1,5 +1,3 @@
 dispatch:
-  - url: "great-read.com/*"
-    service: default
-  - url: "www.great-read.com/*"
+  - url: "greatread.projects.himaiz.com/*"
     service: default
