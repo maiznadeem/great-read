@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const NotesContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useNotes() {
     return useContext(NotesContext);
 }

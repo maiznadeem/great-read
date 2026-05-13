@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import waves from "../../assets/backgrounds/waves.png";
 
@@ -18,9 +18,7 @@ const ReadingListForm = () => {
         setPeriodValue,
         setGoalValue,
         setReadingInfoValue,
-        setSelectedCategoriesValue,
         setSelectionChoiceValue,
-        toggleReadingList,
     } = useReadingList();
 
     const stepLength = 4;
@@ -30,7 +28,7 @@ const ReadingListForm = () => {
     const [selectedTimePeriod, setSelectedTimePeriod] = useState("1 week");
     const [goal, setGoal] = useState(1);
     const [select, setSelect] = useState("choose for me");
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedCategories] = useState([]);
     const nextStep = () => {
         if (step == 4) {
             handleChoose();

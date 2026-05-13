@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
 import amazonIcon from '../../assets/links/amazon.png';
@@ -11,6 +11,31 @@ import tick from "../../assets/buttons/tick.png";
 import { useReadingList } from '../../context/ReadingListContext';
 import { Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
+
+const CategoryIcon = ({ category, categories }) => {
+    const [showtooltip, setshowtooltip] = useState(false);
+    const matchingCategory = categories.find(item => item.name === category);
+
+    if (!matchingCategory || !matchingCategory.image) {
+        return null;
+    }
+
+    return (
+        <Tooltip
+            title={matchingCategory.name}
+            open={showtooltip}
+            TransitionComponent={Zoom}
+            onOpen={() => setshowtooltip(true)}
+            onClose={() => setshowtooltip(false)}
+        >
+            <img
+                src={matchingCategory.image}
+                onClick={() => setshowtooltip(!showtooltip)}
+                className="w-auto h-6 cursor-pointer"
+            />
+        </Tooltip>
+    );
+};
 
 const Book = ({ book, categories }) => {
 
@@ -26,31 +51,9 @@ const Book = ({ book, categories }) => {
         setIsBookInReadingList(books.some((readingBook) => readingBook._id === book._id));
     }, [books, book]);
 
-    const categoryIcons = book.categories.map(category => {
-
-        const [showtooltip, setshowtooltip] = useState(false)
-        const matchingCategory = categories.find(item => item.name === category);
-
-        if (matchingCategory && matchingCategory.image) {
-            return (
-                <Tooltip 
-                    key={matchingCategory._id}
-                    title={matchingCategory.name}
-                    open={showtooltip}
-                    TransitionComponent={Zoom}
-                    onOpen={() => setshowtooltip(true)}
-                    onClose={() => setshowtooltip(false)}
-                >
-                    <img
-                        src={matchingCategory.image}
-                        onClick={() => setshowtooltip(!showtooltip)}
-                        className="w-auto h-6 cursor-pointer"
-                    />
-                </Tooltip>
-            );
-        }
-        return null;
-    });
+    const categoryIcons = book.categories.map(category => (
+        <CategoryIcon key={category} category={category} categories={categories} />
+    ));
 
     return (
         <div className="rounded-lg p-4 flex flex-col border-2 border-gray-400 border-dashed overflow-visible relative">

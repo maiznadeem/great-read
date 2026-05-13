@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
 import amazonIcon from '../../assets/links/amazon.png';
@@ -37,7 +37,7 @@ const ExampleNote = ({ book }) => {
                     <div className='sm:w-1/2 flex flex-row bg-footer relative rounded-tl-xl rounded-tr-xl rounded-br-xl rounded-bl-xl sm:rounded-bl-none sm:rounded-tl-none'>
                         <div className='flex flex-col justify-center items-center z-10 px-6 py-10'>
                             <div className='flex justify-center items-center'>
-                                <p className="manrope-regular text-gray-600 text-sm">"{book.quote}"</p>
+                                <p className="manrope-regular text-gray-600 text-sm">&quot;{book.quote}&quot;</p>
                             </div>
                             <div className='absolute bottom-2 flex justify-center'>
                                 <div className="flex space-x-2 items-center">

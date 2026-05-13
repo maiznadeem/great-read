@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSpring, animated, config } from 'react-spring';
 import { IconButton } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';

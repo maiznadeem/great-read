@@ -1,15 +1,15 @@
-import React, { useRef, useState } from 'react'
+import { useRef } from 'react'
 import Slider from 'react-slick';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import enabled from "../assets/buttons/enabled.svg";
 import disabled from "../assets/buttons/disabled.svg";
 import bookmarksUtil from '../../utils/BookmarksUtil';
 
-const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
+const NotesSlider = ({ currentSlide, setCurrentSlide }) => {
 
     const sliderRef = useRef(null);
 
-    const CustomNextArrow = ({ currentSlide }) => {
+    const CustomNextArrow = () => {
         return (
             <img
                 src={enabled}
@@ -23,8 +23,8 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
             />
         );
     };
-    
-    const CustomPrevArrow = ({ currentSlide }) => {
+
+    const CustomPrevArrow = () => {
         return (
             <img
                 src={disabled}
@@ -47,8 +47,8 @@ const NotesSlider = ({ currentSlide, setCurrentSlide, isShuffling }) => {
         centerPadding: "60px",
         swipeToSlide: true,
         rows: 1,
-        nextArrow: <CustomNextArrow currentSlide={currentSlide} />,
-        prevArrow: <CustomPrevArrow currentSlide={currentSlide} />,
+        nextArrow: <CustomNextArrow />,
+        prevArrow: <CustomPrevArrow />,
         afterChange: (newSlide) => {
             setCurrentSlide(newSlide+1);
         },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Category from "../Category/Category";
 import NotesBook from "./NotesBook";
 import DefaultPagination from "../Category/DefaultPagination";
@@ -59,6 +59,7 @@ const NotesBooks = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, activeCategories, notesCategories]);
 
     useEffect(() => {
@@ -79,6 +80,7 @@ const NotesBooks = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit]);
 
     const handlePageChange = (newPage) => {

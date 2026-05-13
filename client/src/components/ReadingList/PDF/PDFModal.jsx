@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -71,8 +70,10 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                                                     className="w-auto h-4 cursor-pointer hover:tooltip"
                                                     title="Amazon"
                                                     onClick={() =>
-                                                        openLinkInNewTab(
-                                                            book.amazon
+                                                        window.open(
+                                                            book.amazon,
+                                                            "_blank",
+                                                            "noopener,noreferrer"
                                                         )
                                                     }
                                                 />
@@ -84,8 +85,10 @@ const PDFModal = ({ isModalOpen, handleCloseModal }) => {
                                                     className="w-auto h-4 cursor-pointer hover:tooltip"
                                                     title="Perlego"
                                                     onClick={() =>
-                                                        openLinkInNewTab(
-                                                            book.perlego
+                                                        window.open(
+                                                            book.perlego,
+                                                            "_blank",
+                                                            "noopener,noreferrer"
                                                         )
                                                     }
                                                 />

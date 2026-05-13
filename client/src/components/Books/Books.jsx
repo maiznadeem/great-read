@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Category from "../Category/Category";
 import Book from "./Book";
 import DefaultPagination from "../Category/DefaultPagination";
@@ -49,6 +49,7 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, activeCategories]);
 
     useEffect(() => {
@@ -64,6 +65,7 @@ const Books = () => {
                 console.error(error.message);
                 setIsLoading(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit]);
 
     useEffect(() => {
@@ -73,6 +75,7 @@ const Books = () => {
             setCurrentPage(1);
             togglePageRefresh();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageRefresh]);
 
     const handlePageChange = (newPage) => {

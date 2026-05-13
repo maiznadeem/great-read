@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import amazonIcon from '../assets/links/amazon.png';
 import perlegoIcon from '../assets/links/perlego.png';

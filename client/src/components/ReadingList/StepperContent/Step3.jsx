@@ -1,5 +1,4 @@
 import { Slider } from '@mui/material'
-import React from 'react'
 
 const Step3 = ({ name, selectedTimePeriod, goal, setGoal }) => {
     return (

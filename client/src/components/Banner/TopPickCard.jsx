@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSpring, animated } from "react-spring";
 
 function TopPickCard({ book }) {

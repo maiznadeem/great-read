@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Step4 = ({ name, goal, select, setSelect }) => {
     return (
@@ -26,7 +25,7 @@ const Step4 = ({ name, goal, select, setSelect }) => {
                             className="hidden"
                             onChange={() => setSelect('i will choose')}
                         />
-                        <div className="button-radio manrope-regular">I'll choose</div>
+                        <div className="button-radio manrope-regular">I&apos;ll choose</div>
                     </label>
                 </div>
                 <p className='text-black text-center text-sm sm:text-md manrope-regular max-w-[500px]'>*You will have the option to choose the categories before your shelf is stacked for you.</p>

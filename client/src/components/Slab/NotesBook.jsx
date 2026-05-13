@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 
 import amazonIcon from '../../assets/links/amazon.png';

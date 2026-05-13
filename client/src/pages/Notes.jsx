@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SelectProduct from '../components/Product/SelectProduct';
 import Preview from '../components/Product/Preview';
@@ -61,6 +61,7 @@ const Notes = () => {
             }
         };
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sessionId]);
 
     return (

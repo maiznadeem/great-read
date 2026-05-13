@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Modal } from '@mui/material';
 import Shelf from './Shelf';
 

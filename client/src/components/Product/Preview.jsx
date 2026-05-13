@@ -1,5 +1,4 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import React from 'react';
 import Logo from "../../assets/logos/Logo.png";
 import HyperLearning from "../../assets/Preview/HyperLearning.jpg";
 import { previewPoints } from './PreviewAndExamples';

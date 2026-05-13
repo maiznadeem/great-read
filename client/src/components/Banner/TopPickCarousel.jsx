@@ -21,7 +21,7 @@ export default function TopPickCarousel(props) {
 
     const { togglePageRefresh } = useReadingList();
 
-    const customSlideStyle = (offsetFromCenter, index) => {
+    const customSlideStyle = (offsetFromCenter) => {
         const opacity = 1 - Math.abs(offsetFromCenter) / 5;
         const scale = 1 - Math.abs(offsetFromCenter) / 5;
         

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Button, LinearProgress } from "@mui/material";
 import { getCategories } from "../../utils/api";
 import Category from "../Category/Category";
@@ -83,8 +83,7 @@ const CategoriesModal = ({
     };
 
     const handleConfirm = () => {
-        if (notesCategories.length < maxUniqueCategoryLimit) {
-        } else {
+        if (notesCategories.length >= maxUniqueCategoryLimit) {
             handleCategoryConfirm();
         }
     };

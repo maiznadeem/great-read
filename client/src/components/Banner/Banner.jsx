@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getTopPicks } from '../../utils/api';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -35,7 +35,7 @@ const Banner = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [setContextTopPicks]);
 
     let cards = [
         {
@@ -98,7 +98,7 @@ const Banner = () => {
                             <span className='block sm:inline'><span className='text-primaryDark'> Do</span> Better.</span>
                         </p>
                         <p className='manrope-semibold text-lg sm:text-xl text-black text-center max-w-[350px] sm:max-w-[380px]'>
-                            The internet's<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
+                            The internet&apos;s<span className='text-primaryDark'> largest </span>destination for <span className='text-primaryDark'>non-fiction books</span> that will inspire you.
                         </p>
                     </div>
                     <div className='flex w-full justify-between gap-4 flex-wrap custmd:flex-nowrap'>

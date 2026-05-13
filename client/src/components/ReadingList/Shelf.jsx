@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, forwardRef } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,7 +14,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PDFModal from "./PDF/PDFModal";
 
-const Shelf = forwardRef((props, ref) => {
+const Shelf = forwardRef(function Shelf(props, ref) {
     const {
         name,
         goal,
@@ -75,6 +75,7 @@ const Shelf = forwardRef((props, ref) => {
                 });
         }
         prevSelectedCategories.current = selectedCategories;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategories]);
 
     const handleCategoryClick = (categoryName) => {
@@ -202,7 +203,7 @@ const Shelf = forwardRef((props, ref) => {
         >
             <div className="flex flex-col items-center gap-4 sm:gap-4 py-4 sm:py-8">
                 <p className="manrope-semibold text-center text-xl sm:text-2xl text-black">
-                    {name}'s Reading List
+                    {name}&apos;s Reading List
                 </p>
                 <div>
                     <p className="manrope-semibold text-center text-lg sm:text-xl text-primary">
@@ -302,6 +303,7 @@ const Shelf = forwardRef((props, ref) => {
                         <a
                             href={linkedInShareUrl}
                             target="_blank"
+                            rel="noreferrer"
                             className={`w-28 rounded-lg shadow-lg px-2 py-1 flex justify-center items-center gap-1 bg-white opacity-100`}
                         >
                             <LinkedInIcon className="text-blue-700" />
